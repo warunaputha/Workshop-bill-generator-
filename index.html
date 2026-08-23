@@ -1,0 +1,5684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+      
+      
+ 
+<!-- ===== PWA ===== -->
+      
+<link rel="manifest" href="manifest.json">
+
+<meta name="theme-color" content="#003399">
+
+<link rel="apple-touch-icon"
+      href="icons/icon-192.png">
+
+
+<title>HighResist Motors – Bill Generator
+highResist-motors-bill_v2_2.html</title>
+
+<!-- jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- jsPDF AutoTable (for PDF tables) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+  
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+"https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+</script>
+  
+  
+  
+  
+  
+  
+  
+  
+
+<style>
+
+
+
+
+/* ===============================
+   STEP 1 — MAIN UI
+================================ */
+
+body {
+  font-family: Arial, sans-serif;
+  background: #eef3f8;
+  margin: 0;
+  padding: 20px;
+  color: #222;
+}
+
+
+/* ===== MAIN CONTAINER ===== */
+
+.container {
+  background: #ffffff;
+  max-width: 850px;
+  margin: 20px auto;
+  padding: 25px;
+  border-radius: 14px;
+
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.10);
+
+  box-sizing: border-box;
+}
+
+
+
+
+
+/* ===============================
+   MAIN COMPANY HEADER
+================================ */
+
+.main-company-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 12px 16px;
+
+  border-bottom: 1px solid #dce6ef;
+
+  /* ===== BACKGROUND IMAGE ===== */
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.82),
+      rgba(255, 255, 255, 0.82)
+    ),
+    url("header-bg.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  border-radius: 10px;
+}
+
+
+/* ===============================
+   COMPANY INFORMATION
+================================ */
+
+.main-company-title {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+
+
+/* ===== COMPANY NAME ===== */
+
+.main-company-title h2 {
+  margin: 0 0 3px;
+
+  text-align: left;
+
+  font-size: 23px;
+  line-height: 1.2;
+
+  font-weight: 700;
+
+  color: #003399;
+}
+
+
+/* ===== BUSINESS TYPE ===== */
+
+.main-company-type {
+  margin-bottom: 5px;
+
+  font-size: 12px;
+  line-height: 1.3;
+
+  font-weight: 600;
+
+  color: #566575;
+}
+
+
+/* ===== ADDRESS ===== */
+
+.main-company-address {
+  margin-bottom: 5px;
+
+  font-size: 11px;
+  line-height: 1.4;
+
+  color: #777f87;
+}
+
+
+/* ===== CONTACT LINE ===== */
+
+.main-company-contact {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  font-size: 11px;
+  line-height: 1.3;
+
+  color: #44515d;
+
+  white-space: nowrap;
+}
+
+
+/* ===== SEPARATOR ===== */
+
+.contact-separator {
+  color: #aeb7bf;
+}
+
+
+/* ===============================
+   COMPANY LOGO - RIGHT SIDE
+================================ */
+
+.main-company-logo {
+  width: 72px;
+  height: 58px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #ffffff;
+
+  border: 1px solid #d9e2ea;
+  border-radius: 8px;
+}
+
+
+#mainCompanyLogo {
+  display: none;
+
+  max-width: 64px;
+  max-height: 50px;
+
+  width: auto;
+  height: auto;
+
+  object-fit: contain;
+}
+
+
+
+
+
+
+
+
+h2, h3 {
+  text-align: center;
+  margin: 5px 0;
+}
+
+
+
+label {
+  font-size: 14px;
+}
+
+input {
+  width: 100%;
+  padding: 6px;
+  margin-top: 4px;
+  box-sizing: border-box;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th, td {
+  border: 1px solid #000;
+  padding: 6px;
+  text-align: center;
+}
+
+.total-box {
+  text-align: right;
+  font-size: 18px;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+button {
+  margin-top: 15px;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+
+textarea {
+  width: 100%;
+  padding: 6px;
+  margin-top: 4px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+
+
+
+/* ===============================
+   STEP 2 — COMPANY DETAILS UI
+================================ */
+
+.company-settings {
+  background: #f8fbff;
+  border: 1px solid #d9e6f2;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0 25px;
+
+  box-shadow:
+    0 3px 12px rgba(0, 0, 0, 0.06);
+}
+
+
+/* ===== SECTION TITLE ===== */
+
+.company-settings h3 {
+  margin: -20px -20px 20px;
+  padding: 14px 18px;
+
+  background: #0066cc;
+  color: #ffffff;
+
+  text-align: left;
+  font-size: 17px;
+  font-weight: bold;
+
+  border-radius: 12px 12px 0 0;
+}
+
+
+/* ===== LABELS ===== */
+
+.company-settings label {
+  display: block;
+
+  margin-top: 12px;
+  margin-bottom: 5px;
+
+  font-size: 13px;
+  font-weight: bold;
+  color: #34495e;
+}
+
+
+/* ===== INPUTS ===== */
+
+.company-settings input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccd8e3;
+  border-radius: 7px;
+  background: #ffffff;
+  font-size: 14px;
+  box-sizing: border-box;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+/* ===== INPUT FOCUS ===== */
+
+.company-settings input:focus {
+  border-color: #0066cc;
+  box-shadow:
+    0 0 0 3px rgba(0, 102, 204, 0.12);
+}
+
+
+/* ===== FILE INPUT ===== */
+
+.company-settings input[type="file"] {
+  width: 100%;
+  padding: 9px;
+  border: 1px dashed #9fb6cc;
+  border-radius: 7px;
+  background: #ffffff;
+  box-sizing: border-box;
+  font-size: 13px;
+}
+
+
+/* ===== LOGO PREVIEW AREA ===== */
+
+.company-settings div[style*="text-align:center"] {
+  background: #ffffff;
+  border: 1px dashed #c7d5e2;
+  border-radius: 8px;
+  padding: 12px;
+  min-height: 50px;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* ===== LOGO ===== */
+
+#logoPreview {
+  border-radius: 6px;
+  object-fit: contain;
+  max-width: 150px;
+  max-height: 80px;
+}
+
+
+/* ===== SAVE COMPANY BUTTON ===== */
+
+.company-settings button {
+  width: 100%;
+  margin-top: 18px;
+  padding: 11px 15px;
+  background: #0066cc;
+  color: #ffffff;
+  border: none;
+  border-radius: 7px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease;
+}
+
+
+/* ===== BUTTON HOVER ===== */
+
+.company-settings button:hover {
+  background: #0052a3;
+}
+
+
+/* ===== BUTTON PRESS ===== */
+
+.company-settings button:active {
+  transform: scale(0.98);
+}
+
+
+
+
+
+/* ===============================
+   COMPANY DETAILS ACCORDION
+================================ */
+
+.company-details {
+  border: 1px solid #dce6ef;
+  border-radius: 10px;
+  overflow: hidden;
+
+  background: #ffffff;
+}
+
+
+/* ===== HEADER ===== */
+
+.company-details-header {
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 12px 16px;
+
+  background: #0066cc;
+
+  color: #ffffff;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  user-select: none;
+}
+
+
+.company-details-header:active {
+  opacity: 0.9;
+}
+
+
+/* ===== ARROW ===== */
+
+#companyDetailsArrow {
+
+  font-size: 13px;
+
+  transition:
+    transform 0.2s ease;
+}
+
+
+/* ===== CONTENT ===== */
+
+.company-details-content {
+
+  max-height: 1000px;
+
+  overflow: hidden;
+
+  padding: 15px;
+
+  transition:
+    max-height 0.3s ease,
+    padding 0.3s ease;
+}
+
+
+/* ===== CLOSED ===== */
+
+.company-details-content.collapsed {
+
+  max-height: 0;
+
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+
+
+
+
+
+
+/* ===============================
+   STEP 3 — BILL INFORMATION UI
+================================ */
+
+/* ===== BILL INFORMATION AREA ===== */
+
+.container > .row {
+  margin-top: 15px;
+}
+
+
+/* ===== ROW CARDS ===== */
+
+.container > .row:first-of-type,
+.container > .row:nth-of-type(2) {
+  background: #f8fbff;
+  border: 1px solid #d9e6f2;
+  border-radius: 10px;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+
+/* ===== LABELS ===== */
+
+.container label {
+  display: block;
+  margin-top: 14px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #34495e;
+}
+
+
+/* ===== BILL INPUTS ===== */
+
+.container > .row input,
+.container > input,
+.container > textarea {
+  width: 100%;
+  padding: 10px 12px;
+  box-sizing: border-box;
+  border: 1px solid #ccd8e3;
+  border-radius: 7px;
+  background: #ffffff;
+  font-size: 14px;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+/* ===== INPUT FOCUS ===== */
+
+.container > .row input:focus,
+.container > input:focus,
+.container > textarea:focus {
+  border-color: #0066cc;
+  box-shadow:
+    0 0 0 3px rgba(0, 102, 204, 0.12);
+}
+
+
+/* ===== BILL NUMBER ===== */
+
+#billNo {
+  font-weight: bold;
+  color: #003399;
+  background: #f4f8ff;
+}
+
+
+/* ===== DATE ===== */
+
+#billDate {
+  font-weight: 500;
+}
+
+
+/* ===== CUSTOMER ===== */
+
+#customer {
+  background: #ffffff;
+}
+
+
+/* ===== NOTE / DESCRIPTION ===== */
+
+#note {
+  min-height: 80px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+
+/* ===== SECTION TITLE ===== */
+
+.container > h3 {
+  margin-top: 25px;
+  margin-bottom: 10px;
+  padding: 10px 14px;
+  background: #0066cc;
+  color: #ffffff;
+  border-radius: 8px;
+  text-align: left;
+  font-size: 16px;
+}
+
+
+
+
+/* ===============================
+   STEP 4 — SERVICE DETAILS TABLE
+================================ */
+
+
+/* ===== SERVICE DETAILS TABLE ===== */
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table-wrapper table {
+    width: 100%;
+    min-width: 700px;
+    border-collapse: collapse;
+}
+
+
+
+/* ===== TABLE WRAPPER ===== */
+
+#items {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 15px;
+  background: #ffffff;
+  border: 1px solid #d9e6f2;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow:
+    0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+
+/* ===== TABLE HEADER ===== */
+
+#items tr:first-child {
+  background: #0066cc;
+  color: #ffffff;
+}
+
+
+#items tr:first-child th {
+  border: none;
+  padding: 11px 7px;
+  font-size: 13px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+
+/* ===== TABLE CELLS ===== */
+
+#items td {
+  border: none;
+  border-bottom: 1px solid #e5edf4;
+  padding: 7px;
+  background: #ffffff;
+  vertical-align: middle;
+}
+
+
+/* ===== LAST ROW BORDER ===== */
+
+#items tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* ===== S.NO ===== */
+
+#items td:first-child {
+  width: 45px;
+  font-weight: bold;
+  color: #52697d;
+  background: #f7fafd;
+}
+
+
+/* ===== ITEM INPUTS ===== */
+
+#items td input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 7px;
+  border: 1px solid #d3dee8;
+  border-radius: 5px;
+  background: #ffffff;
+  font-size: 13px;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+/* ===== ITEM INPUT FOCUS ===== */
+
+#items td input:focus {
+  border-color: #0066cc;
+  box-shadow:
+    0 0 0 2px rgba(0, 102, 204, 0.10);
+}
+
+
+/* ===== QUANTITY ===== */
+
+#items td:nth-child(3) input {
+  text-align: center;
+}
+
+
+/* ===== RATE ===== */
+
+#items td:nth-child(4) input {
+  text-align: right;
+}
+
+
+/* ===== AMOUNT ===== */
+
+#items td:nth-child(5) input {
+  text-align: right;
+  font-weight: bold;
+  color: #003399;
+  background: #f4f8ff;
+  border-color: #d5e3f2;
+}
+
+
+/* ===== ROW HOVER ===== */
+
+#items tr:not(:first-child):hover td {
+  background: #f8fbff;
+}
+
+
+/* ===== PARTICULARS COLUMN ===== */
+
+#items th:nth-child(2) {
+  text-align: left;
+}
+
+
+/* ===== AMOUNT HEADER ===== */
+
+#items th:nth-child(5) {
+  text-align: right;
+}
+
+/* ===== particular ===== */
+.particular-input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.particular-preview {
+    display: none;
+    font-size: 10px;
+    color: #777;
+    margin-top: 2px;
+    line-height: 12px;
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+
+.particular-display {
+    display: none;
+    width: 100%;
+    font-size: 13px;
+    padding: 4px 2px;
+    cursor: text;
+    overflow-wrap: break-word;
+}
+
+
+
+/* ======= servis display tabel zoom controller====== */
+
+.table-zoom-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  margin: 8px 0;
+}
+
+.table-zoom-controls button {
+  width: auto;
+  min-width: 42px;
+  margin: 0;
+  padding: 6px 10px;
+  font-size: 14px;
+  border: 1px solid #ccd8e3;
+  border-radius: 6px;
+  background: #f5f8fb;
+  color: #34495e;
+}
+
+#tableZoomLevel {
+  min-width: 50px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+
+/* ===============================
+   TABLE SWIPE MODE
+================================ */
+
+.table-swipe-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin: 8px 0;
+}
+
+.table-swipe-controls button {
+  width: auto;
+  min-width: 125px;
+  margin: 0;
+  padding: 7px 12px;
+  border: 1px solid #ccd8e3;
+  border-radius: 6px;
+  background: #f5f8fb;
+  color: #34495e;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.table-swipe-controls button:active {
+  transform: scale(0.96);
+}
+
+
+/* ===== SWIPE STATUS ===== */
+
+#swipeStatus {
+  font-size: 12px;
+  color: #777;
+}
+
+
+/* ===== SWIPE MODE ACTIVE ===== */
+
+.table-wrapper.swipe-mode {
+  border: 2px solid #0066cc;
+  border-radius: 8px;
+  background: #f4f9ff;
+  cursor: grab;
+  box-shadow:
+    0 0 0 3px rgba(0, 102, 204, 0.10);
+  user-select: none;
+}
+
+
+/* ===== WHILE DRAGGING ===== */
+
+.table-wrapper.swipe-mode.swiping {
+  cursor: grabbing;
+}
+
+
+/* ===== SWIPE BUTTON ACTIVE ===== */
+
+.table-swipe-controls button.swipe-active {
+  background: #0066cc;
+  color: #ffffff;
+  border-color: #005bb5;
+}
+
+
+
+
+
+
+
+
+
+
+/* ===============================
+   STEP 5 — TOTAL + ACTION BUTTONS
+================================ */
+
+/* ==PROFESSIONAL TOTAL BOX===== */
+
+.total-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+  margin-bottom: 18px;
+  padding: 12px 14px;
+  background: #f7faff;
+  border-top: 3px solid #0066cc;
+  border-bottom: 1px solid #d7e2ec;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+
+/* ===== TOTAL LABEL ===== */
+
+.total-label {
+  font-size: 20px;
+  font-weight: 700;
+  color: #34495e;
+  letter-spacing: 0.5px;
+}
+
+
+/* ===== TOTAL VALUE ===== */
+
+.total-value {
+  font-size: 21px;
+  font-weight: 700;
+  color: #34495e;
+}
+
+
+/* ===== GRAND TOTAL NUMBER ===== */
+
+#grandTotal {
+  font-size: 28px;
+  font-weight: 800;
+  color: #003399;
+  letter-spacing: 0.4px;
+}
+
+
+
+
+
+
+
+
+
+
+/* ===== ALL ACTION BUTTONS ===== */
+
+.container > button {
+  width: 100%;
+  min-height: 42px;
+  margin-top: 8px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 7px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+}
+
+
+/* ===== BUTTON PRESS ===== */
+
+.container > button:active {
+  transform: scale(0.98);
+}
+
+
+/* ===== BUTTON HOVER ===== */
+
+.container > button:hover {
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+
+/* ===== ADD ROW ===== */
+
+.container > button:nth-of-type(1) {
+  background: #f1f3f5;
+  color: #333;
+
+  border: 1px solid #d0d5da;
+}
+
+
+/* ===== PREVIEW PDF ===== */
+
+.container > button:nth-of-type(2) {
+  background: #e9eef5;
+  color: #34495e;
+  border: 1px solid #ccd6e0;
+}
+
+
+/* ===== DOWNLOAD PDF ===== */
+
+.container > button:nth-of-type(3) {
+  background: #e8f1fb;
+  color: #075a9c;
+  border: 1px solid #bcd4eb;
+}
+
+
+/* ===== SAVE / UPDATE BILL ===== */
+
+.container > button:nth-of-type(4) {
+  background: #0066cc;
+  color: #ffffff;
+  border: 1px solid #005bb5;
+  font-size: 15px;
+}
+
+
+/* ===== SAVE / UPDATE HOVER ===== */
+
+.container > button:nth-of-type(4):hover {
+  background: #0052a3;
+}
+
+
+/* ===== WHATSAPP ===== */
+
+.container > button:nth-of-type(5) {
+  background: #25D366;
+  color: #ffffff;
+  border: 1px solid #1ebe5d;
+  font-size: 14px;
+}
+
+
+/* ===== WHATSAPP HOVER ===== */
+
+.container > button:nth-of-type(5):hover {
+  background: #1ebe5d;
+}
+
+
+
+
+
+
+
+
+
+
+.pdf-modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.75);
+    z-index:9999;
+    overflow:auto;
+}
+
+.pdf-toolbar{
+    position:sticky;
+    top:0;
+    background:#fff;
+    padding:10px;
+    text-align:right;
+}
+
+#pdfCanvas{
+    display:block;
+    margin:20px auto;
+    background:#fff;
+}
+
+
+
+
+/* ===============================
+   PROFESSIONAL BILL HISTORY
+================================ */
+
+.bill-history {
+  background: #ffffff;
+  max-width: 900px;
+  margin: 25px auto;
+  padding: 0;
+  border-radius: 14px;
+  border: 1px solid #dce6ef;
+  box-shadow:
+    0 5px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+
+/* ===== HISTORY HEADER ===== */
+
+.history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 18px 20px;
+  background: linear-gradient(
+    135deg,
+    #0066cc,
+    #004b99
+  );
+  color: #ffffff;
+}
+
+
+.history-header h2 {
+  margin: 0;
+  font-size: 20px;
+  text-align: left;
+}
+
+
+.history-header p {
+  margin: 5px 0 0;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+
+/* ===== REFRESH BUTTON ===== */
+
+.history-refresh-btn {
+  width: auto !important;
+  min-width: 105px;
+  margin: 0 !important;
+  padding: 8px 12px;
+  background: rgba(255,255,255,0.15);
+  color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+
+.history-refresh-btn:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+
+
+
+
+
+
+/* ===== HISTORY CONTENT ===== */
+
+#billHistory {
+  padding: 18px;
+}
+
+
+/* ===== HISTORY TABLE ===== */
+
+.history-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 0;
+  background: #ffffff;
+  border: 1px solid #dce6ef;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+
+/* ===== TABLE HEADER ===== */
+
+.history-table th {
+  padding: 11px 8px;
+  background: #f1f6fb;
+  color: #34495e;
+  border-bottom: 1px solid #dce6ef;
+  font-size: 12px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+
+/* ===== TABLE CELLS ===== */
+
+.history-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid #edf2f6;
+  font-size: 13px;
+  color: #34495e;
+  vertical-align: middle;
+}
+
+
+/* ===== REMOVE LAST BORDER ===== */
+
+.history-table tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* ===== ROW HOVER ===== */
+
+.history-table tr:not(:first-child):hover td {
+  background: #f8fbff;
+}
+
+
+/* ===== BILL NUMBER ===== */
+
+.history-table td:first-child strong {
+  color: #0066cc;
+  font-size: 13px;
+}
+
+
+/* ===== TOTAL ===== */
+
+.history-total {
+  font-weight: bold;
+  color: #003399 !important;
+  white-space: nowrap;
+}
+
+
+/* ===============================
+   ACTION BUTTONS
+================================ */
+
+.history-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: nowrap;
+}
+
+
+.history-actions button {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 7px;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.15s ease;
+}
+
+
+.history-actions button:hover {
+  box-shadow:
+    0 3px 8px rgba(0,0,0,0.15);
+}
+
+
+.history-actions button:active {
+  transform: scale(0.92);
+}
+
+
+/* ===== VIEW ===== */
+
+.view-btn {
+  background: #e7f3ff;
+  color: #0878c9;
+  border: 1px solid #b9ddf8 !important;
+}
+
+
+/* ===== EDIT ===== */
+
+.edit-btn {
+  background: #fff4df;
+  color: #d98200;
+  border: 1px solid #f2d49d !important;
+}
+
+
+/* ===== PRINT ===== */
+
+.print-btn {
+  background: #e8f8ef;
+  color: #239653;
+  border: 1px solid #b9e5c9 !important;
+}
+
+
+/* ===== DELETE ===== */
+
+.delete-btn {
+  background: #ffebeb;
+  color: #d93636;
+  border: 1px solid #f2bcbc !important;
+}
+
+
+/* ===== EMPTY HISTORY ===== */
+
+.no-bills {
+  margin: 0;
+  padding: 30px 15px;
+  text-align: center;
+  color: #7b8a97;
+  font-size: 14px;
+  background: #f8fafc;
+  border: 1px dashed #ccd8e3;
+  border-radius: 10px;
+}
+
+
+
+
+
+/* ===============================
+   BACKUP FILE CONTROLS
+================================ */
+
+.history-tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.history-tools button {
+  width: auto !important;
+  min-width: 90px;
+  margin: 0 !important;
+  padding: 8px 10px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.2s ease;
+}
+
+.history-tools button:active {
+  transform: scale(0.96);
+}
+
+.history-tools button:hover {
+  box-shadow:
+    0 3px 8px rgba(0,0,0,0.15);
+}
+
+
+/* ===== BACKUP FILE ===== */
+
+.backup-btn {
+  background: #eef5ff;
+  color: #075a9c;
+  border: 1px solid #bcd4eb;
+}
+
+
+/* ===== SAVE BACKUP ===== */
+
+.backup-save-btn {
+  background: #e8f8ef;
+  color: #208a4a;
+  border: 1px solid #b9e5c9;
+}
+
+
+/* ===== IMPORT ===== */
+
+.backup-import-btn {
+  background: #fff4df;
+  color: #b86b00;
+  border: 1px solid #f2d49d;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===============================
+   BILL VIEWER MODAL
+================================ */
+
+.bill-viewer-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 10000;
+  overflow-y: auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+
+.bill-viewer-box {
+  background: #fff;
+  max-width: 700px;
+  margin: 20px auto;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow:
+    0 10px 40px rgba(0,0,0,.35);
+}
+
+
+/* ===== HEADER ===== */
+
+.bill-viewer-header {
+
+  background: #0066cc;
+
+  color: white;
+
+  padding: 14px 18px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  font-size: 18px;
+
+}
+
+
+.bill-viewer-header button {
+
+  width: auto;
+
+  margin: 0;
+
+  padding: 5px 10px;
+
+  background: transparent;
+
+  color: white;
+
+  border: none;
+
+  font-size: 18px;
+
+}
+
+
+/* ===== CONTENT ===== */
+
+.bill-viewer-content {
+
+  padding: 20px;
+
+}
+
+
+.viewer-company {
+
+  text-align: center;
+
+  border-bottom: 2px solid #0066cc;
+
+  padding-bottom: 12px;
+
+  margin-bottom: 15px;
+
+}
+
+
+.viewer-company-name {
+
+  font-size: 22px;
+
+  font-weight: bold;
+
+  color: #003399;
+
+}
+
+
+.viewer-company-type {
+
+  color: #555;
+
+  margin-top: 4px;
+
+}
+
+
+.viewer-company-contact {
+
+  font-size: 13px;
+
+  margin-top: 5px;
+
+}
+
+
+/* ===== BILL INFO ===== */
+
+.viewer-info {
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 8px 20px;
+
+  margin-bottom: 15px;
+
+}
+
+
+.viewer-info div {
+
+  padding: 5px 0;
+
+}
+
+
+.viewer-label {
+
+  font-weight: bold;
+
+  color: #555;
+
+}
+
+
+/* ===== ITEMS TABLE ===== */
+
+.viewer-items {
+
+  width: 100%;
+
+  border-collapse: collapse;
+
+  margin-top: 10px;
+
+}
+
+
+.viewer-items th,
+.viewer-items td {
+
+  border: 1px solid #ccc;
+
+  padding: 7px;
+
+  text-align: center;
+
+}
+
+
+.viewer-items th {
+
+  background: #e6f0ff;
+
+}
+
+
+/* ===== TOTAL ===== */
+
+.viewer-total {
+
+  margin-top: 15px;
+
+  text-align: right;
+
+  font-size: 18px;
+
+  font-weight: bold;
+
+  color: #003399;
+
+}
+
+
+/* ===== NOTE ===== */
+
+.viewer-note {
+
+  margin-top: 15px;
+
+  padding: 10px;
+
+  background: #fff8cc;
+
+  border-left: 4px solid #e6b800;
+
+}
+
+
+.viewer-note-title {
+
+  font-weight: bold;
+
+  color: #b00000;
+
+}
+
+
+/* ===== FOOTER ===== */
+
+.bill-viewer-footer {
+
+  padding: 12px 18px;
+
+  background: #f5f5f5;
+
+  display: flex;
+
+  gap: 10px;
+
+}
+
+
+.bill-viewer-footer button {
+
+  flex: 1;
+
+  margin: 0;
+
+}
+
+
+
+
+
+
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 600px) {
+    
+    /* ============== MAINCOMPANY HEADER=========== */
+    
+.main-company-header {
+    gap: 10px;
+    padding: 6px 4px 12px;
+  }
+
+
+  /* Company Name */
+
+  .main-company-title h2 {
+    font-size: 19px;
+    margin-bottom: 2px;
+  }
+
+
+  /* Business Type */
+
+  .main-company-type {
+    font-size: 10px;
+    margin-bottom: 4px;
+  }
+
+
+  /* Address */
+
+  .main-company-address {
+    font-size: 9px;
+    margin-bottom: 4px;
+  }
+
+
+  /* Tel / Email */
+
+  .main-company-contact {
+    font-size: 9px;
+    gap: 4px;
+  }
+
+
+  /* Logo */
+
+  .main-company-logo {
+    width: 58px;
+    height: 48px;
+
+    border-radius: 7px;
+  }
+
+
+  #mainCompanyLogo {
+    max-width: 50px;
+    max-height: 42px;
+  }
+    
+    
+    
+    
+    .company-details-header {
+
+    padding: 11px 14px;
+
+    font-size: 14px;
+  }
+
+
+  .company-details-content {
+
+    padding: 12px;
+  }
+    
+    
+    
+    
+    
+  .container {
+    padding: 15px;
+  }
+
+  .container > .row {
+    flex-direction: column;
+
+    gap: 0;
+
+    padding: 10px;
+  }
+
+  .container > .row div {
+    width: 100%;
+  }
+
+  .container > .row div + div {
+    margin-top: 10px;
+  }
+    
+    
+
+  .bill-viewer-modal {
+
+    padding: 10px;
+
+  }
+
+
+  .bill-viewer-box {
+
+    margin: 5px auto;
+
+  }
+
+
+  .viewer-info {
+
+    grid-template-columns: 1fr;
+
+  }
+
+
+  .viewer-items {
+
+    font-size: 12px;
+
+  }
+
+
+  .viewer-items th,
+  .viewer-items td {
+
+    padding: 5px;
+
+  }
+  
+  
+  
+  #items {
+    display: block;
+
+    overflow-x: auto;
+
+    white-space: nowrap;
+
+    -webkit-overflow-scrolling: touch;
+  }
+
+
+  #items th,
+  #items td {
+    min-width: 75px;
+  }
+
+
+  #items th:nth-child(2),
+  #items td:nth-child(2) {
+    min-width: 150px;
+  }
+
+
+  #items th:nth-child(3),
+  #items td:nth-child(3) {
+    min-width: 65px;
+  }
+
+
+  #items th:nth-child(4),
+  #items td:nth-child(4),
+  #items th:nth-child(5),
+  #items td:nth-child(5) {
+    min-width: 105px;
+  }
+  
+  
+  .table-swipe-controls {
+    justify-content: space-between;
+  }
+
+  .table-swipe-controls button {
+    min-width: 125px;
+  }
+  
+  
+  
+  
+  
+   .total-box {
+    padding: 11px 12px;
+  }
+
+  .total-label {
+    font-size: 18px;
+  }
+
+  .total-value {
+    font-size: 19px;
+  }
+
+  #grandTotal {
+    font-size: 25px;
+  }
+
+
+  .container > button {
+    min-height: 44px;
+
+    font-size: 14px;
+  }
+  
+  
+  
+  /* ===== MOBILE BACKUP CONTROLS ===== */
+  
+    .history-tools {
+    width: 100%;
+    justify-content: flex-start;
+    margin-top: 8px;
+  }
+
+  .history-tools button {
+    min-width: 82px;
+    padding: 7px 8px;
+    font-size: 11px;
+  }
+  
+  
+  
+  
+  
+  /* ===============================
+   MOBILE BILL HISTORY
+================================ */
+  
+  
+   .bill-history {
+    margin: 18px 0;
+    border-radius: 10px;
+  }
+
+
+  .history-header {
+    padding: 15px;
+    align-items: flex-start;
+  }
+
+
+  .history-header h2 {
+    font-size: 17px;
+  }
+
+
+  .history-header p {
+    font-size: 11px;
+  }
+
+
+  .history-refresh-btn {
+    min-width: 82px;
+    font-size: 12px;
+    padding: 7px 8px;
+  }
+
+  #billHistory {
+    padding: 10px;
+    overflow-x: auto;
+  }
+
+  .history-table {
+    min-width: 720px;
+  }
+
+  .history-table th {
+    font-size: 11px;
+    padding: 9px 7px;
+
+  }
+
+
+  .history-table td {
+    font-size: 12px;
+    padding: 9px 7px;
+  }
+
+
+  .history-actions button {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    font-size: 14px;
+  }
+  
+  
+  
+  
+  
+
+}
+
+
+@media (max-width: 768px) {
+
+    .table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
+    .table-wrapper table {
+        min-width: 700px;
+    }
+}
+
+
+
+
+
+
+
+</style>
+</head>
+
+
+
+
+
+
+
+<body>
+
+<div class="container">
+
+
+
+
+
+ <div class="main-company-header">
+
+  <div class="main-company-title">
+
+    <h2 id="mainCompanyName">
+      HighResist MOTORS
+    </h2>
+
+    <div id="mainCompanyType" class="main-company-type">
+      All Car Repair & Service Station
+    </div>
+
+    <div id="mainCompanyAddress" class="main-company-address">
+      Address
+    </div>
+
+    <div class="main-company-contact">
+
+      <span id="mainCompanyContact">
+        Tel: -
+      </span>
+
+      <span class="contact-separator"> | </span>
+
+      <span id="mainCompanyEmail">
+        Email: -
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <div class="main-company-logo">
+
+    <img id="mainCompanyLogo"
+         alt="Company Logo">
+
+  </div>
+
+</div>
+
+
+
+<h3>Bill / Cash Memo</h3>
+  
+  
+
+
+
+<div class="company-details">
+
+ <div class="company-details-header"
+     onclick="toggleCompanyDetails()">
+
+  <span>Company Details</span>
+
+  <span id="companyDetailsArrow">▶</span>
+
+</div>
+
+ <div id="companyDetailsContent"
+     class="company-details-content collapsed">
+
+   <label>Company Name</label>
+  <input id="companyName"
+         value="HighResist MOTORS">
+
+  <label>Business Type</label>
+  <input id="companyType"
+         value="All Car Repair & Service Station">
+
+  <label>Address</label>
+  <input id="companyAddress">
+
+  <label>Contact Number</label>
+  <input id="companyContact"
+         type="tel">
+
+  <label>Email Address</label>
+  <input id="companyEmail"
+         type="email"
+         placeholder="example@gmail.com">
+
+  <label>Company Logo</label>
+  <input id="companyLogo"
+         type="file"
+         accept="image/png, image/jpeg, image/jpg, image/webp"
+         onchange="previewCompanyLogo(event)">
+
+  <!-- Logo Preview -->
+  <div style="margin-top:10px; text-align:center;">
+    <img id="logoPreview"
+         style="max-width:150px;
+                max-height:80px;
+                display:none;
+                object-fit:contain;">
+  </div>
+
+  <button type="button"
+          onclick="saveCompanyDetails()">
+    Save Company Details
+  </button>
+
+
+  </div>
+
+</div>
+
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+  <div class="row">
+    <div>
+      <label>Bill No</label>
+      <input id="billNo">
+    </div>
+    <div>
+      <label>Date</label>
+      <input type="date" id="billDate">
+    </div>
+  </div>
+
+  <label>Customer Name</label>
+  <input id="customer">
+
+  <div class="row">
+    <div>
+      <label>Vehicle No</label>
+      <input id="vehicle">
+    </div>
+    <div>
+      <label>Job Type</label>
+      <input id="type">
+    </div>
+  </div>
+
+  <label>Meter Reading</label>
+  <input id="meter">
+  
+  
+  <label>Note / Description</label>
+<textarea id="note" rows="3" placeholder="Enter additional details..."></textarea>
+
+  <h3>Service Details</h3>
+  
+  
+ 
+  
+  
+  
+<div class="table-wrapper">
+  <table id="items">
+    <tr>
+      <th>S.No</th>
+      <th>Particulars</th>
+      <th>Qty</th>
+      <th>Rate (Rs.)</th>
+      <th>Amount (Rs.)</th>
+    </tr>
+  
+  
+<tr>
+  <td>1</td>
+  
+  
+<td>
+  <input type="text"
+         class="particular-input"
+         onfocus="startParticularEdit(this)"
+         oninput="updateParticularPreview(this)"
+         onblur="finishParticular(this)">
+
+  <div class="particular-preview"></div>
+
+  <div class="particular-display"
+       onclick="editParticular(this)">
+  </div>
+</td>
+
+
+  <td>
+    <input type="number" value="1" min="1" step="1"
+           oninput="calculateTotal()">
+  </td>
+  <td>
+    <input type="number" step="0.01" min="0"
+           oninput="calculateTotal()">
+  </td>
+  <td><input type="number" readonly></td>
+</tr>
+    
+    
+ <tr>
+  <td>2</td>
+ <td>
+  <input type="text"
+         class="particular-input"
+         onfocus="startParticularEdit(this)"
+         oninput="updateParticularPreview(this)"
+         onblur="finishParticular(this)">
+
+  <div class="particular-preview"></div>
+
+  <div class="particular-display"
+       onclick="editParticular(this)">
+  </div>
+</td>
+  <td>
+    <input type="number" value="1" min="1" step="1"
+           oninput="calculateTotal()">
+  </td>
+  <td>
+    <input type="number" step="0.01" min="0"
+           oninput="calculateTotal()">
+  </td>
+  <td><input type="number" readonly></td>
+</tr>
+
+
+ <tr>
+  <td>3</td>
+  <td>
+  <input type="text"
+         class="particular-input"
+         onfocus="startParticularEdit(this)"
+         oninput="updateParticularPreview(this)"
+         onblur="finishParticular(this)">
+
+  <div class="particular-preview"></div>
+
+  <div class="particular-display"
+       onclick="editParticular(this)">
+  </div>
+</td>
+  <td>
+    <input type="number" value="1" min="1" step="1"
+           oninput="calculateTotal()">
+  </td>
+  <td>
+    <input type="number" step="0.01" min="0"
+           oninput="calculateTotal()"
+           onwheel="this.blur()">
+  </td>
+  <td><input type="number" readonly></td>
+</tr>
+  </table>
+  
+  </div>
+  
+  
+   <div class="table-zoom-controls">
+  <button type="button" onclick="zoomTable(-0.1)">−</button>
+  <span id="tableZoomLevel">100%</span>
+  <button type="button" onclick="zoomTable(0.1)">+</button>
+  <button type="button" onclick="resetTableZoom()">Reset</button>
+</div>
+
+
+<div class="table-swipe-controls">
+  <button
+    type="button"
+    id="swipeTableBtn"
+    onclick="toggleTableSwipe()">
+    ☝️ Swipe Table
+  </button>
+
+  <span id="swipeStatus">
+    Swipe Mode OFF
+  </span>
+</div>
+
+
+  
+  
+  
+  
+  
+
+ <div class="total-box">
+  <span class="total-label">TOTAL</span>
+
+  <span class="total-value">
+    Rs. <span id="grandTotal">0.00</span>
+  </span>
+</div>
+
+
+
+  
+  <button type="button" onclick="addRow()">+ Add Row</button>
+  
+  
+  
+
+    <button type="button" onclick="previewPDF()">
+👁 Preview PDF
+</button>
+
+    <button type="button" onclick="downloadPDF()">
+📥 Download PDF
+</button>
+
+    <button
+  type="button"
+  id="saveBillBtn"
+  onclick="saveBill()">
+  💾 Save Bill
+</button>
+  
+  
+  <button type="button" onclick="shareWhatsApp()" 
+style="background:#25D366; color:white;">
+  Share via WhatsApp
+</button>
+  
+  
+  
+  
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ===============================
+     BILL HISTORY
+================================ -->
+
+<div class="bill-history">
+
+  <div class="history-header">
+
+  <div>
+    <h2>📋 Bill History</h2>
+    <p>View, edit, print or delete saved bills</p>
+  </div>
+
+  <div class="history-tools">
+
+    <button
+      type="button"
+      class="history-refresh-btn"
+      onclick="loadBillHistory()">
+      🔄 Refresh
+    </button>
+
+    <button
+      type="button"
+      class="backup-btn"
+      onclick="createBackupFile()">
+      📁 Backup File
+    </button>
+
+    <button
+      type="button"
+      class="backup-save-btn"
+      onclick="saveToBackupFile()">
+      💾 Save Backup
+    </button>
+
+    <button
+      type="button"
+      class="backup-import-btn"
+      onclick="importFromBackupFile()">
+      📥 Import
+    </button>
+
+  </div>
+
+</div>
+
+<input
+  type="file"
+  id="backupFileInput"
+  accept=".json,application/json"
+  style="display:none"
+  onchange="handleBackupFileImport(event)">
+
+  <div id="billHistory">
+    <p class="no-bills">
+      No Saved Bills Found.
+    </p>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- ===============================
+     BILL VIEWER MODAL
+================================ -->
+
+<div id="billViewerModal" class="bill-viewer-modal">
+
+  <div class="bill-viewer-box">
+
+    <!-- HEADER -->
+
+    <div class="bill-viewer-header">
+
+      <strong>Bill Details</strong>
+
+      <button
+        type="button"
+        onclick="closeBillViewer()">
+        ✖
+      </button>
+
+    </div>
+
+
+    <!-- BILL CONTENT -->
+
+    <div id="billViewerContent"
+         class="bill-viewer-content">
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+  <div class="bill-viewer-footer">
+
+  <button
+  type="button"
+  class="print-btn"
+  onclick="reprintBill(currentViewedBillIndex)">
+  🖨 Reprint
+</button>
+
+  <button
+    type="button"
+    class="delete-btn"
+    onclick="closeBillViewer()">
+    ✖ Close
+  </button>
+
+</div>
+
+  </div>
+
+</div>
+
+
+
+
+
+<div id="pdfModal" class="pdf-modal">
+
+  <div class="pdf-toolbar">
+    <button onclick="closePreview()">✖ Close</button>
+    <button onclick="downloadPDF()">📥 Download</button>
+  </div>
+
+  <canvas id="pdfCanvas"></canvas>
+
+</div>
+
+
+
+
+
+<script>
+    
+    
+    
+    
+    
+    
+    
+    /* ===== AUTO BILL NO + AUTO DATE ===== */
+    
+    
+    window.onload = function () {
+
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+
+  let lastBill =
+    localStorage.getItem("hrmLastBill") || 0;
+
+  lastBill++;
+
+  localStorage.setItem(
+    "hrmLastBill",
+    lastBill
+  );
+
+  const sequence =
+    String(lastBill).padStart(4, "0");
+
+  document.getElementById("billNo").value =
+    `HRM/${year}/${month}/${sequence}`;
+
+  document.getElementById("billDate").valueAsDate =
+    today;
+
+
+  
+
+  /* ===== LOAD COMPANY DETAILS ===== */
+
+const savedCompany =
+  JSON.parse(
+    localStorage.getItem("companyDetails")
+  );
+
+if (savedCompany) {
+
+  document.getElementById("companyName").value =
+    savedCompany.name || "";
+
+  document.getElementById("companyType").value =
+    savedCompany.type || "";
+
+  document.getElementById("companyAddress").value =
+    savedCompany.address || "";
+
+  document.getElementById("companyContact").value =
+    savedCompany.contact || "";
+
+  document.getElementById("companyEmail").value =
+    savedCompany.email || "";
+    
+    // ===== LOAD MAIN COMPANY HEADER =====
+
+  document.getElementById("mainCompanyName").textContent =
+    savedCompany.name || "HighResist MOTORS";
+
+  document.getElementById("mainCompanyType").textContent =
+    savedCompany.type || "";
+
+  document.getElementById("mainCompanyAddress").textContent =
+    savedCompany.address || "";
+
+  document.getElementById("mainCompanyContact").textContent =
+    "Tel: " + (savedCompany.contact || "-");
+
+  document.getElementById("mainCompanyEmail").textContent =
+    "Email: " + (savedCompany.email || "-");
+
+}
+
+
+/* ===== LOAD COMPANY LOGO ===== */
+
+const savedLogo =
+  localStorage.getItem("companyLogo");
+
+if (savedLogo) {
+
+  // Company Settings logo
+  const logoPreview =
+    document.getElementById("logoPreview");
+
+  logoPreview.src =
+    savedLogo;
+
+  logoPreview.style.display =
+    "inline-block";
+
+
+  // Main Header logo
+  const mainLogo =
+    document.getElementById("mainCompanyLogo");
+
+  mainLogo.src =
+    savedLogo;
+
+  mainLogo.style.display =
+    "block";
+}
+
+
+  /* ===== DISABLE MOUSE WHEEL ===== */
+
+  document.addEventListener("wheel", function (e) {
+
+    const activeElement =
+      document.activeElement;
+
+    if (
+      activeElement &&
+      activeElement.tagName === "INPUT" &&
+      activeElement.type === "number"
+    ) {
+      e.preventDefault();
+    }
+
+  }, { passive: false });
+
+
+    loadBillHistory();
+
+};
+    
+    
+    
+    
+    function toggleCompanyDetails() {
+
+  const content =
+    document.getElementById(
+      "companyDetailsContent"
+    );
+
+  const arrow =
+    document.getElementById(
+      "companyDetailsArrow"
+    );
+
+
+  content.classList.toggle("collapsed");
+
+
+  if (content.classList.contains("collapsed")) {
+
+    arrow.textContent = "▶";
+
+  } else {
+
+    arrow.textContent = "▼";
+
+  }
+
+}
+    
+    
+    
+    
+    
+/* ===== SAVE COMPANY DETAILS ===== */
+
+function saveCompanyDetails() {
+
+  const logoInput =
+    document.getElementById("companyLogo");
+
+  const companyDetails = {
+
+    name:
+      document.getElementById("companyName").value,
+
+    type:
+      document.getElementById("companyType").value,
+
+    address:
+      document.getElementById("companyAddress").value,
+
+    contact:
+      document.getElementById("companyContact").value,
+
+    email:
+      document.getElementById("companyEmail").value,
+
+    logo:
+      localStorage.getItem("companyLogo") || ""
+
+  };
+
+
+
+// ===== UPDATE MAIN COMPANY HEADER =====
+
+document.getElementById("mainCompanyName").textContent =
+  companyDetails.name || "HighResist MOTORS";
+
+document.getElementById("mainCompanyType").textContent =
+  companyDetails.type || "";
+
+document.getElementById("mainCompanyAddress").textContent =
+  companyDetails.address || "";
+
+document.getElementById("mainCompanyContact").textContent =
+  "Tel: " + (companyDetails.contact || "-");
+
+document.getElementById("mainCompanyEmail").textContent =
+  "Email: " + (companyDetails.email || "-");
+
+  /* ===== SAVE NEW LOGO ===== */
+
+  if (logoInput.files.length > 0) {
+
+    const file =
+      logoInput.files[0];
+
+    const reader =
+      new FileReader();
+
+    reader.onload = function(e) {
+
+      localStorage.setItem(
+        "companyLogo",
+        e.target.result
+      );
+      
+      
+        // Update main header logo
+  const mainLogo =
+    document.getElementById("mainCompanyLogo");
+
+  mainLogo.src =
+    e.target.result;
+
+  mainLogo.style.display =
+    "block";
+      
+
+      companyDetails.logo =
+        e.target.result;
+
+      localStorage.setItem(
+        "companyDetails",
+        JSON.stringify(companyDetails)
+      );
+
+      alert(
+        "Company Details & Logo Saved Successfully!"
+      );
+
+    };
+    
+    
+    
+    
+    
+
+    reader.readAsDataURL(file);
+
+  } else {
+
+    localStorage.setItem(
+      "companyDetails",
+      JSON.stringify(companyDetails)
+    );
+
+    alert(
+      "Company Details Saved Successfully!"
+    );
+
+  }
+
+}
+    
+    
+    
+    
+    
+    
+    
+    
+    /* ===== COMPANY LOGO PREVIEW ===== */
+
+function previewCompanyLogo(event) {
+
+  const file = event.target.files[0];
+
+  if (!file) {
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(e) {
+
+    const logoPreview =
+      document.getElementById("logoPreview");
+
+    logoPreview.src = e.target.result;
+    logoPreview.style.display = "inline-block";
+
+  };
+
+  reader.readAsDataURL(file);
+}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+/* ===== AUTO TOTAL ===== */
+function calculateTotal() {
+  let total = 0;
+  const rows = document.querySelectorAll("#items tr");
+
+  for (let i = 1; i < rows.length; i++) {
+    const inputs = rows[i].querySelectorAll("input");
+
+    const qty = Number(inputs[1].value || 0);
+    const rate = Number(inputs[2].value || 0);
+    const amount = qty * rate;
+
+    // ✅ FIXED LINE
+    inputs[3].value = amount.toFixed(2);
+
+    total += amount;
+  }
+
+  document.getElementById("grandTotal").innerText =
+    total.toLocaleString("en-LK", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+}
+
+
+
+
+/* ===== service details tabel zoom ===== */
+
+let tableZoom = 1;
+
+function zoomTable(amount) {
+
+  tableZoom += amount;
+
+  // Minimum 70%
+  if (tableZoom < 0.7) {
+    tableZoom = 0.7;
+  }
+
+  // Maximum 120%
+  if (tableZoom > 1.2) {
+    tableZoom = 1.2;
+  }
+
+  const table =
+    document.getElementById("items");
+
+  table.style.transform =
+    `scale(${tableZoom})`;
+
+  table.style.transformOrigin =
+    "top left";
+
+  document.getElementById("tableZoomLevel").textContent =
+    Math.round(tableZoom * 100) + "%";
+}
+
+
+function resetTableZoom() {
+
+  tableZoom = 1;
+
+  const table =
+    document.getElementById("items");
+
+  table.style.transform =
+    "scale(1)";
+
+  table.style.transformOrigin =
+    "top left";
+
+  document.getElementById("tableZoomLevel").textContent =
+    "100%";
+}
+
+
+
+
+/* ===============================
+   TABLE SWIPE MODE
+================================ */
+
+let tableSwipeEnabled = false;
+
+let swipeStartX = 0;
+let swipeStartScrollLeft = 0;
+let isTableSwiping = false;
+
+
+function toggleTableSwipe() {
+
+  const wrapper =
+    document.querySelector(".table-wrapper");
+
+  const button =
+    document.getElementById("swipeTableBtn");
+
+  const status =
+    document.getElementById("swipeStatus");
+
+
+  tableSwipeEnabled =
+    !tableSwipeEnabled;
+
+
+  if (tableSwipeEnabled) {
+
+    wrapper.classList.add("swipe-mode");
+
+    button.classList.add("swipe-active");
+
+    button.textContent =
+      "🟢 Swipe Mode ON";
+
+    status.textContent =
+      "Drag table ← →";
+
+  } else {
+
+    wrapper.classList.remove("swipe-mode");
+
+    wrapper.classList.remove("swiping");
+
+    button.classList.remove("swipe-active");
+
+    button.textContent =
+      "☝️ Swipe Table";
+
+    status.textContent =
+      "Swipe Mode OFF";
+
+  }
+
+}
+
+
+/* ===============================
+   TOUCH SWIPE
+================================ */
+
+const tableWrapper =
+  document.querySelector(".table-wrapper");
+
+
+tableWrapper.addEventListener(
+  "touchstart",
+  function(e) {
+
+    if (!tableSwipeEnabled) {
+      return;
+    }
+
+    swipeStartX =
+      e.touches[0].pageX;
+
+    swipeStartScrollLeft =
+      tableWrapper.scrollLeft;
+
+    isTableSwiping = true;
+
+    tableWrapper.classList.add("swiping");
+
+  },
+  { passive: true }
+);
+
+
+tableWrapper.addEventListener(
+  "touchmove",
+  function(e) {
+
+    if (
+      !tableSwipeEnabled ||
+      !isTableSwiping
+    ) {
+      return;
+    }
+
+    const currentX =
+      e.touches[0].pageX;
+
+    const distance =
+      currentX - swipeStartX;
+
+    tableWrapper.scrollLeft =
+      swipeStartScrollLeft - distance;
+
+  },
+  { passive: true }
+);
+
+
+tableWrapper.addEventListener(
+  "touchend",
+  function() {
+
+    if (!tableSwipeEnabled) {
+      return;
+    }
+
+    isTableSwiping = false;
+
+    tableWrapper.classList.remove("swiping");
+
+  }
+);
+
+
+
+
+function startParticularEdit(input) {
+
+    const td = input.parentElement;
+
+    const preview =
+        td.querySelector(".particular-preview");
+
+    const display =
+        td.querySelector(".particular-display");
+
+    // Show input
+    input.style.display = "block";
+
+    // Hide normal display
+    if (display) {
+        display.style.display = "none";
+    }
+
+    // Show live preview
+    if (preview) {
+        preview.style.display = "block";
+        preview.textContent = input.value;
+    }
+}
+
+
+function updateParticularPreview(input) {
+
+    const preview =
+        input.parentElement.querySelector(".particular-preview");
+
+    if (preview) {
+        preview.textContent = input.value;
+    }
+}
+
+
+function finishParticular(input) {
+
+    const td = input.parentElement;
+
+    const preview =
+        td.querySelector(".particular-preview");
+
+    const display =
+        td.querySelector(".particular-display");
+
+    const value = input.value.trim();
+
+    if (display) {
+        display.textContent = value;
+        display.style.display = value ? "block" : "none";
+    }
+
+    // Hide input
+    input.style.display = "none";
+
+    // Hide preview
+    if (preview) {
+        preview.style.display = "none";
+    }
+}
+
+
+function editParticular(display) {
+
+    const td = display.parentElement;
+
+    const input =
+        td.querySelector(".particular-input");
+
+    display.style.display = "none";
+
+    input.style.display = "block";
+
+    startParticularEdit(input);
+
+    input.focus();
+}
+
+
+
+
+/* ===== ADD ROW BUTTON FUNCTION ===== */
+function addRow() {
+  const table = document.getElementById("items");
+  const rowCount = table.rows.length;
+
+  const row = table.insertRow();
+
+  row.innerHTML = `
+  <td>${rowCount}</td>
+  
+  
+ <td>
+  <input type="text"
+         class="particular-input"
+         onfocus="startParticularEdit(this)"
+         oninput="updateParticularPreview(this)"
+         onblur="finishParticular(this)">
+
+  <div class="particular-preview"></div>
+
+  <div class="particular-display"
+       onclick="editParticular(this)">
+  </div>
+</td>
+
+
+  <td>
+    <input type="number" value="1" min="1" step="1"
+           oninput="calculateTotal()">
+  </td>
+  <td>
+    <input type="number" step="0.01" min="0"
+           oninput="calculateTotal()">
+  </td>
+  <td><input type="number" readonly></td>
+`;
+
+  // 🔥 Auto focus on Particulars field
+  row.querySelector("input").focus();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===============================
+   SAVE / UPDATE BILL
+================================ */
+
+function saveBill() {
+
+  // ===== GET BILL DETAILS =====
+
+  const billNo =
+    document.getElementById("billNo").value.trim();
+
+  const billDate =
+    document.getElementById("billDate").value;
+
+  const customer =
+    document.getElementById("customer").value.trim();
+
+  const vehicle =
+    document.getElementById("vehicle").value.trim();
+
+  const jobType =
+    document.getElementById("type").value.trim();
+
+  const meter =
+    document.getElementById("meter").value.trim();
+
+  const note =
+    document.getElementById("note").value.trim();
+
+
+  // =================================
+  // VALIDATION
+  // =================================
+
+  if (billNo === "") {
+
+    alert("Please enter a Bill Number.");
+
+    document.getElementById("billNo").focus();
+
+    return;
+  }
+
+
+  if (billDate === "") {
+
+    alert("Please select the Bill Date.");
+
+    document.getElementById("billDate").focus();
+
+    return;
+  }
+
+
+  // =================================
+  // GET SERVICE ITEMS
+  // =================================
+
+  const items = [];
+
+  const rows =
+    document.querySelectorAll("#items tr");
+
+
+  for (
+    let i = 1;
+    i < rows.length;
+    i++
+  ) {
+
+    const inputs =
+      rows[i].querySelectorAll("input");
+
+
+    const particulars =
+      inputs[0].value.trim();
+
+
+    const qty =
+      Number(inputs[1].value || 0);
+
+
+    const rate =
+      Number(inputs[2].value || 0);
+
+
+    const amount =
+      qty * rate;
+
+
+    // Save only rows containing data
+
+    if (
+      particulars !== "" ||
+      rate > 0
+    ) {
+
+      items.push({
+
+        sno:
+          items.length + 1,
+
+        particulars:
+          particulars,
+
+        qty:
+          qty,
+
+        rate:
+          rate,
+
+        amount:
+          amount
+
+      });
+
+    }
+
+  }
+
+
+  // =================================
+  // VALIDATE ITEMS
+  // =================================
+
+  if (items.length === 0) {
+
+    alert(
+      "Please add at least one service item."
+    );
+
+    return;
+  }
+
+
+  // =================================
+  // CALCULATE TOTAL
+  // =================================
+
+  let total = 0;
+
+
+  items.forEach(function(item) {
+
+    total += item.amount;
+
+  });
+
+
+  // =================================
+  // GET EXISTING BILLS
+  // =================================
+
+  let bills =
+    JSON.parse(
+      localStorage.getItem("hrmBills")
+    ) || [];
+
+
+  // =================================
+  // CHECK EXISTING BILL
+  // =================================
+
+  const existingIndex =
+    bills.findIndex(function(bill) {
+
+      return bill.billNo === billNo;
+
+    });
+    
+    
+    // =================================
+// DUPLICATE BILL NUMBER CHECK
+// =================================
+
+if (existingIndex !== -1 &&
+    existingIndex !== editingBillIndex) {
+
+  alert(
+    "Bill Number already exists!\n\n" +
+    "Bill No: " + billNo
+  );
+
+  document
+    .getElementById("billNo")
+    .focus();
+
+  return;
+}
+    
+
+
+  // =================================
+  // CREATE BILL DATA
+  // =================================
+
+  const billData = {
+
+    billNo:
+      billNo,
+
+    billDate:
+      billDate,
+
+    customer:
+      customer,
+
+    vehicle:
+      vehicle,
+
+    jobType:
+      jobType,
+
+    meter:
+      meter,
+
+    note:
+      note,
+
+    items:
+      items,
+
+    total:
+      total,
+
+    savedAt:
+      new Date().toISOString()
+
+  };
+  
+  
+  
+
+// =================================
+// EDIT MODE
+// =================================
+
+if (editingBillIndex !== -1) {
+
+  const oldBill =
+    bills[editingBillIndex];
+
+
+  if (!oldBill) {
+
+    alert(
+      "The bill being edited could not be found."
+    );
+
+    editingBillIndex = -1;
+
+    document
+      .getElementById("saveBillBtn")
+      .textContent = "💾 Save Bill";
+
+    return;
+  }
+
+
+  const update =
+    confirm(
+      "Update Bill?\n\n" +
+      "Bill No: " + billNo
+    );
+
+
+  if (!update) {
+
+    return;
+  }
+
+
+  // Replace original bill
+  bills[editingBillIndex] =
+    billData;
+
+
+  // Save to localStorage
+  localStorage.setItem(
+    "hrmBills",
+    JSON.stringify(bills)
+  );
+
+
+  // Refresh history
+  loadBillHistory();
+
+
+  // Exit edit mode
+  editingBillIndex = -1;
+
+
+  // Change button back
+  document
+    .getElementById("saveBillBtn")
+    .textContent = "💾 Save Bill";
+
+
+  alert(
+    "Bill " +
+    billNo +
+    " updated successfully!"
+  );
+
+
+  return;
+}
+
+
+  // =================================
+  // SAVE NEW BILL
+  // =================================
+
+  bills.push(billData);
+
+
+  localStorage.setItem(
+    "hrmBills",
+    JSON.stringify(bills)
+  );
+
+
+  // Refresh History
+
+  loadBillHistory();
+
+
+  alert(
+    "Bill " +
+    billNo +
+    " saved successfully!"
+  );
+
+}
+
+
+
+
+
+
+
+
+/* ===============================
+   LOAD BILL HISTORY
+================================ */
+
+function loadBillHistory() {
+
+  const history =
+    document.getElementById("billHistory");
+
+  const bills =
+    JSON.parse(
+      localStorage.getItem("hrmBills")
+    ) || [];
+
+
+  // ===== NO BILLS =====
+
+  if (bills.length === 0) {
+
+    history.innerHTML =
+      "<p>No Saved Bills Found.</p>";
+
+    return;
+  }
+
+
+  // ===== TABLE HEADER =====
+
+  let html = `
+
+    <table class="history-table">
+
+      <tr>
+        <th>Bill No</th>
+        <th>Date</th>
+        <th>Customer</th>
+        <th>Vehicle</th>
+        <th>Total (Rs.)</th>
+        <th>Actions</th>
+      </tr>
+
+  `;
+
+
+  // ===== NEWEST BILL FIRST =====
+
+  for (
+    let i = bills.length - 1;
+    i >= 0;
+    i--
+  ) {
+
+    const bill = bills[i];
+
+
+    html += `
+
+      <tr>
+
+        <td>
+          <strong>
+            ${bill.billNo || ""}
+          </strong>
+        </td>
+
+        <td>
+          ${bill.billDate || ""}
+        </td>
+
+        <td>
+          ${bill.customer || ""}
+        </td>
+
+        <td>
+          ${bill.vehicle || ""}
+        </td>
+
+        <td class="history-total">
+
+          ${Number(
+            bill.total || 0
+          ).toLocaleString(
+            "en-LK",
+            {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            }
+          )}
+
+        </td>
+
+        <td>
+
+          <div class="history-actions">
+
+            <button
+              class="view-btn"
+              onclick="viewBill(${i})">
+              👁
+            </button>
+
+            <button
+              class="edit-btn"
+              onclick="editBill(${i})">
+              ✏️
+            </button>
+
+            <button
+              class="print-btn"
+              onclick="reprintBill(${i})">
+              🖨
+            </button>
+
+            <button
+              class="delete-btn"
+              onclick="deleteBill(${i})">
+              🗑
+            </button>
+
+          </div>
+
+        </td>
+
+      </tr>
+
+    `;
+  }
+
+
+  html += "</table>";
+
+  history.innerHTML = html;
+
+}
+
+
+
+
+
+
+/* =====================================================
+   BILL HISTORY BACKUP FILE SYSTEM
+   ===================================================== */
+
+const BACKUP_DB_NAME = "HRMBackupDatabase";
+const BACKUP_STORE_NAME = "backupHandles";
+
+let backupFileHandle = null;
+
+
+/* =====================================================
+   OPEN INDEXED DB
+   ===================================================== */
+
+function openBackupDB() {
+
+  return new Promise(function(resolve, reject) {
+
+    const request =
+      indexedDB.open(BACKUP_DB_NAME, 1);
+
+    request.onupgradeneeded = function(event) {
+
+      const db = event.target.result;
+
+      if (!db.objectStoreNames.contains(BACKUP_STORE_NAME)) {
+
+        db.createObjectStore(
+          BACKUP_STORE_NAME
+        );
+
+      }
+
+    };
+
+    request.onsuccess = function(event) {
+
+      resolve(event.target.result);
+
+    };
+
+    request.onerror = function() {
+
+      reject(request.error);
+
+    };
+
+  });
+
+}
+
+
+/* =====================================================
+   SAVE FILE HANDLE
+   ===================================================== */
+
+async function saveBackupFileHandle(handle) {
+
+  try {
+
+    const db =
+      await openBackupDB();
+
+    return new Promise(function(resolve, reject) {
+
+      const transaction =
+        db.transaction(
+          BACKUP_STORE_NAME,
+          "readwrite"
+        );
+
+      const store =
+        transaction.objectStore(
+          BACKUP_STORE_NAME
+        );
+
+      const request =
+        store.put(
+          handle,
+          "billBackup"
+        );
+
+      request.onsuccess =
+        function() {
+
+          resolve();
+
+        };
+
+      request.onerror =
+        function() {
+
+          reject(request.error);
+
+        };
+
+    });
+
+  } catch (error) {
+
+    console.log(
+      "Could not save backup handle:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   LOAD SAVED FILE HANDLE
+   ===================================================== */
+
+async function loadBackupFileHandle() {
+
+  try {
+
+    const db =
+      await openBackupDB();
+
+    return new Promise(function(resolve, reject) {
+
+      const transaction =
+        db.transaction(
+          BACKUP_STORE_NAME,
+          "readonly"
+        );
+
+      const store =
+        transaction.objectStore(
+          BACKUP_STORE_NAME
+        );
+
+      const request =
+        store.get("billBackup");
+
+      request.onsuccess =
+        function() {
+
+          resolve(request.result || null);
+
+        };
+
+      request.onerror =
+        function() {
+
+          reject(request.error);
+
+        };
+
+    });
+
+  } catch (error) {
+
+    console.log(
+      "Could not load backup handle:",
+      error
+    );
+
+    return null;
+
+  }
+
+}
+
+
+/* =====================================================
+   CREATE / SELECT BACKUP FILE
+   ===================================================== */
+
+async function createBackupFile() {
+
+  const bills =
+    JSON.parse(
+      localStorage.getItem("hrmBills")
+    ) || [];
+
+
+  /* ===== FILE SYSTEM ACCESS API ===== */
+
+  if ("showSaveFilePicker" in window) {
+
+    try {
+
+      const handle =
+        await window.showSaveFilePicker({
+
+          suggestedName:
+            "HRM-Bill-Database.json",
+
+          types: [
+
+            {
+              description:
+                "HighResist MOTORS Bill Backup",
+
+              accept: {
+                "application/json":
+                  [".json"]
+              }
+
+            }
+
+          ]
+
+        });
+
+
+      backupFileHandle =
+        handle;
+
+
+      await saveBackupFileHandle(
+        handle
+      );
+
+
+      await writeBackupFile(
+        handle,
+        bills
+      );
+
+
+      alert(
+        "📁 Backup File Created Successfully!\n\n" +
+        "Bills Saved: " +
+        bills.length
+      );
+
+
+    } catch (error) {
+
+      if (
+        error &&
+        error.name === "AbortError"
+      ) {
+
+        return;
+
+      }
+
+      console.error(error);
+
+      alert(
+        "Could not create the backup file."
+      );
+
+    }
+
+    return;
+
+  }
+
+
+  /* ===== FALLBACK ===== */
+
+  downloadBackupFile(
+    bills
+  );
+
+}
+
+
+/* =====================================================
+   WRITE DATA TO BACKUP FILE
+   ===================================================== */
+
+async function writeBackupFile(
+  handle,
+  bills
+) {
+
+  const backupData = {
+
+    app:
+      "HighResist MOTORS Bill Generator",
+
+    version:
+      "2.1",
+
+    backupType:
+      "Bill History",
+
+    exportedAt:
+      new Date().toISOString(),
+
+    billCount:
+      bills.length,
+
+    bills:
+      bills
+
+  };
+
+
+  const json =
+    JSON.stringify(
+      backupData,
+      null,
+      2
+    );
+
+
+  const writable =
+    await handle.createWritable();
+
+
+  await writable.write(
+    json
+  );
+
+
+  await writable.close();
+
+}
+
+
+/* =====================================================
+   SAVE CURRENT HISTORY TO EXISTING BACKUP FILE
+   ===================================================== */
+
+async function saveToBackupFile() {
+
+  const bills =
+    JSON.parse(
+      localStorage.getItem("hrmBills")
+    ) || [];
+
+
+  /* ===== TRY PREVIOUS FILE ===== */
+
+  if (!backupFileHandle) {
+
+    backupFileHandle =
+      await loadBackupFileHandle();
+
+  }
+
+
+  /* ===== EXISTING FILE ===== */
+
+  if (backupFileHandle) {
+
+    try {
+
+      let permission =
+        await backupFileHandle.queryPermission({
+          mode: "readwrite"
+        });
+
+
+      if (permission !== "granted") {
+
+        permission =
+          await backupFileHandle.requestPermission({
+            mode: "readwrite"
+          });
+
+      }
+
+
+      if (permission === "granted") {
+
+        await writeBackupFile(
+          backupFileHandle,
+          bills
+        );
+
+
+        alert(
+          "💾 Backup Updated Successfully!\n\n" +
+          "Bills Saved: " +
+          bills.length
+        );
+
+        return;
+
+      }
+
+    } catch (error) {
+
+      console.log(
+        "Existing backup file unavailable:",
+        error
+      );
+
+    }
+
+  }
+
+
+  /* ===== NO FILE SELECTED ===== */
+
+  alert(
+    "No Backup File Selected.\n\n" +
+    "Please create a Backup File first."
+  );
+
+}
+
+
+/* =====================================================
+   IMPORT FROM BACKUP FILE
+   ===================================================== */
+
+async function importFromBackupFile() {
+
+  if ("showOpenFilePicker" in window) {
+
+    try {
+
+      const handles =
+        await window.showOpenFilePicker({
+
+          multiple: false,
+
+          types: [
+
+            {
+              description:
+                "HighResist MOTORS Bill Backup",
+
+              accept: {
+                "application/json":
+                  [".json"]
+              }
+
+            }
+
+          ]
+
+        });
+
+
+      if (
+        !handles ||
+        handles.length === 0
+      ) {
+
+        return;
+
+      }
+
+
+      backupFileHandle =
+        handles[0];
+
+
+      await saveBackupFileHandle(
+        backupFileHandle
+      );
+
+
+      const file =
+        await backupFileHandle.getFile();
+
+
+      const text =
+        await file.text();
+
+
+      processBackupData(
+        text
+      );
+
+
+    } catch (error) {
+
+      if (
+        error &&
+        error.name === "AbortError"
+      ) {
+
+        return;
+
+      }
+
+      console.error(error);
+
+      alert(
+        "Could not import the backup file."
+      );
+
+    }
+
+    return;
+
+  }
+
+
+  /* ===== FALLBACK ===== */
+
+  document
+    .getElementById("backupFileInput")
+    .click();
+
+}
+
+
+/* =====================================================
+   FALLBACK FILE IMPORT
+   ===================================================== */
+
+function handleBackupFileImport(event) {
+
+  const file =
+    event.target.files[0];
+
+
+  if (!file) {
+
+    return;
+
+  }
+
+
+  const reader =
+    new FileReader();
+
+
+  reader.onload =
+    function(e) {
+
+      processBackupData(
+        e.target.result
+      );
+
+    };
+
+
+  reader.readAsText(file);
+
+
+  /* Reset input */
+
+  event.target.value = "";
+
+}
+
+/* =====================================================
+   PROCESS BACKUP DATA
+   ===================================================== */
+
+function processBackupData(text) {
+
+  let backupData;
+
+  /* ===== JSON PARSE ===== */
+
+  try {
+
+    backupData = JSON.parse(text);
+
+  } catch (error) {
+
+    alert(
+      "❌ Invalid Backup File.\n\n" +
+      "The selected file is not valid JSON."
+    );
+
+    return;
+  }
+
+
+  /* ===== VALIDATE FORMAT ===== */
+
+  if (
+    !backupData ||
+    !Array.isArray(backupData.bills)
+  ) {
+
+    alert(
+      "❌ Invalid HighResist MOTORS Backup File.\n\n" +
+      "Bill History data was not found."
+    );
+
+    return;
+  }
+
+
+  const importedBills =
+    backupData.bills;
+
+  const currentBills =
+    JSON.parse(
+      localStorage.getItem("hrmBills")
+    ) || [];
+
+
+  /* =================================================
+     IMPORT INFORMATION
+     ================================================= */
+
+  const replace =
+    confirm(
+      "📥 Import Bill History\n\n" +
+
+      "Current Bills: " +
+      currentBills.length +
+
+      "\nBackup Bills: " +
+      importedBills.length +
+
+      "\n\n" +
+
+      "OK = Replace Current History\n" +
+
+      "Cancel = Choose Merge"
+    );
+
+
+  /* =================================================
+     REPLACE
+     ================================================= */
+
+  if (replace) {
+
+    const confirmReplace =
+      confirm(
+        "⚠️ Replace Current History?\n\n" +
+
+        "Current Bills: " +
+        currentBills.length +
+
+        "\nBackup Bills: " +
+        importedBills.length +
+
+        "\n\n" +
+
+        "All current Bill History will be " +
+        "replaced by the backup data."
+      );
+
+
+    if (!confirmReplace) {
+
+      return;
+    }
+
+
+    localStorage.setItem(
+      "hrmBills",
+      JSON.stringify(
+        importedBills
+      )
+    );
+
+
+    /* Refresh History */
+
+    loadBillHistory();
+
+
+    alert(
+      "✅ History Restored Successfully!\n\n" +
+
+      "Imported Bills: " +
+      importedBills.length
+    );
+
+
+    return;
+  }
+
+
+  /* =================================================
+     MERGE CONFIRMATION
+     ================================================= */
+
+  const merge =
+    confirm(
+      "🔄 Merge Bill History?\n\n" +
+
+      "Current Bills: " +
+      currentBills.length +
+
+      "\nBackup Bills: " +
+      importedBills.length +
+
+      "\n\n" +
+
+      "Duplicate Bill Numbers will be skipped.\n\n" +
+
+      "OK = Merge\n" +
+      "Cancel = Cancel Import"
+    );
+
+
+  if (!merge) {
+
+    return;
+  }
+
+
+  /* =================================================
+     MERGE
+     ================================================= */
+
+  const existingNumbers =
+    new Set(
+      currentBills.map(
+        function(bill) {
+
+          return String(
+            bill.billNo || ""
+          ).trim();
+
+        }
+      )
+    );
+
+
+  let added = 0;
+  let skipped = 0;
+
+
+  importedBills.forEach(
+    function(bill) {
+
+      const billNo =
+        String(
+          bill.billNo || ""
+        ).trim();
+
+
+      /* ===== DUPLICATE BILL NUMBER ===== */
+
+      if (
+        billNo !== "" &&
+        existingNumbers.has(billNo)
+      ) {
+
+        skipped++;
+
+        return;
+      }
+
+
+      /* ===== ADD BILL ===== */
+
+      currentBills.push(bill);
+
+      if (billNo !== "") {
+
+        existingNumbers.add(billNo);
+
+      }
+
+      added++;
+
+    }
+  );
+
+
+  /* ===== SAVE MERGED DATA ===== */
+
+  localStorage.setItem(
+    "hrmBills",
+    JSON.stringify(
+      currentBills
+    )
+  );
+
+
+  /* ===== REFRESH HISTORY ===== */
+
+  loadBillHistory();
+
+
+  /* ===== RESULT ===== */
+
+  alert(
+    "✅ Backup Merged Successfully!\n\n" +
+
+    "Added: " +
+    added +
+
+    "\nSkipped Duplicate Bills: " +
+    skipped +
+
+    "\nTotal Bills: " +
+    currentBills.length
+  );
+
+}
+
+/* =====================================================
+   FALLBACK DOWNLOAD
+   ===================================================== */
+
+function downloadBackupFile(
+  bills
+) {
+
+  const backupData = {
+
+    app:
+      "HighResist MOTORS Bill Generator",
+
+    version:
+      "2.1",
+
+    backupType:
+      "Bill History",
+
+    exportedAt:
+      new Date().toISOString(),
+
+    billCount:
+      bills.length,
+
+    bills:
+      bills
+
+  };
+
+
+  const blob =
+    new Blob(
+      [
+        JSON.stringify(
+          backupData,
+          null,
+          2
+        )
+      ],
+      {
+        type:
+          "application/json"
+      }
+    );
+
+
+  const url =
+    URL.createObjectURL(
+      blob
+    );
+
+
+  const link =
+    document.createElement("a");
+
+
+  link.href =
+    url;
+
+
+  link.download =
+    "HRM-Bill-Database.json";
+
+
+  document.body.appendChild(
+    link
+  );
+
+
+  link.click();
+
+
+  document.body.removeChild(
+    link
+  );
+
+
+  setTimeout(
+    function() {
+
+      URL.revokeObjectURL(
+        url
+      );
+
+    },
+    1000
+  );
+
+
+  alert(
+    "📁 Backup File Created.\n\n" +
+    "File: HRM-Bill-Database.json\n\n" +
+    "You can import this file later."
+  );
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===============================
+   LOAD BILL INTO FORM
+================================ */
+
+function loadBillIntoForm(index) {
+
+  const bills =
+    JSON.parse(
+      localStorage.getItem("hrmBills")
+    ) || [];
+
+  const bill = bills[index];
+
+  if (!bill) {
+    alert("Bill not found.");
+    return false;
+  }
+
+
+  document.getElementById("billNo").value =
+    bill.billNo || "";
+
+  document.getElementById("billDate").value =
+    bill.billDate || "";
+
+  document.getElementById("customer").value =
+    bill.customer || "";
+
+  document.getElementById("vehicle").value =
+    bill.vehicle || "";
+
+  document.getElementById("type").value =
+    bill.jobType || "";
+
+  document.getElementById("meter").value =
+    bill.meter || "";
+
+  document.getElementById("note").value =
+    bill.note || "";
+
+
+  const table =
+    document.getElementById("items");
+
+
+  // Remove existing item rows
+  while (table.rows.length > 1) {
+    table.deleteRow(1);
+  }
+
+
+  // Add saved items
+  (bill.items || []).forEach(function(item) {
+
+    const row =
+      table.insertRow();
+
+    row.innerHTML = `
+
+      <td>${item.sno}</td>
+
+      <td>
+        <input
+          value="${item.particulars || ""}">
+      </td>
+
+      <td>
+        <input
+          type="number"
+          value="${item.qty || 1}"
+          min="1"
+          step="1"
+          oninput="calculateTotal()">
+      </td>
+
+      <td>
+        <input
+          type="number"
+          value="${item.rate || 0}"
+          step="0.01"
+          min="0"
+          oninput="calculateTotal()">
+      </td>
+
+      <td>
+        <input
+          type="number"
+          value="${item.amount || 0}"
+          readonly>
+      </td>
+
+    `;
+
+  });
+
+
+  calculateTotal();
+
+  return true;
+
+}
+
+
+
+/* ===============================
+   VIEW BILL
+================================ */
+
+let currentViewedBillIndex = -1;
+let editingBillIndex = -1;
+
+
+
+
+function viewBill(index) {
+
+  const bills =
+    JSON.parse(
+      localStorage.getItem("hrmBills")
+    ) || [];
+
+  const bill = bills[index];
+
+  if (!bill) {
+
+    alert("Bill not found.");
+
+    return;
+
+  }
+
+  currentViewedBillIndex = index;
+
+  // ===== COMPANY DETAILS =====
+
+  const company =
+    JSON.parse(
+      localStorage.getItem("companyDetails")
+    ) || {};
+
+  const companyName =
+    company.name ||
+    "HighResist MOTORS";
+
+  const companyType =
+    company.type || "";
+
+  const companyAddress =
+    company.address || "";
+
+  const companyContact =
+    company.contact || "";
+
+  const companyEmail =
+    company.email || "";
+
+
+  // ===== BUILD ITEMS =====
+
+  let itemsHTML = "";
+
+  (bill.items || []).forEach(function(item) {
+
+    itemsHTML += `
+
+      <tr>
+
+        <td>${item.sno}</td>
+
+        <td style="text-align:left;">
+          ${item.particulars || ""}
+        </td>
+
+        <td>
+          ${item.qty}
+        </td>
+
+        <td>
+          ${Number(item.rate || 0)
+            .toLocaleString(
+              "en-LK",
+              {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              }
+            )}
+        </td>
+
+        <td>
+          ${Number(item.amount || 0)
+            .toLocaleString(
+              "en-LK",
+              {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              }
+            )}
+        </td>
+
+      </tr>
+
+    `;
+
+  });
+
+
+  // ===== NOTE =====
+
+  let noteHTML = "";
+
+  if (
+    bill.note &&
+    bill.note.trim() !== ""
+  ) {
+
+    noteHTML = `
+
+      <div class="viewer-note">
+
+        <div class="viewer-note-title">
+          Note
+        </div>
+
+        <div>
+          ${bill.note}
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+
+  // ===== BUILD VIEWER =====
+
+  const content =
+    document.getElementById(
+      "billViewerContent"
+    );
+
+  content.innerHTML = `
+
+    <div class="viewer-company">
+
+      <div class="viewer-company-name">
+        ${companyName}
+      </div>
+
+      <div class="viewer-company-type">
+        ${companyType}
+      </div>
+
+      <div>
+        ${companyAddress}
+      </div>
+
+      <div class="viewer-company-contact">
+
+        ${
+          companyContact
+            ? "Tel : " + companyContact
+            : ""
+        }
+
+        ${
+          companyEmail
+            ? " | Email : " + companyEmail
+            : ""
+        }
+
+      </div>
+
+    </div>
+
+
+    <div class="viewer-info">
+
+      <div>
+        <span class="viewer-label">
+          Bill No:
+        </span>
+
+        ${bill.billNo || ""}
+      </div>
+
+
+      <div>
+        <span class="viewer-label">
+          Date:
+        </span>
+
+        ${bill.billDate || ""}
+      </div>
+
+
+      <div>
+        <span class="viewer-label">
+          Customer:
+        </span>
+
+        ${bill.customer || ""}
+      </div>
+
+
+      <div>
+        <span class="viewer-label">
+          Vehicle:
+        </span>
+
+        ${bill.vehicle || ""}
+      </div>
+
+
+      <div>
+        <span class="viewer-label">
+          Job Type:
+        </span>
+
+        ${bill.jobType || ""}
+      </div>
+
+
+      <div>
+        <span class="viewer-label">
+          Meter Reading:
+        </span>
+
+        ${bill.meter || ""}
+      </div>
+
+    </div>
+
+
+    <table class="viewer-items">
+
+      <thead>
+
+        <tr>
+
+          <th>S.No</th>
+          <th>Particulars</th>
+          <th>Qty</th>
+          <th>Rate (Rs.)</th>
+          <th>Amount (Rs.)</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        ${itemsHTML}
+
+      </tbody>
+
+    </table>
+
+
+    ${noteHTML}
+
+
+    <div class="viewer-total">
+
+      TOTAL AMOUNT : Rs.
+
+      ${Number(bill.total || 0)
+        .toLocaleString(
+          "en-LK",
+          {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          }
+        )}
+
+    </div>
+
+  `;
+
+
+  // ===== OPEN MODAL =====
+
+  document
+    .getElementById("billViewerModal")
+    .style.display = "block";
+
+}
+
+
+
+
+
+
+
+/* ===============================
+   EDIT BILL
+================================ */
+
+function editBill(index) {
+
+  // Load selected bill
+  if (!loadBillIntoForm(index)) {
+    return;
+  }
+
+
+  // IMPORTANT:
+  // Remember the original bill index
+  editingBillIndex = index;
+
+
+  // Change Save button to Update button
+  const saveButton =
+    document.getElementById("saveBillBtn");
+
+  if (saveButton) {
+
+    saveButton.textContent =
+      "🔄 Update Bill";
+
+  }
+
+
+  // Enable main fields
+  document
+    .querySelectorAll(
+      "#billNo, #billDate, #customer, #vehicle, #type, #meter, #note"
+    )
+    .forEach(function(input) {
+
+      input.disabled = false;
+
+    });
+
+
+  // Enable item fields
+  document
+    .querySelectorAll("#items input")
+    .forEach(function(input) {
+
+      input.disabled = false;
+
+    });
+
+
+  // Scroll to form
+  document
+    .querySelector(".container")
+    .scrollIntoView({
+      behavior: "smooth"
+    });
+
+
+  alert(
+    "Bill loaded in Edit Mode."
+  );
+
+}
+
+/* ===============================
+   CLOSE BILL VIEWER
+================================ */
+
+function closeBillViewer() {
+
+  const modal =
+    document.getElementById("billViewerModal");
+
+  modal.style.display = "none";
+
+  currentViewedBillIndex = -1;
+
+}
+
+
+
+
+
+
+/* ===============================
+   REPRINT BILL
+================================ */
+
+function reprintBill(index) {
+
+  const bills =
+    JSON.parse(
+      localStorage.getItem("hrmBills")
+    ) || [];
+
+  const bill = bills[index];
+
+  if (!bill) {
+
+    alert("Bill not found.");
+
+    return;
+
+  }
+
+  // Load saved bill into form
+  if (!loadBillIntoForm(index)) {
+
+    return;
+
+  }
+
+  // Generate PDF
+  const blob = generatePDF();
+
+  // Create temporary URL
+  const url =
+    URL.createObjectURL(blob);
+
+  // Safe file name
+  const billNo =
+    String(bill.billNo || "Bill")
+      .replace(/\//g, "_");
+
+  // Download
+  const link =
+    document.createElement("a");
+
+  link.href = url;
+
+  link.download =
+    "HighResist_Motors_Bill_" +
+    billNo +
+    ".pdf";
+
+  document.body.appendChild(link);
+
+  link.click();
+
+  document.body.removeChild(link);
+
+  // Release memory
+  setTimeout(function () {
+
+    URL.revokeObjectURL(url);
+
+  }, 1000);
+
+}
+
+
+/* ===============================
+   REPRINT VIEWED BILL
+================================ */
+
+function reprintViewedBill() {
+
+  if (currentViewedBillIndex === -1) {
+
+    alert("No bill selected.");
+
+    return;
+
+  }
+
+  reprintBill(currentViewedBillIndex);
+
+}
+
+
+
+
+
+/* ===============================
+   DELETE BILL
+================================ */
+
+function deleteBill(index) {
+
+  let bills =
+    JSON.parse(
+      localStorage.getItem("hrmBills")
+    ) || [];
+
+
+  const bill = bills[index];
+
+  if (!bill) {
+
+    alert("Bill not found.");
+
+    return;
+  }
+
+
+  const confirmDelete =
+    confirm(
+      "Delete Bill " +
+      bill.billNo +
+      "?\n\n" +
+      "This action cannot be undone."
+    );
+
+
+  if (!confirmDelete) {
+    return;
+  }
+
+
+  // Remove bill
+  bills.splice(index, 1);
+
+
+  // Save updated history
+  localStorage.setItem(
+    "hrmBills",
+    JSON.stringify(bills)
+  );
+
+
+  // Refresh history
+  loadBillHistory();
+
+
+  alert(
+    "Bill " +
+    bill.billNo +
+    " deleted successfully."
+  );
+
+}
+
+
+
+
+
+// ===============================
+// GENERATE PDF (Returns Blob)
+// ===============================
+function generatePDF() {
+
+  /* ===== GET BILL DETAILS ===== */
+
+  const billNo =
+    document.getElementById("billNo").value;
+
+  const billDate =
+    document.getElementById("billDate").value;
+
+  const customer =
+    document.getElementById("customer").value;
+
+  const vehicle =
+    document.getElementById("vehicle").value;
+
+  const jobType =
+    document.getElementById("type").value;
+
+  const meter =
+    document.getElementById("meter").value;
+
+  const note =
+    document.getElementById("note").value;
+
+
+  /* ===== GET SAVED COMPANY DETAILS ===== */
+
+  const savedCompany =
+  JSON.parse(
+    localStorage.getItem("companyDetails")
+  ) || {};
+
+const companyName =
+  savedCompany.name || "";
+
+const companyType =
+  savedCompany.type || "";
+
+const companyAddress =
+  savedCompany.address || "";
+
+const companyContact =
+  savedCompany.contact || "";
+
+const companyEmail =
+  savedCompany.email || "";
+
+const companyLogo =
+  localStorage.getItem("companyLogo") || "";
+
+  const { jsPDF } = window.jspdf;
+
+  const doc = new jsPDF();
+
+
+
+
+
+
+// ===== COMPANY LOGO (RIGHT SIDE) =====
+
+
+/* ===== COMPANY LOGO ===== */
+
+
+// ===== HEADER BACKGROUND =====
+doc.setFillColor(230, 240, 255);   // Light Blue
+doc.rect(7, 5, 195, 35, "F");
+
+
+
+
+
+
+
+if (companyLogo) {
+
+    // Border
+    doc.setDrawColor(180, 180, 180);
+    doc.setLineWidth(0.4);
+    doc.roundedRect(160, 10, 35, 22, 2, 2);
+
+    // Logo
+    doc.addImage(
+        companyLogo,
+        161,
+        11,
+        33,
+        20
+    );
+
+}
+
+
+
+// Start text below logo
+let y = 18;
+
+
+
+
+
+
+
+
+
+
+
+ /* ===== COMPANY HEADER ===== */
+
+
+
+// ===== Company Name Color =====
+doc.setTextColor(0, 51, 153);   // Dark Blue
+doc.setFontSize(19);
+doc.setFont(undefined, "bold");
+doc.text(companyName, 10, 18);
+
+y += 7;
+
+
+
+
+/* ===== BUSINESS TYPE ===== */
+doc.setTextColor(60, 60, 60);
+doc.setFontSize(11);
+doc.setFont(undefined, "normal");
+doc.text(companyType, 10, y);
+
+y += 6;
+
+
+/* ===== COMPANY ADDRESS ===== */
+
+doc.setFontSize(9);
+doc.text(companyAddress, 10, y);
+
+y += 5;
+
+
+/* ===== COMPANY CONTACT ===== */
+let contact = "";
+
+if (companyContact)
+    contact += "Tel : " + companyContact;
+
+if (companyEmail)
+    contact += "   |   Email : " + companyEmail;
+
+doc.text(contact, 10, y);
+
+y += 8;
+
+
+
+
+
+
+
+
+/* ===== LINE SEPARATOR ===== */
+doc.setDrawColor(0, 102, 204);
+doc.setLineWidth(0.8);
+doc.line(10, 40, 200, 40);
+
+y += 8;
+
+
+
+doc.text(`Bill No: ${billNo}`, 10, y);
+doc.text(`Date: ${billDate}`, 150, y);
+    y += 7;
+
+  
+doc.text(`Customer: ${customer}`, 10, y);
+  y += 7;
+
+doc.text(`Vehicle No: ${vehicle}`, 10, y);
+
+
+doc.text(`Job Type: ${jobType}`, 120, y);
+  y += 7;
+
+  doc.text(`Meter Reading: ${meter}`, 10, y);
+  y += 10;
+
+  
+
+
+
+
+
+
+
+
+
+  const tableBody = [];
+  let total = 0;
+
+  const rows = document.querySelectorAll("#items tr");
+
+for (let i = 1; i < rows.length; i++) {
+  const inputs = rows[i].querySelectorAll("input");
+
+  if (inputs[0].value.trim() !== "" || Number(inputs[1].value) > 0) {
+
+  
+  
+  
+  
+const qty = Number(inputs[1].value || 0);
+const rate = Number(inputs[2].value || 0);
+const amount = qty * rate;
+
+tableBody.push([
+  tableBody.length + 1,
+  inputs[0].value,
+  qty,
+  rate.toFixed(2),
+  amount.toFixed(2)
+]);
+    
+
+    total += amount;
+  }
+}
+
+  while (tableBody.length < 10) {
+  tableBody.push([
+    tableBody.length + 1, "", "", "", ""
+  ]);
+}
+  
+  
+  
+// TABLE
+  doc.autoTable({
+  startY: y,
+  head: [['S.No', 'Particulars', 'Qty', 'Rate (Rs.)', 'Amount (Rs.)']],
+  
+  body: tableBody,
+  theme: 'grid',
+  styles: {
+    fontSize: 10,
+    cellPadding: 4
+  }
+});
+
+let startY = doc.lastAutoTable.finalY + 10;
+
+if (note.trim() !== "") {
+
+  const splitNote = doc.splitTextToSize(note, 180);
+  const lineHeight = 6;
+  const boxHeight = splitNote.length * lineHeight + 10;
+
+  doc.setFillColor(255, 255, 204);
+  doc.rect(12, startY - 5, 186, boxHeight, "F");
+
+  doc.setDrawColor(200, 200, 200);
+  doc.rect(12, startY - 5, 186, boxHeight);
+
+  doc.setFont(undefined, "bold");
+  doc.setTextColor(200, 0, 0);
+  doc.text("Note:", 14, startY);
+
+  doc.setFontSize(10);
+  doc.text(splitNote, 14, startY + 6);
+
+  // ✅ move y inside
+  y = startY + boxHeight + 5;
+
+} else {
+  y = startY;
+}
+  
+  
+
+// TOTAL BOX
+let text = `TOTAL AMOUNT : Rs. ${total.toLocaleString("en-LK", {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2
+})}`;
+
+doc.setFontSize(12);
+doc.setFont(undefined, "bold");
+
+// text width
+let textWidth = doc.getTextWidth(text);
+let boxWidth = textWidth + 12;
+let boxHeight = 10;
+
+// right align position
+let xPosition = 200 - boxWidth - 10;
+
+// 🔵 BLUE BACKGROUND BOX
+doc.setFillColor(0, 102, 204);
+doc.roundedRect(xPosition, y, boxWidth, boxHeight, 2, 2, "F");
+
+// ⚪ TEXT (WHITE)
+doc.setTextColor(255, 255, 255);
+doc.text(text, xPosition + 6, y + 7);
+
+// reset color
+doc.setTextColor(0, 0, 0);
+doc.setFont(undefined, "normal");
+
+
+
+
+
+
+
+
+
+
+
+/* ===== FIXED FOOTER ===== */
+const pageHeight = doc.internal.pageSize.height;
+
+
+
+doc.setFontSize(15);
+doc.text("Thank You for Your Business!", 105, pageHeight - 20, { align: "center" });
+
+
+
+
+doc.text(
+  companyName + " | Contact: " + companyContact,
+  105,
+  pageHeight - 14,
+  { align: "center" }
+);
+
+// after all your PDF content (tables, text, note, etc.)
+
+const pdfBlob = 
+doc.output("blob");
+return pdfBlob;
+
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ // ===============================
+// PREVIEW PDF
+// ===============================
+
+ 
+ async function previewPDF(){
+
+    const blob = generatePDF();
+
+    const url = URL.createObjectURL(blob);
+
+    document.getElementById("pdfModal").style.display="block";
+
+    const pdf = await pdfjsLib.getDocument(url).promise;
+
+    const page = await pdf.getPage(1);
+
+    const viewport = page.getViewport({scale:1.5});
+
+    const canvas=document.getElementById("pdfCanvas");
+
+    const ctx=canvas.getContext("2d");
+
+    canvas.width=viewport.width;
+    canvas.height=viewport.height;
+
+    await page.render({
+        canvasContext:ctx,
+        viewport:viewport
+    }).promise;
+
+}
+ 
+ 
+ 
+ function closePreview(){
+
+    document.getElementById("pdfModal").style.display="none";
+
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+// ===============================
+// DOWNLOAD PDF BUTTON
+// ===============================
+function downloadPDF() {
+
+    const blob = generatePDF();
+
+    const url = URL.createObjectURL(blob);
+
+    const billNo =
+        document.getElementById("billNo").value
+        .replaceAll("/", "_");
+
+    const a = document.createElement("a");
+
+    a.href = url;
+    a.download = "HighResist_Motors_Bill_" + billNo + ".pdf";
+    a.click();
+
+    URL.revokeObjectURL(url);
+}
+
+
+
+
+
+
+// ===============================
+// SHARE VIA WHATSAPP (Android)
+// ===============================
+async function shareWhatsApp() {
+
+  const blob = generatePDF();
+
+  const file = new File([blob], "HRM_Bill.pdf", {
+    type: "application/pdf"
+  });
+
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+
+    await navigator.share({
+      title: "HighResist Motors Bill",
+      text: "Please find attached bill.",
+      files: [file]
+    });
+
+  } else {
+    alert("Sharing not supported on this device.");
+  }
+}
+
+
+
+
+
+/* =====================================================
+   PWA SERVICE WORKER
+===================================================== */
+
+if ("serviceWorker" in navigator) {
+
+  window.addEventListener("load", function() {
+
+    navigator.serviceWorker
+      .register("./service-worker.js")
+      .then(function(registration) {
+
+        console.log(
+          "✅ HighResist MOTORS App Service Worker registered."
+        );
+
+      })
+      .catch(function(error) {
+
+        console.error(
+          "❌ Service Worker registration failed:",
+          error
+        );
+
+      });
+
+  });
+
+}
+
+ 
+
+
+</script>
+
+</body>
+</html>
+
+
+
