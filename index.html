@@ -22,7 +22,7 @@
  
 
 <title>HighResist Motors – Bill Generator
-highResist-motors-bill_v2_56.html</title>
+highResist-motors-bill_v2_57.html</title>
 
 <!-- jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -42,9 +42,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc =
   
   <!-- Developer Info -->
   <!--
-    File: HighResist Motors – Bill Generator v2_56
-    Version: 2.56
-    Created: 2026-09-20
+    File: HighResist Motors – Bill Generator v2_57
+    Version: 2.57
+    Created: 2026-10-04
     Purpose: Vehicle Workshop Bill Generator 
    
     🎯 Result
@@ -465,18 +465,35 @@ textarea {
    COMPANY DETAILS ACCORDION
 ================================ */
 
+/* =================================
+   COMPANY DETAILS
+================================= */
+
 .company-details {
+  margin-top: 12px;
+  margin-bottom: 16px;
+
   border: 1px solid #dce6ef;
-  border-radius: 10px;
+  border-radius: 12px;
+
   overflow: hidden;
 
   background: #ffffff;
+
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+
+
+.company-details + h3 {
+  margin-top: 18px;
 }
 
 
 /* ===== HEADER ===== */
 
-.company-details-header {
+/*.company-details-header {
 
   display: flex;
 
@@ -495,8 +512,36 @@ textarea {
   cursor: pointer;
 
   user-select: none;
-}
+}*/
 
+/* =================================
+   COMPANY DETAILS HEADER
+================================= */
+
+.company-details-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: 46px;
+
+  padding: 0 14px;
+
+  background: #0066cc;
+
+  color: #ffffff;
+
+  font-size: 18px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  user-select: none;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
 
 .company-details-header:active {
   opacity: 0.9;
@@ -505,13 +550,80 @@ textarea {
 
 /* ===== ARROW ===== */
 
-#companyDetailsArrow {
+/*#companyDetailsArrow {
 
   font-size: 13px;
 
   transition:
     transform 0.2s ease;
+}*/
+
+
+#companyDetailsArrow {
+
+  font-size: 24px;
+  font-weight: 300;
+
+  color: #ffffff;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 28px;
+  height: 28px;
+
+  border: 1.5px solid rgba(0, 102, 204, 0.35);
+  border-radius: 50%;
+
+  box-sizing: border-box;
+
+  transition:
+    transform 0.3s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
 }
+
+.company-details-header:hover #companyDetailsArrow {
+
+  background: rgba(0, 102, 204, 0.08);
+
+  border-color: rgba(0, 102, 204, 0.65);
+}
+
+#companyDetailsArrow.open {
+  transform: rotate(180deg);
+  border-color: #0066cc;
+}
+
+
+
+
+
+
+
+.company-details-header {
+  cursor: pointer;
+}
+
+
+
+
+/* ===== CONTENT ===== */
+
+/*.company-details-content {
+
+  max-height: 1000px;
+
+  overflow: hidden;
+
+  padding: 15px;
+
+  transition:
+    max-height 0.3s ease,
+    padding 0.3s ease;
+}*/
 
 
 /* ===== CONTENT ===== */
@@ -524,10 +636,93 @@ textarea {
 
   padding: 15px;
 
+  background: #ffffff;
+
+  border-top: 1px solid #e5edf5;
+
   transition:
     max-height 0.3s ease,
     padding 0.3s ease;
 }
+
+
+.company-details-content label {
+  display: block;
+
+  margin-top: 10px;
+  margin-bottom: 5px;
+
+  color: #34495e;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.company-details-content input {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 10px 11px;
+
+  border: 1px solid #ccd9e6;
+  border-radius: 7px;
+
+  background: #ffffff;
+
+  color: #263746;
+
+  font-size: 14px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.company-details-content input:focus {
+  border-color: #0066cc;
+
+  box-shadow:
+    0 0 0 3px rgba(0, 102, 204, 0.10);
+}
+
+
+.company-details-content button {
+  width: 100%;
+
+  margin-top: 18px;
+
+  padding: 11px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #0066cc;
+
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease;
+}
+
+.company-details-content button:hover {
+  background: #0052a3;
+}
+
+.company-details-content button:active {
+  transform: scale(0.98);
+}
+
+
+
 
 
 /* ===== CLOSED ===== */
@@ -539,6 +734,9 @@ textarea {
   padding-top: 0;
   padding-bottom: 0;
 }
+
+
+
 
 
 
@@ -2755,6 +2953,123 @@ textarea {
 }
 
 
+/* =================================
+   NEW VERSION NOTIFICATION
+================================= */
+
+#updateNotification {
+
+  position: fixed;
+
+  top: 20px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  display: none;
+
+  align-items: center;
+
+  gap: 12px;
+
+  width: min(420px, calc(100% - 30px));
+
+  padding: 14px 16px;
+
+  background: #ffffff;
+
+  border: 1px solid #cfd8dc;
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 5px 18px rgba(0,0,0,0.18);
+
+  z-index: 10001;
+}
+
+
+/* Icon */
+
+.update-notification-icon {
+
+  font-size: 24px;
+
+  flex-shrink: 0;
+}
+
+
+/* Text */
+
+.update-notification-content {
+
+  flex: 1;
+
+}
+
+.update-notification-content strong {
+
+  display: block;
+
+  font-size: 14px;
+
+  color: #123b63;
+
+}
+
+.update-notification-content small {
+
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 12px;
+
+  line-height: 1.4;
+
+  color: #666;
+
+}
+
+
+/* Update button */
+
+#updateAppBtn {
+
+  padding: 8px 14px;
+
+  background: #0066cc;
+
+  color: #ffffff;
+
+  border: none;
+
+  border-radius: 7px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  flex-shrink: 0;
+
+}
+
+#updateAppBtn:hover {
+
+  background: #0052a3;
+
+}
+
+#updateAppBtn:active {
+
+  transform: scale(0.97);
+
+}
+
+
+
 
 
 
@@ -3155,6 +3470,35 @@ textarea {
 
 <body>
     
+    <!-- =================================
+     NEW VERSION AVAILABLE
+================================= -->
+
+<div id="updateNotification">
+
+  <div class="update-notification-icon">
+    🔄
+  </div>
+
+  <div class="update-notification-content">
+
+    <strong>
+      New version available
+    </strong>
+
+    <small>
+      A new version of HighResist MOTORS is available.
+    </small>
+
+  </div>
+
+  <button id="updateAppBtn">
+    Update
+  </button>
+
+</div>
+    
+    
     <div id="connectionStatus" class="online">
   🟢 Online
 </div>
@@ -3227,7 +3571,7 @@ textarea {
 
 
 
-<h3>Bill / Cash Memo</h3>
+
   
   
 
@@ -3240,7 +3584,8 @@ textarea {
 
   <span>Company Details</span>
 
-  <span id="companyDetailsArrow">▶</span>
+<span id="companyDetailsArrow">+</span>
+
 
 </div>
 
@@ -3315,7 +3660,7 @@ textarea {
   
   
   
-  
+  <h3>Bill / Cash Memo</h3>
   
 
   <div class="row">
@@ -3356,10 +3701,14 @@ textarea {
       <label>Job Type</label>
       <input id="type">
     </div>
+    
+    <div>
+      <label>Meter Readi</label>
+      <input id="meter">
+  </div>
   </div>
 
-  <label>Meter Reading</label>
-  <input id="meter">
+  
   
   
   
@@ -4134,17 +4483,20 @@ function generateNextBillNumber() {
       "companyDetailsArrow"
     );
 
-
   content.classList.toggle("collapsed");
 
 
   if (content.classList.contains("collapsed")) {
 
-    arrow.textContent = "▶";
+    arrow.textContent = "+";
+
+    arrow.classList.remove("open");
 
   } else {
 
-    arrow.textContent = "▼";
+    arrow.textContent = "×";
+
+    arrow.classList.add("open");
 
   }
 
@@ -9207,20 +9559,42 @@ async function shareWhatsApp() {
 
   const blob = generatePDF();
 
-  const file = new File([blob], "HRM_Bill.pdf", {
+  const billNo =
+    document.getElementById("billNo").value.trim();
+
+  const companyName =
+    document.getElementById("companyName").value.trim();
+
+  const safeCompanyName =
+    companyName.replace(/[\\/:*?"<>|]/g, "_");
+
+  const safeBillNo =
+    billNo.replace(/[\\/:*?"<>|]/g, "_");
+
+  const fileName =
+    `${safeCompanyName}_Bill_${safeBillNo}.pdf`;
+
+  const file = new File([blob], fileName, {
     type: "application/pdf"
   });
 
-  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+  if (
+    navigator.canShare &&
+    navigator.canShare({ files: [file] })
+  ) {
 
     await navigator.share({
-      title: "HighResist Motors Bill",
+      title: `${companyName} Bill`,
       text: "Please find attached bill.",
       files: [file]
     });
 
   } else {
-    alert("Sharing not supported on this device.");
+
+    alert(
+      "Sharing not supported on this device."
+    );
+
   }
 }
 
@@ -9230,21 +9604,62 @@ async function shareWhatsApp() {
    PWA SERVICE WORKER
 ===================================================== */
 
+/* =====================================================
+   PWA SERVICE WORKER + UPDATE
+===================================================== */
+
 if ("serviceWorker" in navigator) {
 
-  window.addEventListener("load", function () {
+  window.addEventListener("load", function() {
 
     navigator.serviceWorker
       .register("./service-worker.js")
-      .then(function (registration) {
+      .then(function(registration) {
 
         console.log(
           "Service Worker registered:",
           registration.scope
         );
 
+
+        /* =================================
+           CHECK FOR NEW VERSION
+        ================================= */
+
+        registration.addEventListener(
+          "updatefound",
+          function() {
+
+            const newWorker =
+              registration.installing;
+
+            if (!newWorker) return;
+
+
+            newWorker.addEventListener(
+              "statechange",
+              function() {
+
+                if (
+                  newWorker.state === "installed" &&
+                  navigator.serviceWorker.controller
+                ) {
+
+                  showUpdateNotification(
+                    registration
+                  );
+
+                }
+
+              }
+            );
+
+          }
+        );
+
       })
-      .catch(function (error) {
+
+      .catch(function(error) {
 
         console.error(
           "Service Worker registration failed:",
@@ -9257,9 +9672,72 @@ if ("serviceWorker" in navigator) {
 
 }
 
+/* =================================
+   SHOW UPDATE NOTIFICATION
+================================= */
+
+function showUpdateNotification(registration) {
+
+  const notification =
+    document.getElementById(
+      "updateNotification"
+    );
+
+  const updateBtn =
+    document.getElementById(
+      "updateAppBtn"
+    );
+
+
+  notification.style.display = "flex";
+
+
+  updateBtn.onclick = function() {
+
+    updateBtn.disabled = true;
+
+    updateBtn.textContent =
+      "Updating...";
+
+
+    if (
+      registration.waiting
+    ) {
+
+      registration.waiting.postMessage({
+        type: "SKIP_WAITING"
+      });
+
+    }
+
+  };
+
+}
 
 
 
+/* =================================
+   RELOAD AFTER UPDATE
+================================= */
+
+if ("serviceWorker" in navigator) {
+
+  let refreshing = false;
+
+  navigator.serviceWorker.addEventListener(
+    "controllerchange",
+    function() {
+
+      if (refreshing) return;
+
+      refreshing = true;
+
+      window.location.reload();
+
+    }
+  );
+
+}
 
 
 
