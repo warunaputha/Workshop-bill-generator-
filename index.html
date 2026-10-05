@@ -9600,9 +9600,7 @@ async function shareWhatsApp() {
 
 
 
-/* =====================================================
-   PWA SERVICE WORKER
-===================================================== */
+
 
 /* =====================================================
    PWA SERVICE WORKER + UPDATE
@@ -9620,6 +9618,8 @@ if ("serviceWorker" in navigator) {
           "Service Worker registered:",
           registration.scope
         );
+        
+        registration.update();
 
 
         /* =================================
