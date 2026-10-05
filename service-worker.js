@@ -1,4 +1,4 @@
-const CACHE_NAME = "hrm-bill-generator-v2.56";
+const CACHE_NAME = "hrm-bill-generator-v2.57";
 
 const APP_FILES = [
   "./",
