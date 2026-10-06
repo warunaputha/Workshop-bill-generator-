@@ -17,6 +17,31 @@
       type="image/png"
       sizes="192x192"
       href="./icons/icon-192.png">
+      
+      
+   <!-- =================================
+     APPLE / iOS PWA SUPPORT
+================================= -->
+
+<meta
+  name="apple-mobile-web-app-capable"
+  content="yes"
+>
+
+<meta
+  name="apple-mobile-web-app-status-bar-style"
+  content="default"
+>
+
+<meta
+  name="apple-mobile-web-app-title"
+  content="HighResist MOTORS"
+>
+
+<link
+  rel="apple-touch-icon"
+  href="./icons/icon-192.png"
+>
  
       
  
@@ -3470,6 +3495,13 @@ textarea {
 
 <body>
     
+    
+     <div id="connectionStatus" class="online">
+  🟢 Online
+</div>
+
+
+    
     <!-- =================================
      NEW VERSION AVAILABLE
 ================================= -->
@@ -3499,12 +3531,8 @@ textarea {
 </div>
     
     
-    <div id="connectionStatus" class="online">
-  🟢 Online
-</div>
+   
 
-<div class="container">
-    
     
     <button
   id="installAppBtn"
@@ -3513,6 +3541,11 @@ textarea {
   📱 Install HighResist MOTORS
 </button>
 
+
+
+<div class="container">
+    
+    
 
 <div id="saveNotification">
   <span class="save-notification-icon">✓</span>
