@@ -1,14 +1,18 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 
 <meta name="viewport"
       content="width=device-width, initial-scale=1.0">
-   
-   
-   <!-- ===== PWA ===== -->
-      
+
+
+<!-- ===== PWA ===== -->
+
 <link rel="manifest" href="./manifest.json">
 
 <meta name="theme-color" content="#0066cc">
@@ -16,12 +20,10 @@
 <link rel="icon"
       type="image/png"
       sizes="192x192"
-      href="./icons/icon-192.png">
-      
-      
-   <!-- =================================
-     APPLE / iOS PWA SUPPORT
-================================= -->
+      href="./assets/icons/icon-192.png">
+
+
+<!-- ===== APPLE / iOS PWA SUPPORT ===== -->
 
 <meta
   name="apple-mobile-web-app-capable"
@@ -42,3453 +44,77 @@
   rel="apple-touch-icon"
   href="./icons/icon-192.png"
 >
- 
-      
- 
 
-<title>HighResist Motors – Bill Generator
-highResist-motors-bill_v2_57.html</title>
 
-<!-- jsPDF -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- ===== PAGE TITLE ===== -->
 
-  <!-- jsPDF AutoTable (for PDF tables) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
-  
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<title>HighResist Motors – Bill Generator v2.593</title>
+
+
+<!-- ===== EXTERNAL CSS FILES ===== -->
+
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/company.css">
+<link rel="stylesheet" href="css/bill-form.css">
+<link rel="stylesheet" href="css/table.css">
+<link rel="stylesheet" href="css/payment.css">
+<link rel="stylesheet" href="css/bill-history.css">
+<link rel="stylesheet" href="css/modal.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/responsive.css">
+
+
+<!-- ===== jsPDF ===== -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- jsPDF AutoTable -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+
+<!-- PDF.js -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
 <script>
 pdfjsLib.GlobalWorkerOptions.workerSrc =
 "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 </script>
-  
-  
-  
-  <!-- Developer Info -->
-  <!--
-    File: HighResist Motors – Bill Generator v2_57
-    Version: 2.57
-    Created: 2026-10-04
-    Purpose: Vehicle Workshop Bill Generator 
-   
-    🎯 Result
-✅ Company Details + Logo
-✅ Main Company Header
-✅ Bill No / Date auto generation
-✅ Customer + Vehicle details
-✅ Service table
-✅ Add Row
-✅ Smart Particular Suggestions
-✅ Recent Services from Bill History
-✅ Table Zoom
-✅ Table Swipe Mode
-✅ Payment Method
-✅ FULL / HALF / NOT PAID
-✅ Paid Amount
-✅ Balance calculation
-✅ PDF Preview / Download
-✅ Bill History
-✅ View / Edit / Reprint / Delete
-✅ Backup / Import
-✅ WhatsApp sharing
-✅ PWA structure
 
+
+<!-- ===== DEVELOPER INFO ===== -->
+
+<!--
+File: HighResist Motors – Bill Generator v2_593
+Version: 2.593
+Created: 2026-11-10
+Purpose: Vehicle Workshop Bill Generator
+
+Features:
+Company Details + Logo
+Main Company Header
+Bill No / Date auto generation
+Customer + Vehicle details
+Service table
+Add Row
+Smart Particular Suggestions
+Recent Services from Bill History
+Table Zoom
+Table Swipe Mode
+Payment Method
+FULL / HALF / NOT PAID
+Paid Amount
+Balance calculation
+PDF Preview / Download
+Bill History
+View / Edit / Reprint / Delete
+Backup / Import
+WhatsApp sharing
+PWA structure
 -->
- 
-  
-  
-  
-  
-  
-  
-  
-  
 
-<style>
-
-
-
-
-/* ===============================
-   STEP 1 — MAIN UI
-================================ */
-
-body {
-  font-family: Arial, sans-serif;
-  background: #eef3f8;
-  margin: 0;
-  padding: 20px;
-  color: #222;
-}
-
-
-/* ===== MAIN CONTAINER ===== */
-
-.container {
-  background: #ffffff;
-  max-width: 850px;
-  margin: 20px auto;
-  padding: 25px;
-  border-radius: 14px;
-
-  box-shadow:
-    0 4px 20px rgba(0, 0, 0, 0.10);
-
-  box-sizing: border-box;
-}
-
-
-
-
-
-/* ===============================
-   MAIN COMPANY HEADER
-================================ */
-
-.main-company-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 14px 12px 16px;
-
-  border-bottom: 1px solid #dce6ef;
-
-  /* ===== BACKGROUND IMAGE ===== */
-  background-image:
-    linear-gradient(
-      rgba(255, 255, 255, 0.82),
-      rgba(255, 255, 255, 0.82)
-    ),
-    url("header-bg.jpg");
-
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-
-  border-radius: 10px;
-}
-
-
-/* ===============================
-   COMPANY INFORMATION
-================================ */
-
-.main-company-title {
-  flex: 1;
-  min-width: 0;
-  text-align: left;
-}
-
-
-/* ===== COMPANY NAME ===== */
-
-.main-company-title h2 {
-  margin: 0 0 3px;
-
-  text-align: left;
-
-  font-size: 23px;
-  line-height: 1.2;
-
-  font-weight: 700;
-
-  color: #003399;
-}
-
-
-/* ===== BUSINESS TYPE ===== */
-
-.main-company-type {
-  margin-bottom: 5px;
-
-  font-size: 12px;
-  line-height: 1.3;
-
-  font-weight: 600;
-
-  color: #566575;
-}
-
-
-/* ===== ADDRESS ===== */
-
-.main-company-address {
-  margin-bottom: 5px;
-
-  font-size: 11px;
-  line-height: 1.4;
-
-  color: #777f87;
-}
-
-
-/* ===== CONTACT LINE ===== */
-
-.main-company-contact {
-  display: flex;
-  align-items: center;
-
-  gap: 5px;
-
-  font-size: 11px;
-  line-height: 1.3;
-
-  color: #44515d;
-
-  white-space: nowrap;
-}
-
-
-/* ===== SEPARATOR ===== */
-
-.contact-separator {
-  color: #aeb7bf;
-}
-
-
-/* ===============================
-   COMPANY LOGO - RIGHT SIDE
-================================ */
-
-.main-company-logo {
-  width: 72px;
-  height: 58px;
-
-  flex-shrink: 0;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: #ffffff;
-
-  border: 1px solid #d9e2ea;
-  border-radius: 8px;
-}
-
-
-#mainCompanyLogo {
-  display: none;
-
-  max-width: 64px;
-  max-height: 50px;
-
-  width: auto;
-  height: auto;
-
-  object-fit: contain;
-}
-
-
-
-
-
-
-
-
-h2, h3 {
-  text-align: center;
-  margin: 5px 0;
-}
-
-
-
-label {
-  font-size: 14px;
-}
-
-input {
-  width: 100%;
-  padding: 6px;
-  margin-top: 4px;
-  box-sizing: border-box;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-
-th, td {
-  border: 1px solid #000;
-  padding: 6px;
-  text-align: center;
-}
-
-
-
-button {
-  margin-top: 15px;
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-
-textarea {
-  width: 100%;
-  padding: 6px;
-  margin-top: 4px;
-  box-sizing: border-box;
-  resize: vertical;
-}
-
-
-
-
-/* ===============================
-   STEP 2 — COMPANY DETAILS UI
-================================ */
-
-.company-settings {
-  background: #f8fbff;
-  border: 1px solid #d9e6f2;
-  border-radius: 12px;
-  padding: 20px;
-  margin: 20px 0 25px;
-
-  box-shadow:
-    0 3px 12px rgba(0, 0, 0, 0.06);
-}
-
-
-/* ===== SECTION TITLE ===== */
-
-.company-settings h3 {
-  margin: -20px -20px 20px;
-  padding: 14px 18px;
-
-  background: #0066cc;
-  color: #ffffff;
-
-  text-align: left;
-  font-size: 17px;
-  font-weight: bold;
-
-  border-radius: 12px 12px 0 0;
-}
-
-
-/* ===== LABELS ===== */
-
-.company-settings label {
-  display: block;
-
-  margin-top: 12px;
-  margin-bottom: 5px;
-
-  font-size: 13px;
-  font-weight: bold;
-  color: #34495e;
-}
-
-
-/* ===== INPUTS ===== */
-
-.company-settings input {
-  width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #ccd8e3;
-  border-radius: 7px;
-  background: #ffffff;
-  font-size: 14px;
-  box-sizing: border-box;
-  outline: none;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-
-/* ===== INPUT FOCUS ===== */
-
-.company-settings input:focus {
-  border-color: #0066cc;
-  box-shadow:
-    0 0 0 3px rgba(0, 102, 204, 0.12);
-}
-
-
-/* ===== FILE INPUT ===== */
-
-.company-settings input[type="file"] {
-  width: 100%;
-  padding: 9px;
-  border: 1px dashed #9fb6cc;
-  border-radius: 7px;
-  background: #ffffff;
-  box-sizing: border-box;
-  font-size: 13px;
-}
-
-
-/* ===== LOGO PREVIEW AREA ===== */
-
-.company-settings div[style*="text-align:center"] {
-  background: #ffffff;
-  border: 1px dashed #c7d5e2;
-  border-radius: 8px;
-  padding: 12px;
-  min-height: 50px;
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
-}
-
-
-/* ===== LOGO ===== */
-
-#logoPreview {
-  border-radius: 6px;
-  object-fit: contain;
-  max-width: 150px;
-  max-height: 80px;
-}
-
-
-/* ===== SAVE COMPANY BUTTON ===== */
-
-.company-settings button {
-  width: 100%;
-  margin-top: 18px;
-  padding: 11px 15px;
-  background: #0066cc;
-  color: #ffffff;
-  border: none;
-  border-radius: 7px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-  transition:
-    background 0.2s ease,
-    transform 0.1s ease;
-}
-
-
-/* ===== BUTTON HOVER ===== */
-
-.company-settings button:hover {
-  background: #0052a3;
-}
-
-
-/* ===== BUTTON PRESS ===== */
-
-.company-settings button:active {
-  transform: scale(0.98);
-}
-
-
-
-
-
-/* ===============================
-   COMPANY DETAILS ACCORDION
-================================ */
-
-/* =================================
-   COMPANY DETAILS
-================================= */
-
-.company-details {
-  margin-top: 12px;
-  margin-bottom: 16px;
-
-  border: 1px solid #dce6ef;
-  border-radius: 12px;
-
-  overflow: hidden;
-
-  background: #ffffff;
-
-  box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-
-
-.company-details + h3 {
-  margin-top: 18px;
-}
-
-
-/* ===== HEADER ===== */
-
-/*.company-details-header {
-
-  display: flex;
-
-  align-items: center;
-  justify-content: space-between;
-
-  padding: 12px 16px;
-
-  background: #0066cc;
-
-  color: #ffffff;
-
-  font-size: 16px;
-  font-weight: bold;
-
-  cursor: pointer;
-
-  user-select: none;
-}*/
-
-/* =================================
-   COMPANY DETAILS HEADER
-================================= */
-
-.company-details-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  min-height: 46px;
-
-  padding: 0 14px;
-
-  background: #0066cc;
-
-  color: #ffffff;
-
-  font-size: 18px;
-  font-weight: bold;
-
-  cursor: pointer;
-
-  user-select: none;
-
-  transition:
-    background 0.2s ease,
-    color 0.2s ease;
-}
-
-.company-details-header:active {
-  opacity: 0.9;
-}
-
-
-/* ===== ARROW ===== */
-
-/*#companyDetailsArrow {
-
-  font-size: 13px;
-
-  transition:
-    transform 0.2s ease;
-}*/
-
-
-#companyDetailsArrow {
-
-  font-size: 24px;
-  font-weight: 300;
-
-  color: #ffffff;
-
-  display: inline-flex;
-
-  align-items: center;
-  justify-content: center;
-
-  width: 28px;
-  height: 28px;
-
-  border: 1.5px solid rgba(0, 102, 204, 0.35);
-  border-radius: 50%;
-
-  box-sizing: border-box;
-
-  transition:
-    transform 0.3s ease,
-    background 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.company-details-header:hover #companyDetailsArrow {
-
-  background: rgba(0, 102, 204, 0.08);
-
-  border-color: rgba(0, 102, 204, 0.65);
-}
-
-#companyDetailsArrow.open {
-  transform: rotate(180deg);
-  border-color: #0066cc;
-}
-
-
-
-
-
-
-
-.company-details-header {
-  cursor: pointer;
-}
-
-
-
-
-/* ===== CONTENT ===== */
-
-/*.company-details-content {
-
-  max-height: 1000px;
-
-  overflow: hidden;
-
-  padding: 15px;
-
-  transition:
-    max-height 0.3s ease,
-    padding 0.3s ease;
-}*/
-
-
-/* ===== CONTENT ===== */
-
-.company-details-content {
-
-  max-height: 1000px;
-
-  overflow: hidden;
-
-  padding: 15px;
-
-  background: #ffffff;
-
-  border-top: 1px solid #e5edf5;
-
-  transition:
-    max-height 0.3s ease,
-    padding 0.3s ease;
-}
-
-
-.company-details-content label {
-  display: block;
-
-  margin-top: 10px;
-  margin-bottom: 5px;
-
-  color: #34495e;
-
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.company-details-content input {
-  width: 100%;
-  box-sizing: border-box;
-
-  padding: 10px 11px;
-
-  border: 1px solid #ccd9e6;
-  border-radius: 7px;
-
-  background: #ffffff;
-
-  color: #263746;
-
-  font-size: 14px;
-
-  outline: none;
-
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-
-.company-details-content input:focus {
-  border-color: #0066cc;
-
-  box-shadow:
-    0 0 0 3px rgba(0, 102, 204, 0.10);
-}
-
-
-.company-details-content button {
-  width: 100%;
-
-  margin-top: 18px;
-
-  padding: 11px;
-
-  border: none;
-  border-radius: 8px;
-
-  background: #0066cc;
-
-  color: #ffffff;
-
-  font-size: 14px;
-  font-weight: 600;
-
-  cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    transform 0.1s ease;
-}
-
-.company-details-content button:hover {
-  background: #0052a3;
-}
-
-.company-details-content button:active {
-  transform: scale(0.98);
-}
-
-
-
-
-
-/* ===== CLOSED ===== */
-
-.company-details-content.collapsed {
-
-  max-height: 0;
-
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
-
-
-
-
-
-
-
-
-
-/* ===============================
-   STEP 3 — BILL INFORMATION UI
-================================ */
-
-/* ===== BILL INFORMATION AREA ===== */
-
-.container > .row {
-  margin-top: 15px;
-}
-
-
-/* ===== ROW CARDS ===== */
-
-.container > .row:first-of-type,
-.container > .row:nth-of-type(2) {
-  background: #f8fbff;
-  border: 1px solid #d9e6f2;
-  border-radius: 10px;
-  padding: 12px;
-  box-sizing: border-box;
-}
-
-
-/* ===== LABELS ===== */
-
-.container label {
-  display: block;
-  margin-top: 14px;
-  margin-bottom: 5px;
-  font-size: 14px;
-  font-weight: bold;
-  color: #34495e;
-}
-
-
-/* ===== BILL INPUTS ===== */
-
-.container > .row input,
-.container > input,
-.container > textarea {
-  width: 100%;
-  padding: 10px 12px;
-  box-sizing: border-box;
-  border: 1px solid #ccd8e3;
-  border-radius: 7px;
-  background: #ffffff;
-  font-size: 14px;
-  outline: none;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-
-/* ===== INPUT FOCUS ===== */
-
-.container > .row input:focus,
-.container > input:focus,
-.container > textarea:focus {
-  border-color: #0066cc;
-  box-shadow:
-    0 0 0 3px rgba(0, 102, 204, 0.12);
-}
-
-
-/* ===== BILL NUMBER ===== */
-
-#billNo {
-  font-weight: bold;
-  color: #003399;
-  background: #f4f8ff;
-}
-
-
-/* ===== DATE ===== */
-
-#billDate {
-  font-weight: 500;
-}
-
-
-/* ===== CUSTOMER ===== */
-
-#customer {
-  background: #ffffff;
-}
-
-
-/* ===== NOTE / DESCRIPTION ===== */
-
-#note {
-  min-height: 80px;
-  line-height: 1.5;
-  resize: vertical;
-}
-
-
-/* ===== SECTION TITLE ===== */
-
-.container > h3 {
-  margin-top: 25px;
-  margin-bottom: 10px;
-  padding: 10px 14px;
-  background: #0066cc;
-  color: #ffffff;
-  border-radius: 8px;
-  text-align: left;
-  font-size: 16px;
-}
-
-
-
-
-/* ===============================
-   STEP 4 — SERVICE DETAILS TABLE
-================================ */
-
-
-/* ===== SERVICE DETAILS TABLE ===== */
-
-.table-wrapper {
-    width: 100%;
-    overflow-x: auto;
-    overflow-y: visible;
-    -webkit-overflow-scrolling: touch;
-    position: relative;
-}
-
-.table-wrapper table {
-    width: 100%;
-    min-width: 700px;
-    border-collapse: collapse;
-}
-
-
-
-/* ===== TABLE WRAPPER ===== */
-
-#items {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  margin-top: 15px;
-  background: #ffffff;
-  border: 1px solid #d9e6f2;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow:
-    0 3px 10px rgba(0, 0, 0, 0.05);
-}
-
-
-/* ===== TABLE HEADER ===== */
-
-#items tr:first-child {
-  background: #0066cc;
-  color: #ffffff;
-}
-
-
-#items tr:first-child th {
-  border: none;
-  padding: 11px 7px;
-  font-size: 13px;
-  font-weight: bold;
-  white-space: nowrap;
-}
-
-
-/* ===== TABLE CELLS ===== */
-
-#items td {
-  border: none;
-  border-bottom: 1px solid #e5edf4;
-  padding: 7px;
-  background: #ffffff;
-  vertical-align: middle;
-}
-
-
-/* ===== LAST ROW BORDER ===== */
-
-#items tr:last-child td {
-  border-bottom: none;
-}
-
-
-/* ===== S.NO ===== */
-
-#items td:first-child {
-  width: 45px;
-  font-weight: bold;
-  color: #52697d;
-  background: #f7fafd;
-}
-
-
-/* ===== ITEM INPUTS ===== */
-
-#items td input {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 8px 7px;
-  border: 1px solid #d3dee8;
-  border-radius: 5px;
-  background: #ffffff;
-  font-size: 13px;
-  outline: none;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-
-/* ===== ITEM INPUT FOCUS ===== */
-
-#items td input:focus {
-  border-color: #0066cc;
-  box-shadow:
-    0 0 0 2px rgba(0, 102, 204, 0.10);
-}
-
-
-/* ===== QUANTITY ===== */
-
-#items td:nth-child(3) input {
-  text-align: center;
-}
-
-
-/* ===== RATE ===== */
-
-#items td:nth-child(4) input {
-  text-align: right;
-}
-
-
-/* ===== AMOUNT ===== */
-
-#items td:nth-child(5) input {
-  text-align: right;
-  font-weight: bold;
-  color: #003399;
-  background: #f4f8ff;
-  border-color: #d5e3f2;
-}
-
-
-/* ===== ROW HOVER ===== */
-
-#items tr:not(:first-child):hover td {
-  background: #f8fbff;
-}
-
-
-/* ===== PARTICULARS COLUMN ===== */
-
-#items th:nth-child(2) {
-  text-align: left;
-}
-
-
-/* ===== AMOUNT HEADER ===== */
-
-#items th:nth-child(5) {
-  text-align: right;
-}
-
-/* ===== particular ===== */
-.particular-input {
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.particular-preview {
-    display: none;
-    font-size: 10px;
-    color: #777;
-    margin-top: 2px;
-    line-height: 12px;
-    white-space: normal;
-    overflow-wrap: break-word;
-}
-
-.particular-display {
-    display: none;
-    width: 100%;
-    font-size: 13px;
-    padding: 4px 2px;
-    cursor: text;
-    overflow-wrap: break-word;
-}
-
-
-
-/* ===============================
-   SMART PARTICULARS SUGGESTIONS
-================================ */
-/*
-.particular-suggestion-box {
-  display: none;
-  position: absolute;
-
-  left: 0;
-  right: 0;
-  top: calc(100% + 2px);
-
-  z-index: 99999;
-
-  margin-top: 0;
-
-  background: #ffffff;
-  border: 1px solid #bcd4eb;
-  border-radius: 7px;
-
-  box-shadow:
-    0 5px 15px rgba(0, 0, 0, 0.20);
-
-  max-height: 180px;
-  overflow-y: auto;
-
-  box-sizing: border-box;
-}*/
-
-
-
-.particular-suggestion-box {
-  display: none;
-
-  position: fixed;
-
-  z-index: 99999;
-
-  background: #ffffff;
-
-  border: 1px solid #bcd4eb;
-  border-radius: 7px;
-
-  box-shadow:
-    0 5px 15px rgba(0, 0, 0, 0.15);
-
-  max-height: 180px;
-  overflow-y: auto;
-
-  box-sizing: border-box;
-}
-
-
-
-
-/* Particulars cell */
-
-#items td:nth-child(2) {
-  position: relative;
-}
-
-
-/* Suggestion item */
-
-.particular-suggestion-item {
-  padding: 9px 10px;
-
-  font-size: 13px;
-
-  cursor: pointer;
-
-  border-bottom:
-    1px solid #edf2f6;
-
-  color: #34495e;
-}
-
-
-/* Last item */
-
-.particular-suggestion-item:last-child {
-  border-bottom: none;
-}
-
-
-/* Hover */
-
-.particular-suggestion-item:hover {
-  background: #f1f7ff;
-}
-
-/* ===== SUGGESTION SECTION TITLE ===== */
-
-.suggestion-section-title {
-  padding: 6px 10px;
-  background: #f1f6fb;
-
-  font-size: 11px;
-  font-weight: bold;
-
-  color: #52697d;
-
-  border-bottom: 1px solid #dce6ef;
-
-  position: sticky;
-  top: 0;
-}
-
-
-
-
-/* ======= servis display tabel zoom controller====== */
-
-.table-zoom-controls {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 6px;
-  margin: 8px 0;
-}
-
-.table-zoom-controls button {
-  width: auto;
-  min-width: 42px;
-  margin: 0;
-  padding: 6px 10px;
-  font-size: 14px;
-  border: 1px solid #ccd8e3;
-  border-radius: 6px;
-  background: #f5f8fb;
-  color: #34495e;
-}
-
-#tableZoomLevel {
-  min-width: 50px;
-  text-align: center;
-  font-size: 13px;
-  font-weight: bold;
-}
-
-
-/* ===============================
-   TABLE SWIPE MODE
-================================ */
-
-.table-swipe-controls {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 8px;
-  margin: 8px 0;
-}
-
-.table-swipe-controls button {
-  width: auto;
-  min-width: 125px;
-  margin: 0;
-  padding: 7px 12px;
-  border: 1px solid #ccd8e3;
-  border-radius: 6px;
-  background: #f5f8fb;
-  color: #34495e;
-  font-size: 13px;
-  font-weight: bold;
-}
-
-.table-swipe-controls button:active {
-  transform: scale(0.96);
-}
-
-
-/* ===== SWIPE STATUS ===== */
-
-#swipeStatus {
-  font-size: 12px;
-  color: #777;
-}
-
-
-/* ===== SWIPE MODE ACTIVE ===== */
-
-.table-wrapper.swipe-mode {
-  border: 2px solid #0066cc;
-  border-radius: 8px;
-  background: #f4f9ff;
-  cursor: grab;
-  box-shadow:
-    0 0 0 3px rgba(0, 102, 204, 0.10);
-  user-select: none;
-}
-
-
-/* ===== WHILE DRAGGING ===== */
-
-.table-wrapper.swipe-mode.swiping {
-  cursor: grabbing;
-}
-
-
-/* ===== SWIPE BUTTON ACTIVE ===== */
-
-.table-swipe-controls button.swipe-active {
-  background: #0066cc;
-  color: #ffffff;
-  border-color: #005bb5;
-}
-
-
-
-.add-row-table td {
-  padding: 6px;
-  text-align: center;
-}
-
-.add-row-btn {
-  width: 100%;
-  padding: 10px;
-
-  border: 1px solid #198754;
-  border-radius: 6px;
-
-  background: #e8f8ef;
-
-  color: #198754;
-
-  font-size: 14px;
-  font-weight: bold;
-
-  cursor: pointer;
-}
-
-
-
-
-
-
-
-
-
-
-/* ===============================
-   STEP 5 — TOTAL + ACTION BUTTONS
-================================ */
-
-
-/* ==PROFESSIONAL TOTAL BOX===== */
-
-.total-box {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 14px;
-  margin-bottom: 18px;
-  padding: 12px 14px;
-  background: #f7faff;
-  border-top: 3px solid #0066cc;
-  border-bottom: 1px solid #d7e2ec;
-  border-radius: 6px;
-  box-sizing: border-box;
-}
-
-
-
-
-/* ===== TOTAL LABEL ===== */
-
-.total-label {
-  font-size: 20px;
-  font-weight: 700;
-  color: #34495e;
-  letter-spacing: 0.5px;
-}
-
-
-/* ===== TOTAL VALUE ===== */
-
-.total-value {
-  font-size: 21px;
-  font-weight: 700;
-  color: #34495e;
-}
-
-
-/* ===== GRAND TOTAL NUMBER ===== */
-
-#grandTotal {
-  font-size: 28px;
-  font-weight: 800;
-  color: #003399;
-  letter-spacing: 0.4px;
-}
-
-
-
-    
-    
-    
-    
-    /* ===== payment-panel ===== */
-
-    
- /*   .payment-panel {
-  margin-top: 12px;
-  padding: 14px;
-  border-radius: 12px;
-  border: 1px solid #ddd;
-  background: #fff;
-}*/
-
-
-.payment-panel {
-    margin-top: 20px;
-    padding: 22px;
-    background: #ffffff;
-    border: 1px solid #d9e0e8;
-    border-radius: 14px;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-}
-
-
-
-/* PAYMENT PANEL HEADING */
-
-.payment-heading {
-    margin-bottom: 18px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #e5e9ef;
-}
-
-.payment-heading span {
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: #1e3a5f;
-}
-
-
-
-
-
-/* =================================
-   TOTAL AMOUNT - PROFESSIONAL
-================================= */
-
-.payment-total {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    padding: 16px 18px;
-    margin-bottom: 20px;
-
-    background: #f4f7fb;
-    border: 1px solid #dbe3ed;
-    border-radius: 10px;
-}
-
-.payment-total > span {
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.8px;
-    color: #5b6775;
-}
-
-.payment-total strong {
-    font-size: 22px;
-    font-weight: 800;
-    color: #1e3a5f;
-}
-
-.payment-total strong span {
-    font-variant-numeric: tabular-nums;
-}
-
-
-
-
-
-/* SECTION */
-
-.payment-section {
-  margin-bottom: 14px;
-}
-
-.payment-title {
-  font-size: 12px;
-  font-weight: bold;
-  margin-bottom: 7px;
-}
-
-
-
-
-/* =================================
-   PAYMENT METHOD - PROPOSAL CARDS
-================================= */
-
-.payment-options {
-    display: flex;
-    gap: 12px;
-    margin-top: 10px;
-}
-
-.payment-card {
-    flex: 1;
-    position: relative;
-    cursor: pointer;
-}
-
-.payment-card input {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
-}
-
-.payment-card span {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    min-height: 48px;
-    padding: 10px 14px;
-
-    background: #ffffff;
-    border: 1px solid #d5dde7;
-    border-radius: 10px;
-
-    font-size: 14px;
-    font-weight: 700;
-    color: #44515f;
-
-    transition: all 0.2s ease;
-}
-
-/* Hover */
-.payment-card:hover span {
-    border-color: #1e3a5f;
-    background: #f7f9fc;
-}
-
-/* Selected */
-.payment-card input:checked + span {
-    background: #eef4fb;
-    border-color: #1e3a5f;
-    color: #1e3a5f;
-
-    box-shadow: 0 2px 6px rgba(30, 58, 95, 0.12);
-}
-
-
-
-
-/* =================================
-   PAYMENT STATUS - PROPOSAL CARDS
-================================= */
-
-.status-options {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.status-options .payment-card {
-    flex: 1;
-}
-
-.status-options .payment-card span {
-    min-height: 46px;
-    padding: 9px 8px;
-
-    font-size: 13px;
-    font-weight: 700;
-    text-align: center;
-}
-
-/* Selected status */
-
-.status-options .payment-card input:checked + span {
-    background: #eef4fb;
-    border-color: #1e3a5f;
-    color: #1e3a5f;
-
-    box-shadow: 0 2px 6px rgba(30, 58, 95, 0.12);
-}
-
-
-
-
-
-/* =================================
-   PAID AMOUNT - PROFESSIONAL INPUT
-================================= */
-
-.payment-amount-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    margin-top: 18px;
-    padding: 14px 16px;
-
-    background: #ffffff;
-    border: 1px solid #d5dde7;
-    border-radius: 10px;
-}
-
-.payment-amount-row > label {
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.7px;
-    color: #5b6775;
-}
-
-.amount-input {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-
-    padding: 7px 10px;
-
-    background: #f7f9fc;
-    border: 1px solid #d5dde7;
-    border-radius: 8px;
-
-    font-size: 14px;
-    font-weight: 700;
-    color: #1e3a5f;
-    
-    width: 170px;
-}
-
-.amount-input input {
-    width: 100px;
-
-    border: none;
-    outline: none;
-    background: transparent;
-
-    font-size: 17px;
-    font-weight: 700;
-    text-align: right;
-
-    color: #1e3a5f;
-}
-
-.amount-input input:focus {
-    outline: none;
-}
-
-
-
-
-/* =================================
-   BALANCE - PROFESSIONAL HIGHLIGHT
-================================= */
-/* =================================
-   BALANCE - PROFESSIONAL
-================================= */
-
-.payment-balance {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    margin-top: 18px;
-    padding: 18px 20px;
-
-    background: linear-gradient(
-        135deg,
-        #1e4f8a,
-        #163b68
-    );
-
-    border-radius: 12px;
-
-    box-shadow: 0 4px 10px rgba(30, 58, 95, 0.18);
-
-    color: #ffffff;
-}
-
-.payment-balance > span {
-    font-size: 15px;
-    font-weight: 800;
-    letter-spacing: 1px;
-}
-
-.payment-balance strong {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-
-    font-size: 23px;
-    font-weight: 800;
-
-    white-space: nowrap;
-}
-
-.payment-balance strong span {
-    font-variant-numeric: tabular-nums;
-}
-
-/* ===== ALL ACTION BUTTONS ===== */
-
-.container > button {
-  width: 100%;
-  min-height: 42px;
-  margin-top: 8px;
-  padding: 10px 14px;
-  border: none;
-  border-radius: 7px;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  transition:
-    transform 0.1s ease,
-    box-shadow 0.2s ease,
-    opacity 0.2s ease;
-}
-
-
-/* ===== BUTTON PRESS ===== */
-
-.container > button:active {
-  transform: scale(0.98);
-}
-
-
-/* ===== BUTTON HOVER ===== */
-
-.container > button:hover {
-  box-shadow:
-    0 3px 8px rgba(0, 0, 0, 0.15);
-}
-
-
-/* ===== ADD ROW ===== */
-
-.container > button:nth-of-type(1) {
-  background: #f1f3f5;
-  color: #333;
-
-  border: 1px solid #d0d5da;
-}
-
-
-/* ===== PREVIEW PDF ===== */
-
-.container > button:nth-of-type(2) {
-  background: #e9eef5;
-  color: #34495e;
-  border: 1px solid #ccd6e0;
-}
-
-
-/* ===== DOWNLOAD PDF ===== */
-
-.container > button:nth-of-type(3) {
-  background: #e8f1fb;
-  color: #075a9c;
-  border: 1px solid #bcd4eb;
-}
-
-
-/* ===== SAVE / UPDATE BILL ===== */
-
-.container > button:nth-of-type(4) {
-  background: #0066cc;
-  color: #ffffff;
-  border: 1px solid #005bb5;
-  font-size: 15px;
-}
-
-
-/* ===== SAVE / UPDATE HOVER ===== */
-
-.container > button:nth-of-type(4):hover {
-  background: #0052a3;
-}
-
-
-/* ===== WHATSAPP ===== */
-
-.container > button:nth-of-type(5) {
-  background: #25D366;
-  color: #ffffff;
-  border: 1px solid #1ebe5d;
-  font-size: 14px;
-}
-
-
-/* ===== WHATSAPP HOVER ===== */
-
-.container > button:nth-of-type(5):hover {
-  background: #1ebe5d;
-}
-
-
-
-
-
-
-
-
-
-
-.pdf-modal{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.75);
-    z-index:9999;
-    overflow:auto;
-}
-
-.pdf-toolbar{
-    position:sticky;
-    top:0;
-    background:#fff;
-    padding:10px;
-    text-align:right;
-}
-
-#pdfCanvas{
-    display:block;
-    margin:20px auto;
-    background:#fff;
-}
-
-
-
-
-/* ===============================
-   PROFESSIONAL BILL HISTORY
-================================ */
-
-.bill-history {
-  background: #ffffff;
-  max-width: 900px;
-  margin: 25px auto;
-  padding: 0;
-  border-radius: 14px;
-  border: 1px solid #dce6ef;
-  box-shadow:
-    0 5px 20px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
-}
-
-
-/* ===== HISTORY HEADER ===== */
-
-.history-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 15px;
-  padding: 18px 20px;
-  background: linear-gradient(
-    135deg,
-    #0066cc,
-    #004b99
-  );
-  color: #ffffff;
-}
-
-
-.history-header h2 {
-  margin: 0;
-  font-size: 20px;
-  text-align: left;
-}
-
-
-.history-header p {
-  margin: 5px 0 0;
-  font-size: 12px;
-  opacity: 0.85;
-}
-
-
-/* ===== REFRESH BUTTON ===== */
-
-.history-refresh-btn {
-  width: auto !important;
-  min-width: 105px;
-  margin: 0 !important;
-  padding: 8px 12px;
-  background: rgba(255,255,255,0.15);
-  color: #ffffff;
-  border: 1px solid rgba(255,255,255,0.35);
-  border-radius: 7px;
-  font-size: 13px;
-  font-weight: bold;
-}
-
-
-.history-refresh-btn:hover {
-  background: rgba(255,255,255,0.25);
-}
-
-
-
-
-
-
-
-/* ===== HISTORY CONTENT ===== */
-
-#billHistory {
-  padding: 18px;
-}
-
-
-/* ===== HISTORY TABLE ===== */
-
-.history-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  margin: 0;
-  background: #ffffff;
-  border: 1px solid #dce6ef;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-
-/* ===== TABLE HEADER ===== */
-
-.history-table th {
-  padding: 11px 8px;
-  background: #f1f6fb;
-  color: #34495e;
-  border-bottom: 1px solid #dce6ef;
-  font-size: 12px;
-  font-weight: bold;
-  white-space: nowrap;
-}
-
-
-/* ===== TABLE CELLS ===== */
-
-.history-table td {
-  padding: 10px 8px;
-  border-bottom: 1px solid #edf2f6;
-  font-size: 13px;
-  color: #34495e;
-  vertical-align: middle;
-}
-
-
-/* ===== REMOVE LAST BORDER ===== */
-
-.history-table tr:last-child td {
-  border-bottom: none;
-}
-
-
-/* ===== ROW HOVER ===== */
-
-.history-table tr:not(:first-child):hover td {
-  background: #f8fbff;
-}
-
-
-/* ===== BILL NUMBER ===== */
-
-.history-table td:first-child strong {
-  color: #0066cc;
-  font-size: 13px;
-}
-
-
-/* ===== TOTAL ===== */
-
-.history-total {
-  font-weight: bold;
-  color: #003399 !important;
-  white-space: nowrap;
-}
-
-
-/* ===============================
-   ACTION BUTTONS
-================================ */
-
-.history-actions {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  flex-wrap: nowrap;
-}
-
-
-.history-actions button {
-  width: 34px;
-  height: 34px;
-  min-width: 34px;
-  margin: 0;
-  padding: 0;
-  border: none;
-  border-radius: 7px;
-  font-size: 15px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition:
-    transform 0.12s ease,
-    box-shadow 0.15s ease;
-}
-
-
-.history-actions button:hover {
-  box-shadow:
-    0 3px 8px rgba(0,0,0,0.15);
-}
-
-
-.history-actions button:active {
-  transform: scale(0.92);
-}
-
-
-/* ===== VIEW ===== */
-
-.view-btn {
-  background: #e7f3ff;
-  color: #0878c9;
-  border: 1px solid #b9ddf8 !important;
-}
-
-
-/* ===== EDIT ===== */
-
-.edit-btn {
-  background: #fff4df;
-  color: #d98200;
-  border: 1px solid #f2d49d !important;
-}
-
-
-/* ===== PRINT ===== */
-
-.print-btn {
-  background: #e8f8ef;
-  color: #239653;
-  border: 1px solid #b9e5c9 !important;
-}
-
-
-/* ===== DELETE ===== */
-
-.delete-btn {
-  background: #ffebeb;
-  color: #d93636;
-  border: 1px solid #f2bcbc !important;
-}
-
-
-/* ===== EMPTY HISTORY ===== */
-
-.no-bills {
-  margin: 0;
-  padding: 30px 15px;
-  text-align: center;
-  color: #7b8a97;
-  font-size: 14px;
-  background: #f8fafc;
-  border: 1px dashed #ccd8e3;
-  border-radius: 10px;
-}
-
-
-
-
-
-/* ===============================
-   BACKUP FILE CONTROLS
-================================ */
-
-.history-tools {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.history-tools button {
-  width: auto !important;
-  min-width: 90px;
-  margin: 0 !important;
-  padding: 8px 10px;
-  border-radius: 7px;
-  font-size: 12px;
-  font-weight: bold;
-  cursor: pointer;
-  transition:
-    transform 0.1s ease,
-    box-shadow 0.2s ease;
-}
-
-.history-tools button:active {
-  transform: scale(0.96);
-}
-
-.history-tools button:hover {
-  box-shadow:
-    0 3px 8px rgba(0,0,0,0.15);
-}
-
-
-/* ===== BACKUP FILE ===== */
-
-.backup-btn {
-  background: #eef5ff;
-  color: #075a9c;
-  border: 1px solid #bcd4eb;
-}
-
-
-/* ===== SAVE BACKUP ===== */
-
-.backup-save-btn {
-  background: #e8f8ef;
-  color: #208a4a;
-  border: 1px solid #b9e5c9;
-}
-
-
-/* ===== IMPORT ===== */
-
-.backup-import-btn {
-  background: #fff4df;
-  color: #b86b00;
-  border: 1px solid #f2d49d;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-/* ===============================
-   PROFESSIONAL BILL VIEWER
-================================ */
-
-.bill-viewer-modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 30, 45, 0.72);
-  z-index: 10000;
-  overflow-y: auto;
-  padding: 24px 16px;
-  box-sizing: border-box;
-}
-
-
-/* ===== MAIN VIEWER CARD ===== */
-
-.bill-viewer-box {
-  width: 100%;
-  max-width: 760px;
-  margin: 10px auto;
-  background: #ffffff;
-  border-radius: 16px;
-  overflow: hidden;
-  border: 1px solid #d9e2ea;
-  box-shadow:
-    0 18px 50px rgba(0, 0, 0, 0.25);
-  box-sizing: border-box;
-}
-
-
-
-
-
-
-/* ===== VIEWER HEADER ===== */
-
-.bill-viewer-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px 20px;
-  background: linear-gradient(
-    135deg,
-    #1e4f8a,
-    #163b68
-  );
-  color: #ffffff;
-  border-bottom: 1px solid #123557;
-}
-
-
-/* ===== HEADER TITLE ===== */
-
-.bill-viewer-header strong {
-  font-size: 17px;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-}
-
-
-/* ===== CLOSE BUTTON ===== */
-
-.bill-viewer-header button {
-  width: 36px;
-  height: 36px;
-  margin: 0;
-  padding: 0;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: #e60000;
-  color: #ffffff;
-
-  border: none;
-  border-radius: 9px;
-
-  font-size: 22px;
-  font-weight: bold;
-
-  cursor: pointer;
-
-  box-shadow:
-    0 3px 6px rgba(0,0,0,0.35),
-    inset 0 1px 2px rgba(255,255,255,0.25);
-
-  transition:
-    background 0.2s ease,
-    transform 0.1s ease,
-    box-shadow 0.2s ease;
-}
-
-
-.bill-viewer-header button:hover {
-  background: #ff0000;
-  box-shadow:
-    0 4px 8px rgba(0,0,0,0.4),
-    inset 0 1px 2px rgba(255,255,255,0.3);
-}
-
-
-.bill-viewer-header button:active {
-  transform: scale(0.92);
-}
-
-
-
-
-
-/* ===== CONTENT ===== */
-
-.bill-viewer-content {
-  padding: 24px;
-  background: #ffffff;
-  box-sizing: border-box;
-}
-
-
-
-.viewer-company {
-  text-align: center;
-  padding: 16px 12px 18px;
-  margin-bottom: 20px;
-  background: #f8fbff;
-  border: 1px solid #dce6ef;
-  border-radius: 12px;
-  position: relative;
-}
-
-
-
-.viewer-company::after {
-  content: "";
-  position: absolute;
-  left: 12%;
-  right: 12%;
-  bottom: 0;
-  height: 3px;
-  background: #1e4f8a;
-  border-radius: 3px;
-}
-
-
-
-
-
-/* ===== COMPANY NAME ===== */
-
-.viewer-company-name {
-  font-size: 24px;
-  font-weight: 800;
-  color: #1e3a5f;
-  letter-spacing: 0.4px;
-}
-
-
-/* ===== COMPANY TYPE ===== */
-
-.viewer-company-type {
-  margin-top: 5px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #5b6775;
-}
-
-
-/* ===== ADDRESS ===== */
-
-.viewer-company > div:nth-child(3) {
-  margin-top: 5px;
-  font-size: 11px;
-  color: #777f87;
-}
-
-
-/* ===== CONTACT ===== */
-
-.viewer-company-contact {
-  margin-top: 6px;
-  font-size: 11px;
-  color: #44515d;
-}
-
-
-
-
-
-
-/* =================================
-   BILL VIEWER - INFORMATION CARDS
-================================= */
-
-.viewer-info {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 22px;
-}
-
-.viewer-info > div {
-  position: relative;
-  padding: 12px 14px;
-  background: #ffffff;
-  border: 1px solid #dce3eb;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-}
-
-.viewer-info > div::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 10px;
-  bottom: 10px;
-  width: 3px;
-  background: #1e4f8a;
-  border-radius: 0 3px 3px 0;
-}
-
-
-
-
-
-/* =================================
-   VIEWER GENERATED DATA
-================================= */
-
-.viewer-data {
-  display: block;
-
-  font-family: "Segoe UI", Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: #1f2937;
-
-  line-height: 1.4;
-  letter-spacing: 0.2px;
-
-  font-variant-numeric: tabular-nums;
-  word-break: break-word;
-}
-
-
-.viewer-label {
-  display: block;
-
-  font-family: "Segoe UI", Arial, sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-
-  letter-spacing: 0.7px;
-  text-transform: uppercase;
-
-  color: #7a8795;
-}
-
-
-
-
-
-/* ===== VIEWER PAYMENT STATUS ===== */
-
-.viewer-payment-paid {
-
-  color: #198754;
-
-  background: #e8f8ef;
-
-  border: 1px solid #b9e5c9;
-
-  padding: 3px 8px;
-
-  border-radius: 15px;
-
-  font-weight: bold;
-
-  font-size: 12px;
-
-}
-
-
-.viewer-payment-not-paid {
-
-  color: #d93636;
-
-  background: #ffebeb;
-
-  border: 1px solid #f2bcbc;
-
-  padding: 3px 8px;
-
-  border-radius: 15px;
-
-  font-weight: bold;
-
-  font-size: 12px;
-
-}
-
-
-
-
-/* =================================
-   BILL VIEWER - STEP 6
-   ITEMS TABLE
-================================= */
-
-.viewer-items {
-  width: 100%;
-  margin-top: 20px;
-  margin-bottom: 18px;
-
-  overflow-x: auto;
-}
-
-
-.viewer-items table {
-  width: 100%;
-  table-layout: fixed;
-
-  border-collapse: separate;
-  border-spacing: 0;
-
-  font-family: "Segoe UI", Arial, sans-serif;
-  font-size: 12px;
-
-  border: 1px solid #dce3eb;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-
-/* ===== COLUMN WIDTH & ALIGNMENT ===== */
-
-.viewer-items th:nth-child(1),
-.viewer-items td:nth-child(1) {
-  width: 45px;
-}
-
-
-.viewer-items th:nth-child(2),
-.viewer-items td:nth-child(2) {
-  width: auto;
-}
-
-
-.viewer-items th:nth-child(3),
-.viewer-items td:nth-child(3) {
-  width: 55px;
-}
-
-
-.viewer-items th:nth-child(4),
-.viewer-items td:nth-child(4),
-.viewer-items th:nth-child(5),
-.viewer-items td:nth-child(5) {
-  width: 95px;
-}
-
-
-
-
-
-/* ===== TABLE HEADER ===== */
-
-.viewer-items th {
-
-  padding: 11px 10px;
-
-  background: #1e3a5f;
-  color: #ffffff;
-
-  border: 1px solid #3d5a7a;
-
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-
-  letter-spacing: 0.4px;
-  text-transform: uppercase;
-
-  text-align: center;
-}
-
-
-/* ===== TABLE BODY ===== */
-
-.viewer-items td {
-
-  padding: 10px;
-
-  background: #ffffff;
-  color: #26384d;
-
-  border: 1px solid #d5dde6;
-  
-  font-size: 12px;
-  font-weight: 500;
-
-  line-height: 1.4;
-}
-
-
-/* ===== SERVICE / ITEM ===== */
-
-.viewer-items td:nth-child(2) {
-
-  text-align: left;
-
-  font-size: 13px;
-  font-weight: 600;
-
-  color: #26384d;
-}
-
-
-/* ===== QTY ===== */
-
-.viewer-items td:nth-child(3) {
-
-  text-align: center;
-
-  font-variant-numeric: tabular-nums;
-  font-size: 12px;
-  font-weight: 500;
-}
-
-
-/* ===== RATE / AMOUNT ===== */
-
-.viewer-items td:nth-child(4),
-.viewer-items td:nth-child(5) {
-
-  text-align: right;
-
-  font-variant-numeric: tabular-nums;
-  font-size: 12px;
-  font-weight: 500;
-
-  white-space: nowrap;
-}
-
-
-/* ===== SERIAL NUMBER ===== */
-
-.viewer-items td:nth-child(1) {
-
-  text-align: center;
-
-  font-variant-numeric: tabular-nums;
-
-  color: #6b7785;
-}
-
-
-/* ===== ROW HOVER ===== */
-
-.viewer-items tbody tr:hover td {
-
-  background: #f7f9fc;
-
-}
-
-
-
-/* =================================
-   STEP 6A
-   AMOUNT COLUMN EMPHASIS
-================================= */
-
-/* Amount column header */
-.viewer-items th:nth-child(5) {
-  text-align: right;
-  white-space: nowrap;
-}
-
-
-/* Amount column data */
-.viewer-items td:nth-child(5) {
-  text-align: right;
-
-  font-size: 13px;
-  font-weight: 700;
-
-  color: #1e3a5f;
-
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
-
-/* Slight background emphasis */
-.viewer-items td:nth-child(5) {
-  background: #f7f9fc;
-}
-
-
-/* Keep hover effect */
-.viewer-items tbody tr:hover td:nth-child(5) {
-  background: #eef4fb;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-/* =================================
-   TOTAL AMOUNT
-================================= */
-
-.viewer-total {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  margin-top: 14px;
-  margin-bottom: 18px;
-
-  padding: 14px 18px;
-
-  background: #eef4fb;
-
-  border: 1px solid #cbd9e8;
-  border-radius: 10px;
-}
-
-
-/* TOTAL label */
-.viewer-total > span {
-  font-size: 13px;
-  font-weight: 800;
-
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-
-  color: #5b6775;
-}
-
-
-/* TOTAL amount */
-.viewer-total > strong {
-  font-size: 20px;
-  font-weight: 800;
-
-  color: #1e3a5f;
-
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
-
-/* Number itself */
-.viewer-total-amount {
-  font-variant-numeric: tabular-nums;
-}
-
-
-
-
-/* =================================
-   VIEWER PAYMENT SUMMARY
-================================= */
-
-.viewer-payment-summary {
-  margin-top: 18px;
-  padding: 16px;
-  background: #f7f9fc;
-  border: 1px solid #dce3eb;
-  border-radius: 12px;
-}
-
-.viewer-payment-title {
-  margin-bottom: 12px;
-  padding-bottom: 9px;
-  border-bottom: 1px solid #dce3eb;
-
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.9px;
-  color: #1e3a5f;
-}
-
-.viewer-payment-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.viewer-payment-card {
-  padding: 11px 13px;
-  background: #ffffff;
-  border: 1px solid #dce3eb;
-  border-radius: 9px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.viewer-payment-card > span:first-child {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
-  color: #7a8795;
-}
-
-.viewer-payment-card > strong {
-  font-size: 14px;
-  font-weight: 700;
-  color: #26384d;
-  font-variant-numeric: tabular-nums;
-}
-
-.viewer-balance-card {
-  background: #eef4fb;
-  border-color: #cbd9e8;
-}
-
-.viewer-balance-card > strong {
-  color: #1e4f8a;
-  font-size: 15px;
-}
-
-
-
-
-/* ===== NOTE ===== */
-
-.viewer-note {
-
-  margin-top: 15px;
-
-  padding: 10px;
-
-  background: #fff8cc;
-
-  border-left: 4px solid #e6b800;
-
-}
-
-
-.viewer-note-title {
-
-  font-weight: bold;
-
-  color: #b00000;
-
-}
-
-
-/* ===== FOOTER ===== */
-
-.bill-viewer-footer {
-
-  padding: 12px 18px;
-
-  background: #f5f5f5;
-
-  display: flex;
-
-  gap: 10px;
-
-}
-
-
-.bill-viewer-footer button {
-
-  flex: 1;
-
-  margin: 0;
-
-}
-
-
-
-/* ===============================
-   ONLINE / OFFLINE STATUS
-================================ */
-
-#connectionStatus {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-
-  padding: 6px 12px;
-  border-radius: 20px;
-
-  font-size: 13px;
-  font-weight: 600;
-
-  z-index: 9999;
-}
-
-#connectionStatus.online {
-  background: #e8f5e9;
-  color: #2e7d32;
-}
-
-#connectionStatus.offline {
-  background: #ffebee;
-  color: #c62828;
-}
-
-
-
-
-/* =================================
-   PWA INSTALL BUTTON
-================================= */
-
-.install-app-btn {
-
-  display: none;
-
-  margin: 10px auto;
-
-  padding: 10px 18px;
-
-  background: #0066cc;
-  color: #ffffff;
-
-  border: none;
-  border-radius: 8px;
-
-  font-size: 14px;
-  font-weight: 600;
-
-  cursor: pointer;
-
-  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
-}
-
-.install-app-btn:hover {
-  background: #0052a3;
-}
-
-.install-app-btn:active {
-  transform: scale(0.98);
-}
-
-
-
-/* =================================
-   SHARE PDF BUTTON
-================================= */
-
-.share-pdf-btn {
-
-  margin: 8px auto;
-
-  padding: 10px 18px;
-
-  background: #198754;
-  color: #ffffff;
-
-  border: none;
-  border-radius: 8px;
-
-  font-size: 14px;
-  font-weight: 600;
-
-  cursor: pointer;
-
-  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
-}
-
-.share-pdf-btn:hover {
-  background: #157347;
-}
-
-.share-pdf-btn:active {
-  transform: scale(0.98);
-}
-
-
-
-
-
-/* =================================
-   BILL SAVED NOTIFICATION
-================================= */
-
-#saveNotification {
-
-  position: fixed;
-
-  top: 20px;
-  left: 50%;
-
-  transform: translateX(-50%);
-
-  display: none;
-
-  align-items: center;
-  gap: 10px;
-
-  min-width: 250px;
-
-  padding: 12px 16px;
-
-  background: #e8f5e9;
-  color: #1b5e20;
-
-  border: 1px solid #a5d6a7;
-
-  border-radius: 10px;
-
-  box-shadow:
-    0 4px 12px rgba(0,0,0,0.15);
-
-  z-index: 10000;
-}
-
-.save-notification-icon {
-
-  display: flex;
-
-  width: 28px;
-  height: 28px;
-
-  align-items: center;
-  justify-content: center;
-
-  background: #2e7d32;
-  color: #ffffff;
-
-  border-radius: 50%;
-
-  font-weight: bold;
-}
-
-#saveNotification strong {
-
-  display: block;
-
-  font-size: 14px;
-}
-
-#saveNotification small {
-
-  display: block;
-
-  margin-top: 2px;
-
-  font-size: 12px;
-
-  color: #4b6b4d;
-}
-
-
-/* =================================
-   NEW VERSION NOTIFICATION
-================================= */
-
-#updateNotification {
-
-  position: fixed;
-
-  top: 20px;
-  left: 50%;
-
-  transform: translateX(-50%);
-
-  display: none;
-
-  align-items: center;
-
-  gap: 12px;
-
-  width: min(420px, calc(100% - 30px));
-
-  padding: 14px 16px;
-
-  background: #ffffff;
-
-  border: 1px solid #cfd8dc;
-
-  border-radius: 12px;
-
-  box-shadow:
-    0 5px 18px rgba(0,0,0,0.18);
-
-  z-index: 10001;
-}
-
-
-/* Icon */
-
-.update-notification-icon {
-
-  font-size: 24px;
-
-  flex-shrink: 0;
-}
-
-
-/* Text */
-
-.update-notification-content {
-
-  flex: 1;
-
-}
-
-.update-notification-content strong {
-
-  display: block;
-
-  font-size: 14px;
-
-  color: #123b63;
-
-}
-
-.update-notification-content small {
-
-  display: block;
-
-  margin-top: 3px;
-
-  font-size: 12px;
-
-  line-height: 1.4;
-
-  color: #666;
-
-}
-
-
-/* Update button */
-
-#updateAppBtn {
-
-  padding: 8px 14px;
-
-  background: #0066cc;
-
-  color: #ffffff;
-
-  border: none;
-
-  border-radius: 7px;
-
-  font-size: 13px;
-
-  font-weight: 600;
-
-  cursor: pointer;
-
-  flex-shrink: 0;
-
-}
-
-#updateAppBtn:hover {
-
-  background: #0052a3;
-
-}
-
-#updateAppBtn:active {
-
-  transform: scale(0.97);
-
-}
-
-
-
-
-
-
-/* ===== MOBILE ===== */
-
-@media (max-width: 600px) {
-    
-    /* ============== MAINCOMPANY HEADER=========== */
-    
-.main-company-header {
-    gap: 10px;
-    padding: 6px 4px 12px;
-  }
-
-
-  /* Company Name */
-
-  .main-company-title h2 {
-    font-size: 19px;
-    margin-bottom: 2px;
-  }
-
-
-  /* Business Type */
-
-  .main-company-type {
-    font-size: 10px;
-    margin-bottom: 4px;
-  }
-
-
-  /* Address */
-
-  .main-company-address {
-    font-size: 9px;
-    margin-bottom: 4px;
-  }
-
-
-  /* Tel / Email */
-
-  .main-company-contact {
-    font-size: 9px;
-    gap: 4px;
-  }
-
-
-  /* Logo */
-
-  .main-company-logo {
-    width: 58px;
-    height: 48px;
-
-    border-radius: 7px;
-  }
-
-
-  #mainCompanyLogo {
-    max-width: 50px;
-    max-height: 42px;
-  }
-    
-    
-    
-    
-    .company-details-header {
-
-    padding: 11px 14px;
-
-    font-size: 14px;
-  }
-
-
-  .company-details-content {
-
-    padding: 12px;
-  }
-    
-    
-    
-    
-    
-  .container {
-    padding: 15px;
-  }
-
-  .container > .row {
-    flex-direction: column;
-
-    gap: 0;
-
-    padding: 10px;
-  }
-
-  .container > .row div {
-    width: 100%;
-  }
-
-  .container > .row div + div {
-    margin-top: 10px;
-  }
-    
-    
-
-  .bill-viewer-modal {
-
-    padding: 10px;
-
-  }
-
-
-  .bill-viewer-box {
-
-    margin: 5px auto;
-
-  }
-
-
-  
-  
-  /* =================================
-   BILL VIEWER - INFORMATION CARDS
-================================= */
-
-.viewer-info {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .viewer-info > div {
-    padding: 11px 13px;
-  }
-
-  .viewer-info strong {
-    font-size: 13px;
-  }
-  
-
-
-  .viewer-items {
-
-    font-size: 12px;
-
-  }
-
-
-  .viewer-items th,
-  .viewer-items td {
-
-    padding: 5px;
-
-  }
-  
-  
-  
-  .viewer-total {
-    padding: 13px 14px;
-  }
-
-  .viewer-total > span {
-    font-size: 12px;
-  }
-
-  .viewer-total > strong {
-    font-size: 18px;
-  }
-  
-  
-  
-  
-  
-  
- /* #items {
-    display: block;
-
-    overflow-x: auto;
-
-    white-space: nowrap;
-
-    -webkit-overflow-scrolling: touch;
-  }*/
-  
-
-
-  #items th,
-  #items td {
-    min-width: 75px;
-  }
-
-
-  #items th:nth-child(2),
-  #items td:nth-child(2) {
-    min-width: 150px;
-  }
-
-
-  #items th:nth-child(3),
-  #items td:nth-child(3) {
-    min-width: 65px;
-  }
-
-
-  #items th:nth-child(4),
-  #items td:nth-child(4),
-  #items th:nth-child(5),
-  #items td:nth-child(5) {
-    min-width: 105px;
-  }
-  
-  
-  .table-swipe-controls {
-    justify-content: space-between;
-  }
-
-  .table-swipe-controls button {
-    min-width: 125px;
-  }
-  
-  
-  
-  
-  
-   
-
-  .total-label {
-    font-size: 18px;
-  }
-
-  .total-value {
-    font-size: 19px;
-  }
-
-  #grandTotal {
-    font-size: 25px;
-  }
-
-
-  .container > button {
-    min-height: 44px;
-
-    font-size: 14px;
-  }
-  
-  
-  /* ===============================
-   SMART PARTICULARS SUGGESTIONS
-================================ */
-.particular-suggestion-item {
-    padding: 10px;
-    font-size: 13px;
-  }
-  
-  
-  
-  
-  
-  
-  /* ===== MOBILE BACKUP CONTROLS ===== */
-  
-    .history-tools {
-    width: 100%;
-    justify-content: flex-start;
-    margin-top: 8px;
-  }
-
-  .history-tools button {
-    min-width: 82px;
-    padding: 7px 8px;
-    font-size: 11px;
-  }
-  
-  
-  
-  
-  
-  /* ===============================
-   MOBILE BILL HISTORY
-================================ */
-  
-  
-   .bill-history {
-    margin: 18px 0;
-    border-radius: 10px;
-  }
-
-
-  .history-header {
-    padding: 15px;
-    align-items: flex-start;
-  }
-
-
-  .history-header h2 {
-    font-size: 17px;
-  }
-
-
-  .history-header p {
-    font-size: 11px;
-  }
-
-
-  .history-refresh-btn {
-    min-width: 82px;
-    font-size: 12px;
-    padding: 7px 8px;
-  }
-
-  #billHistory {
-    padding: 10px;
-    overflow-x: auto;
-  }
-
-  .history-table {
-    min-width: 720px;
-  }
-
-  .history-table th {
-    font-size: 11px;
-    padding: 9px 7px;
-
-  }
-
-
-  .history-table td {
-    font-size: 12px;
-    padding: 9px 7px;
-  }
-
-
-  .history-actions button {
-    width: 32px;
-    height: 32px;
-    min-width: 32px;
-    font-size: 14px;
-  }
-  
-  
-  
-  
-  
-
-}
-
-
-@media (max-width: 768px) {
-
-    .table-wrapper {
-        width: 100%;
-        overflow-x: auto;
-        overflow-y: hidden;
-    }
-
-    .table-wrapper table {
-        min-width: 700px;
-    }
-}
-
-@media (max-width: 480px) {
-
-    .amount-input {
-        width: 150px;
-    }
-
-    .amount-input input {
-        width: 85px;
-    }
-    
-    .payment-balance {
-        padding: 18px 16px;
-    }
-
-    .payment-balance > span {
-        font-size: 14px;
-    }
-
-    .payment-balance strong {
-        font-size: 21px;
-        gap: 5px;
-    }
-
-}
-
-
-
-
-
-
-
-</style>
 </head>
-
-
-
 
 
 
@@ -3612,37 +238,160 @@ textarea {
 
 <div class="company-details">
 
- <div class="company-details-header"
+<div class="company-details-header"
      onclick="toggleCompanyDetails()">
 
   <span>Company Details</span>
 
-<span id="companyDetailsArrow">+</span>
+  
+  <!-- COMPANY DETAILS COMPLETION -->
 
+<span id="companyCompletion"
+      style="
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2px;
+        font-weight: bold;
+        color: #166534;
+        background: conic-gradient(
+          #16a34a 0%,
+          #16a34a 0%,
+          #e5e7eb 0%,
+          #e5e7eb 100%
+        );
+        position: relative;
+        flex-shrink: 0;
+      ">
+  <span id="companyCompletionText"
+      style="
+        width: 24px;
+        height: 24px;
+        font-size: 8px !important;
+        font-weight: normal;
+        border-radius: 50%;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      ">
+    0%
+  </span>
+</span>
+
+  <span id="companyDetailsArrow">+</span>
 
 </div>
+
 
  <div id="companyDetailsContent"
      class="company-details-content collapsed">
 
-   <label>Company Name</label>
-  <input id="companyName"
-         value="Company Name">
+
+
+
+  <label>Company Name</label>
+
+<input
+  id="companyName"
+  value="Company Name"
+  oninput="handleCompanyNameChange()"
+>
          
-   <label>Bill Number Prefix</label>
+         
+ 
+
+<label>Bill Number Prefix</label>
 
 <input
   id="billPrefix"
   type="text"
   value="HRM"
-  maxlength="5"
+  maxlength="3"
   style="text-transform:uppercase;"
-  placeholder="Example: HRM">
-         
+  placeholder="Example: HRM"
+>
 
-  <label>Business Type</label>
-  <input id="companyType"
-         value="All Car Repair & Service Station">
+
+
+
+
+
+  
+
+<label>Business Type</label>
+
+<select id="companyType"
+        class="company-type-select"
+        onchange="updateCompanyTypeDescription()">
+
+  <option value="Automotive Electrical Repair & Service Station">
+    Automotive Electrical Workshop
+  </option>
+
+  <option value="All Car Repair & Service Station">
+    Automotive Workshop
+  </option>
+
+  <option value="Vehicle Maintenance & Service Center">
+    Vehicle Service Center
+  </option>
+
+  <option value="Motorbike Repair & Service Workshop">
+    Motorbike Repair
+  </option>
+
+  <option value="Hybrid Vehicle Repair & Maintenance Center">
+    Hybrid Vehicle Repair
+  </option>
+
+  <option value="Electric Motorcycle Repair & Service Center">
+    EV Bike Repair
+  </option>
+
+  <option value="All Vehicle Repair & Maintenance Services">
+    Vehicle Repair
+  </option>
+
+  <option value="Lathe & Milling Engineering Workshop">
+    Lathe & Milling Workshop
+  </option>
+
+  <option value="Iron Works & Welding Fabrication Workshop">
+    Iron Works & Welding Workshop
+  </option>
+
+  <option value="Vehicle Accident Repair & Body Shop">
+    Vehicle Accident Repair
+  </option>
+
+  <option value="Automotive Air Conditioning Repair & Service">
+    Automotive A/C Service
+  </option>
+
+  <option value="General Workshop & Engineering Services">
+    Other Workshop / Engineering Service
+  </option>
+
+</select>
+
+
+<label>Business Description</label>
+
+<input
+  id="companyTypeDescription"
+  type="text"
+  placeholder="Enter Business Description"
+>
+
+
+
+
+         
+         
 
   <label>Address</label>
   <input id="companyAddress">
@@ -3657,6 +406,7 @@ textarea {
          placeholder="example@gmail.com">
 
   <label>Company Logo</label>
+  
   <input id="companyLogo"
          type="file"
          accept="image/png, image/jpeg, image/jpg, image/webp"
@@ -3670,6 +420,10 @@ textarea {
                 display:none;
                 object-fit:contain;">
   </div>
+  
+  
+  
+ 
 
   <button type="button"
           onclick="saveCompanyDetails()">
@@ -4158,6 +912,15 @@ style="background:#25D366; color:white;">
       onclick="importFromBackupFile()">
       📥 Import
     </button>
+    
+    
+    <button
+  type="button"
+  onclick="restoreSafetyBackup()"
+>
+  🛡️ Restore Safety Backup
+</button>
+    
 
   </div>
 
@@ -4169,6 +932,139 @@ style="background:#25D366; color:white;">
   accept=".json,application/json"
   style="display:none"
   onchange="handleBackupFileImport(event)">
+  
+  
+  
+  <!-- MONTH FILTER -->
+  <div class="history-filter">  <label for="historyMonth">
+    📅 Filter by Month:
+  </label>
+  
+  <select
+    id="historyMonth"
+    onchange="loadBillHistory()">
+
+<option value="ALL">
+  All Months
+</option>
+
+  </select>
+  
+  </div>
+  
+  
+  <!-- ===== MONTHLY SUMMARY ===== -->
+  
+  <div class="monthly-summary">  <!-- TOTAL BILLS -->  <div class="summary-card summary-bills"><div class="summary-icon">📋</div>
+
+<div class="summary-label">
+  Total Bills
+</div>
+
+<div class="summary-value" id="summaryBillCount">
+  0
+</div>
+
+  </div>  <!-- TOTAL BILL VALUE -->  <div class="summary-card summary-total"><div class="summary-icon">💰</div>
+
+<div class="summary-label">
+  Total Bill Value
+</div>
+
+<div class="summary-value" id="summaryBillTotal">
+  Rs. 0.00
+</div>
+
+  </div>  <!-- TOTAL PAID -->  <div class="summary-card summary-paid"><div class="summary-icon">✅</div>
+
+<div class="summary-label">
+  Total Paid
+</div>
+
+<div class="summary-value" id="summaryPaidTotal">
+  Rs. 0.00
+</div>
+
+  </div>  <!-- OUTSTANDING BALANCE -->  <div class="summary-card summary-balance"><div class="summary-icon">⏳</div>
+
+<div class="summary-label">
+  Outstanding
+</div>
+
+<div class="summary-value" id="summaryOutstanding">
+  Rs. 0.00
+</div>
+
+  </div></div>
+  
+  
+ 
+ 
+ 
+  
+ <!-- ===== PAYMENT STATUS SUMMARY ===== -->
+ 
+ 
+ <div class="payment-status-summary"> 
+ 
+ 
+<button
+  type="button"
+  class="status-summary-card status-full"
+  onclick="filterBillsByPaymentStatus('FULL')"
+>
+     
+    <div class="status-summary-icon">🟢</div>
+    <div class="status-summary-label">FULL</div>
+    <div class="status-summary-value" id="summaryFullCount">0</div>
+    <div class="status-summary-caption">Fully Paid Bills</div>
+  </button> 
+  
+  
+  
+  
+ <button
+  type="button"
+  class="status-summary-card status-half"
+  onclick="filterBillsByPaymentStatus('HALF')"
+>
+      
+    <div class="status-summary-icon">🟠</div>
+    <div class="status-summary-label">HALF</div>
+    <div class="status-summary-value" id="summaryHalfCount">0</div>
+    <div class="status-summary-caption">Partially Paid Bills</div>
+</button>
+  
+  
+  
+  
+  
+ 
+      <button
+  type="button"
+  class="status-summary-card status-unpaid"
+  onclick="filterBillsByPaymentStatus('NOT PAID')"
+>
+    <div class="status-summary-icon">🔴</div>
+    <div class="status-summary-label">NOT PAID</div>
+    <div class="status-summary-value" id="summaryUnpaidCount">0</div>
+    <div class="status-summary-caption">Unpaid Bills</div>
+  
+  
+ </button>
+  
+  </div>
+  
+  
+  <!-- ===== ACTIVE PAYMENT FILTER INDICATOR ===== --><div id="activePaymentFilter" class="active-payment-filter" aria-live="polite">
+  Showing: All Payment Statuses
+</div>
+  
+  
+  
+  <!-- EXISTING BILL HISTORY -->
+  
+  
 
   <div id="billHistory">
     <p class="no-bills">
@@ -4176,9 +1072,9 @@ style="background:#25D366; color:white;">
     </p>
   </div>
 
+
+
 </div>
-
-
 
 
 
@@ -4260,6 +1156,45 @@ style="background:#25D366; color:white;">
 
 
 
+<!-- ===== DRAFT RESTORE POPUP ===== -->
+
+<div id="draftRestorePopup" class="draft-popup-overlay">
+
+  <div class="draft-popup">
+
+    <h3>Previous Draft Found!</h3>
+
+    <p>
+      A previously saved bill draft was found.
+      Do you want to restore it?
+    </p>
+
+    <div class="draft-popup-buttons">
+
+      <button
+        type="button"
+        id="restoreDraftBtn"
+      >
+        Restore
+      </button>
+
+      <button
+        type="button"
+        id="skipDraftBtn"
+      >
+        Not Now
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
 <script>
     
     
@@ -4271,7 +1206,7 @@ style="background:#25D366; color:white;">
     /* ===== AUTO BILL NO + AUTO DATE ===== */
     
     
-    window.onload = function () {
+      window.onload = function () {
 
   const today = new Date();
   const year = today.getFullYear();
@@ -4309,8 +1244,70 @@ if (savedCompany) {
     document.getElementById("billPrefix").value =
   savedCompany.prefix || "HRM";
 
-  document.getElementById("companyType").value =
+
+
+  // ===== RESTORE BUSINESS TYPE =====
+
+const companyType =
+  document.getElementById("companyType");
+
+const companyDescription =
+  document.getElementById("companyTypeDescription");
+
+const savedBusinessType =
+  savedCompany.businessType || "";
+
+// Check matching dropdown option
+
+const matchingOption =
+  Array.from(companyType.options).find(
+    option => option.value === savedBusinessType
+  );
+
+if (matchingOption) {
+
+  companyType.value = savedBusinessType;
+
+} else {
+
+  // ===== LEGACY BACKUP SUPPORT =====
+
+  const legacyType =
     savedCompany.type || "";
+
+  const legacyMatchingOption =
+    Array.from(companyType.options).find(
+      option => option.value === legacyType
+    );
+
+  if (legacyMatchingOption) {
+
+    companyType.value = legacyType;
+
+  } else {
+
+    companyType.selectedIndex = 0;
+
+  }
+
+}
+
+// ===== RESTORE DESCRIPTION =====
+
+if (companyDescription) {
+
+  companyDescription.value =
+    savedCompany.type || "";
+
+}
+
+// ===== UPDATE HEADER BACKGROUND =====
+
+updateCompanyHeaderBackground();
+
+
+
+
 
   document.getElementById("companyAddress").value =
     savedCompany.address || "";
@@ -4397,269 +1394,34 @@ if (savedLogo) {
 
 
 
-/* =================================
-   GENERATE NEXT BILL NUMBER
-================================= */
-
-function generateNextBillNumber() {
-
-  const today = new Date();
-
-  const year =
-    today.getFullYear();
-
-  const month =
-    String(
-      today.getMonth() + 1
-    ).padStart(2, "0");
-
-
-  /* ===== GET COMPANY PREFIX ===== */
-
-  const savedCompany =
-    JSON.parse(
-      localStorage.getItem("companyDetails")
-    ) || {};
-
-
-  const prefix =
-    (
-      savedCompany.prefix ||
-      "HRM"
-    )
-      .trim()
-      .toUpperCase();
-
-
-  /* ===== GET SAVED BILLS ===== */
-
-  const bills =
-    JSON.parse(
-      localStorage.getItem("hrmBills")
-    ) || [];
-
-
-  /* ===== FIND LAST BILL NUMBER ===== */
-
-  let lastSequence = 0;
-
-
-  bills.forEach(function(bill) {
-
-    const billNo =
-      String(
-        bill.billNo || ""
-      ).trim();
-
-
-    const pattern =
-      new RegExp(
-        "^" +
-        prefix +
-        "\\d{6}(\\d{4})$"
-      );
-
-
-    const match =
-      billNo.match(pattern);
-
-
-    if (match) {
-
-      const sequence =
-        Number(match[1]) || 0;
-
-
-      if (sequence > lastSequence) {
-
-        lastSequence =
-          sequence;
-
-      }
-
-    }
-
-  });
-
-
-  /* ===== NEXT SEQUENCE ===== */
-
-  const nextSequence =
-    lastSequence + 1;
-
-
-  const sequence =
-    String(nextSequence)
-      .padStart(4, "0");
-
-
-  /* ===== FINAL BILL NUMBER ===== */
-
-  document.getElementById("billNo").value =
-    `${prefix}${year}${month}${sequence}`;
-
-}
-
-    
-    
-    
-    
-    function toggleCompanyDetails() {
-
-  const content =
-    document.getElementById(
-      "companyDetailsContent"
-    );
-
-  const arrow =
-    document.getElementById(
-      "companyDetailsArrow"
-    );
-
-  content.classList.toggle("collapsed");
-
-
-  if (content.classList.contains("collapsed")) {
-
-    arrow.textContent = "+";
-
-    arrow.classList.remove("open");
-
-  } else {
-
-    arrow.textContent = "×";
-
-    arrow.classList.add("open");
-
-  }
-
-}
-    
-    
-    
-    
-    
-/* ===== SAVE COMPANY DETAILS ===== */
-
-function saveCompanyDetails() {
-
-  const logoInput =
-    document.getElementById("companyLogo");
-
-  const companyDetails = {
-
-    name:
-      document.getElementById("companyName").value,
-
-      prefix:
-    document.getElementById("billPrefix").value
-      .trim()
-      .toUpperCase(),
-    
-    type:
-      document.getElementById("companyType").value,
-
-    address:
-      document.getElementById("companyAddress").value,
-
-    contact:
-      document.getElementById("companyContact").value,
-
-    email:
-      document.getElementById("companyEmail").value,
-
-    logo:
-      localStorage.getItem("companyLogo") || ""
-
-  };
-
-
-
-// ===== UPDATE MAIN COMPANY HEADER =====
-
-document.getElementById("mainCompanyName").textContent =
-  companyDetails.name || "HighResist MOTORS";
-
-document.getElementById("mainCompanyType").textContent =
-  companyDetails.type || "";
-
-document.getElementById("mainCompanyAddress").textContent =
-  companyDetails.address || "";
-
-document.getElementById("mainCompanyContact").textContent =
-  "Tel: " + (companyDetails.contact || "-");
-
-document.getElementById("mainCompanyEmail").textContent =
-  "Email: " + (companyDetails.email || "-");
-
-  /* ===== SAVE NEW LOGO ===== */
-
-  if (logoInput.files.length > 0) {
-
-    const file =
-      logoInput.files[0];
-
-    const reader =
-      new FileReader();
-
-    reader.onload = function(e) {
-
-      localStorage.setItem(
-        "companyLogo",
-        e.target.result
-      );
-      
-      
-        // Update main header logo
-  const mainLogo =
-    document.getElementById("mainCompanyLogo");
-
-  mainLogo.src =
-    e.target.result;
-
-  mainLogo.style.display =
-    "block";
-      
-
-      companyDetails.logo =
-        e.target.result;
-
-      localStorage.setItem(
-        "companyDetails",
-        JSON.stringify(companyDetails)
-      );
-
-      alert(
-        "Company Details & Logo Saved Successfully!"
-      );
-      
-      generateNextBillNumber();
-
-    };
-    
-    
-    
     
     
 
-    reader.readAsDataURL(file);
 
-  } else {
 
-    localStorage.setItem(
-      "companyDetails",
-      JSON.stringify(companyDetails)
-    );
 
-    alert(
-      "Company Details Saved Successfully!"
-    );
+
+
     
-    generateNextBillNumber();
 
-  }
 
-}
+    
+    
+        
+    
+    
+
+
+
+
+
+
+
+    
+
+
+
+
     
     
     
@@ -4668,30 +1430,9 @@ document.getElementById("mainCompanyEmail").textContent =
     
     
     
-    /* ===== COMPANY LOGO PREVIEW ===== */
-
-function previewCompanyLogo(event) {
-
-  const file = event.target.files[0];
-
-  if (!file) {
-    return;
-  }
-
-  const reader = new FileReader();
-
-  reader.onload = function(e) {
-
-    const logoPreview =
-      document.getElementById("logoPreview");
-
-    logoPreview.src = e.target.result;
-    logoPreview.style.display = "inline-block";
-
-  };
-
-  reader.readAsDataURL(file);
-}
+    
+    
+    
     
     
     
@@ -4706,1322 +1447,59 @@ function previewCompanyLogo(event) {
     
     
    
-/* ===== AUTO TOTAL ===== */
 
-/* ===== AUTO TOTAL ===== */
 
-function calculateTotal() {
 
-  let total = 0;
 
-  const rows =
-    document.querySelectorAll("#items tr");
 
-  for (let i = 1; i < rows.length; i++) {
 
-    // Skip Add Row button row
-    if (
-      rows[i].classList.contains("add-row-table")
-    ) {
-      continue;
-    }
 
-    const inputs =
-      rows[i].querySelectorAll("input");
 
-    // Safety check
-    if (inputs.length < 4) {
-      continue;
-    }
 
-    const qty =
-      Number(inputs[1].value) || 0;
 
-    const rate =
-      Number(inputs[2].value) || 0;
+/* ===== GET DRAFT ITEMS ===== */
 
-    const amount =
-      qty * rate;
 
-    // Amount column
-    inputs[3].value =
-      amount.toFixed(2);
 
-    total += amount;
-  }
-  
-  
-  document.getElementById("grandTotal").innerText =
-    total.toLocaleString("en-LK", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    });
 
 
-  // ===== PAYMENT TOTAL =====
 
-  document.getElementById("paymentTotal")
-    .textContent =
-      total.toLocaleString("en-LK", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      });
 
 
-  // ===== UPDATE PAYMENT =====
 
-  updatePaymentUI(total);
-}
 
 
-function updatePaymentUI(currentTotal) {
 
-  // If total was not passed,
-  // calculate it from the table
-  if (typeof currentTotal !== "number") {
 
-    currentTotal = 0;
 
-    const rows =
-      document.querySelectorAll("#items tr");
 
-    for (let i = 1; i < rows.length; i++) {
 
-      if (
-        rows[i].classList.contains("add-row-table")
-      ) {
-        continue;
-      }
 
-      const inputs =
-        rows[i].querySelectorAll("input");
 
-      if (inputs.length < 4) {
-        continue;
-      }
 
-      const qty =
-        Number(inputs[1].value) || 0;
 
-      const rate =
-        Number(inputs[2].value) || 0;
 
-      currentTotal += qty * rate;
-    }
-  }
 
 
-  const status =
-    document.querySelector(
-      'input[name="paymentStatus"]:checked'
-    )?.value || "FULL";
 
 
-  const paidInput =
-    document.getElementById("paidAmount");
 
 
-  let paid = 0;
 
 
-  // ===== FULL PAYMENT =====
 
-if (status === "FULL") {
 
-  paid = currentTotal;
 
-  paidInput.value =
-    currentTotal.toFixed(2);
 
-  paidInput.disabled = false;
-  paidInput.readOnly = true;
-}
 
 
- // ===== HALF PAYMENT =====
 
-else if (status === "HALF") {
 
-  paidInput.disabled = false;
-  paidInput.readOnly = false;
 
-  paidInput.placeholder = "0.00";
 
-  paid =
-    Number(paidInput.value) || 0;
-}
 
 
-  // ===== NOT PAID =====
 
-else if (status === "NOT PAID") {
-
-  paid = 0;
-
-  paidInput.value = "0.00";
-
-  paidInput.disabled = false;
-  paidInput.readOnly = true;
-}
-
-
-  // ===== BALANCE =====
-
-  let balance =
-    currentTotal - paid;
-
-  if (balance < 0) {
-    balance = 0;
-  }
-
-
-  // ===== DISPLAY TOTAL =====
-
-  document.getElementById("paymentTotal")
-    .textContent =
-      currentTotal.toLocaleString("en-LK", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      });
-
-
-  // ===== DISPLAY BALANCE =====
-
-  document.getElementById("balanceAmount")
-    .textContent =
-      balance.toLocaleString("en-LK", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      });
-}
-
-/* ===== service details tabel zoom ===== */
-
-let tableZoom = 1;
-
-function zoomTable(amount) {
-
-  tableZoom += amount;
-
-  // Minimum 70%
-  if (tableZoom < 0.7) {
-    tableZoom = 0.7;
-  }
-
-  // Maximum 120%
-  if (tableZoom > 1.2) {
-    tableZoom = 1.2;
-  }
-
-  const table =
-    document.getElementById("items");
-
-  table.style.transform =
-    `scale(${tableZoom})`;
-
-  table.style.transformOrigin =
-    "top left";
-
-  document.getElementById("tableZoomLevel").textContent =
-    Math.round(tableZoom * 100) + "%";
-}
-
-
-
-
-function handlePaymentStatusChange() {
-
-  const status =
-    document.querySelector(
-      'input[name="paymentStatus"]:checked'
-    )?.value;
-
-  const paidInput =
-    document.getElementById("paidAmount");
-
-  if (status === "HALF") {
-
-    paidInput.value = "";
-    paidInput.placeholder = "0.00";
-  }
-
-  updatePaymentUI();
-}
-
-
-
-
-
-function resetTableZoom() {
-
-  tableZoom = 1;
-
-  const table =
-    document.getElementById("items");
-
-  table.style.transform =
-    "scale(1)";
-
-  table.style.transformOrigin =
-    "top left";
-
-  document.getElementById("tableZoomLevel").textContent =
-    "100%";
-}
-
-
-
-
-/* ===============================
-   TABLE SWIPE MODE
-================================ */
-
-let tableSwipeEnabled = false;
-
-let swipeStartX = 0;
-let swipeStartScrollLeft = 0;
-let isTableSwiping = false;
-
-
-function toggleTableSwipe() {
-
-  const wrapper =
-    document.querySelector(".table-wrapper");
-
-  const button =
-    document.getElementById("swipeTableBtn");
-
-  const status =
-    document.getElementById("swipeStatus");
-
-
-  tableSwipeEnabled =
-    !tableSwipeEnabled;
-
-
-  if (tableSwipeEnabled) {
-
-    wrapper.classList.add("swipe-mode");
-
-    button.classList.add("swipe-active");
-
-    button.textContent =
-      "🟢 Swipe Mode ON";
-
-    status.textContent =
-      "Drag table ← →";
-
-  } else {
-
-    wrapper.classList.remove("swipe-mode");
-
-    wrapper.classList.remove("swiping");
-
-    button.classList.remove("swipe-active");
-
-    button.textContent =
-      "☝️ Swipe Table";
-
-    status.textContent =
-      "Swipe Mode OFF";
-
-  }
-
-}
-
-
-/* ===============================
-   TOUCH SWIPE
-================================ */
-
-const tableWrapper =
-  document.querySelector(".table-wrapper");
-
-
-tableWrapper.addEventListener(
-  "touchstart",
-  function(e) {
-
-    if (!tableSwipeEnabled) {
-      return;
-    }
-
-    swipeStartX =
-      e.touches[0].pageX;
-
-    swipeStartScrollLeft =
-      tableWrapper.scrollLeft;
-
-    isTableSwiping = true;
-
-    tableWrapper.classList.add("swiping");
-
-  },
-  { passive: true }
-);
-
-
-tableWrapper.addEventListener(
-  "touchmove",
-  function(e) {
-
-    if (
-      !tableSwipeEnabled ||
-      !isTableSwiping
-    ) {
-      return;
-    }
-
-    const currentX =
-      e.touches[0].pageX;
-
-    const distance =
-      currentX - swipeStartX;
-
-    tableWrapper.scrollLeft =
-      swipeStartScrollLeft - distance;
-
-  },
-  { passive: true }
-);
-
-
-tableWrapper.addEventListener(
-  "touchend",
-  function() {
-
-    if (!tableSwipeEnabled) {
-      return;
-    }
-
-    isTableSwiping = false;
-
-    tableWrapper.classList.remove("swiping");
-
-  }
-);
-
-
-
-
-/* ===============================
-   WORKSHOP SERVICE SUGGESTIONS
-================================ */
-
-const workshopSuggestions = [
-
-  "Engine Oil Change",
-  "Engine Oil & Filter Change",
-  "Engine Repair",
-  "Engine Tune-up",
-  "Engine Overhaul",
-
-  "Oil Filter Replacement",
-  "Air Filter Replacement",
-  "Fuel Filter Replacement",
-  "Cabin Filter Replacement",
-
-  "Battery Test",
-  "Battery Replacement",
-  "Battery Charging",
-  "Battery Terminal Cleaning",
-
-  "Brake Pad Replacement",
-  "Brake Shoe Replacement",
-  "Brake Disc Replacement",
-  "Brake Service",
-  "Brake Fluid Replacement",
-
-  "Tyre Replacement",
-  "Tyre Repair",
-  "Tyre Rotation",
-  "Wheel Alignment",
-  "Wheel Balancing",
-
-  "Vehicle Inspection",
-  "Vehicle Service",
-  "Full Service",
-  "General Repair",
-
-  "Radiator Repair",
-  "Coolant Replacement",
-  "Cooling System Service",
-
-  "Spark Plug Replacement",
-  "Ignition Coil Replacement",
-
-  "AC Service",
-  "AC Gas Refill",
-  "AC Compressor Repair",
-
-  "Clutch Repair",
-  "Clutch Replacement",
-
-  "Suspension Repair",
-  "Shock Absorber Replacement",
-
-  "Alternator Repair",
-  "Starter Motor Repair",
-
-  "Headlight Repair",
-  "Electrical Repair"
-
-];
-
-
-
-/* ===============================
-   RECENT SERVICES FROM BILL HISTORY
-================================ */
-
-function getRecentServiceSuggestions() {
-
-  const bills =
-    JSON.parse(
-      localStorage.getItem("hrmBills")
-    ) || [];
-
-
-  const recentServices = [];
-
-  // Newest bills first
-  for (
-    let i = bills.length - 1;
-    i >= 0;
-    i--
-  ) {
-
-    const bill =
-      bills[i];
-
-
-    if (!bill.items) {
-      continue;
-    }
-
-
-    bill.items.forEach(function(item) {
-
-      const service =
-        (item.particulars || "")
-          .trim();
-
-
-      // Empty service skip
-      if (service === "") {
-        return;
-      }
-
-
-      // Duplicate services skip
-      const alreadyExists =
-        recentServices.some(function(existing) {
-
-          return (
-            existing.toLowerCase() ===
-            service.toLowerCase()
-          );
-
-        });
-
-
-      if (!alreadyExists) {
-
-        recentServices.push(
-          service
-        );
-
-      }
-
-    });
-
-  }
-
-
-  return recentServices;
-
-}
-
-
-
-
-/* ===============================
-   SHOW PARTICULAR SUGGESTIONS
-================================ */
-
-/* ===============================
-   SMART + RECENT SERVICE SUGGESTIONS
-================================ */
-
-function showParticularSuggestions(input) {
-
-  const text =
-    input.value
-      .trim()
-      .toLowerCase();
-
-
-// Hide all existing suggestion boxes
-document
-  .querySelectorAll(".particular-suggestion-box")
-  .forEach(function(box) {
-
-    box.style.display = "none";
-
-  });
-  
-  
-  
-
-  const td =
-    input.parentElement;
-    
-    input.setAttribute(
-  "data-suggestion-active",
-  "true"
-);
-
-
-
-const suggestionBox =
-    document.querySelector(
-      ".particular-suggestion-box"
-    );
-    
-
-if (!suggestionBox) {
-  console.log("Suggestion box not found!");
-  return;
-}
-
-
-  // Empty නම් hide කරන්න
-
-  if (text === "") {
-
-    suggestionBox.style.display =
-      "none";
-
-    return;
-
-  }
-
-
-  // =================================
-  // GET RECENT SERVICES FROM HISTORY
-  // =================================
-
-  const recentServices =
-    getRecentServiceSuggestions();
-
-
-  // =================================
-  // MATCH RECENT SERVICES
-  // =================================
-
-  const recentMatches =
-    recentServices.filter(
-      function(service) {
-
-        return service
-          .toLowerCase()
-          .includes(text);
-
-      }
-    );
-
-
-  // =================================
-  // MATCH DEFAULT WORKSHOP SERVICES
-  // =================================
-
-  const defaultMatches =
-    workshopSuggestions.filter(
-      function(service) {
-
-        return service
-          .toLowerCase()
-          .includes(text);
-
-      }
-    );
-
-
-  // =================================
-  // REMOVE DUPLICATES
-  // =================================
-
-  const allSuggestions = [];
-
-  function addUnique(service, type) {
-
-    const exists =
-      allSuggestions.some(
-        function(item) {
-
-          return (
-            item.text.toLowerCase() ===
-            service.toLowerCase()
-          );
-
-        }
-      );
-
-
-    if (!exists) {
-
-      allSuggestions.push({
-        text: service,
-        type: type
-      });
-
-    }
-
-  }
-
-
-  // Recent services first ⭐
-
-  if (recentMatches.length > 0) {
-
-  recentMatches.forEach(
-    function(service) {
-
-      addUnique(
-        service,
-        "recent"
-      );
-
-    }
-  );
-
-}
-
-
-  // Default suggestions after
-
-  defaultMatches.forEach(
-    function(service) {
-
-      addUnique(
-        service,
-        "default"
-      );
-
-    }
-  );
-
-
-  // No results
-
-if (allSuggestions.length === 0) {
-
-  suggestionBox.innerHTML = "";
-
-  suggestionBox.style.display =
-    "none";
-
-  return;
-
-}
-
-
-  // =================================
-  // BUILD SUGGESTION UI
-  // =================================
-
-  let html = "";
-
-  let recentAdded = false;
-  let defaultAdded = false;
-
-
-  allSuggestions
-    .slice(0, 8)
-    .forEach(
-      function(item) {
-
-
-        // ===== RECENT HEADER =====
-
-        if (
-          item.type === "recent" &&
-          !recentAdded
-        ) {
-
-          html += `
-            <div class="suggestion-section-title">
-              🕘 Recent Services
-            </div>
-          `;
-
-          recentAdded = true;
-
-        }
-
-
-        // ===== DEFAULT HEADER =====
-
-        if (
-          item.type === "default" &&
-          !defaultAdded
-        ) {
-
-          html += `
-            <div class="suggestion-section-title">
-              🔧 Workshop Services
-            </div>
-          `;
-
-          defaultAdded = true;
-
-        }
-
-
-        // ===== SUGGESTION ITEM =====
-
-        html += `
-         <div
-  class="particular-suggestion-item"
-  data-suggestion="${item.text}"
-  onpointerdown="selectParticularSuggestion(event, this)">
-
-            ${item.type === "recent" ? "🕘" : "🔧"}
-            ${item.text}
-
-          </div>
-        `;
-
-      }
-    );
-
-
-  suggestionBox.innerHTML = html;
-
-// Move suggestion box outside the table
-if (suggestionBox.parentElement !== document.body) {
-  document.body.appendChild(suggestionBox);
-}
-
-// Remember the input that opened this box
-suggestionBox._activeInput = input;
-
-
-
-
-// Get input position
-const rect =
-    input.getBoundingClientRect();
-
-
-// Set width first
-suggestionBox.style.width =
-    rect.width + "px";
-
-
-// Show temporarily so we can measure height
-suggestionBox.style.display =
-    "block";
-
-
-// Get actual suggestion box height
-const boxHeight =
-    suggestionBox.offsetHeight;
-
-
-// Available space below input
-const spaceBelow =
-    window.innerHeight - rect.bottom;
-
-
-// Available space above input
-const spaceAbove =
-    rect.top;
-
-
-// If not enough space below,
-// show the box above the input
-if (
-    spaceBelow < boxHeight &&
-    spaceAbove > boxHeight
-) {
-
-    suggestionBox.style.top =
-        (rect.top - boxHeight - 3) + "px";
-
-} else {
-
-    suggestionBox.style.top =
-        (rect.bottom + 3) + "px";
-
-}
-
-
-// Horizontal position
-suggestionBox.style.left =
-    rect.left + "px";
-
-}
-
-
-
-
-
-
-
-/* ===============================
-   SELECT PARTICULAR SUGGESTION
-================================ */
-/* ===============================
-   SELECT PARTICULAR SUGGESTION
-================================ */
-
-function selectParticularSuggestion(event, element) {
-
-  event.preventDefault();
-
-
-  const suggestionBox =
-      element.closest(
-        ".particular-suggestion-box"
-      );
-
-
-  if (!suggestionBox) {
-    return;
-  }
-
-
-  // Get the input that opened this box
-  const input =
-      suggestionBox._activeInput;
-
-
-  if (!input) {
-    return;
-  }
-
-
-  const td =
-      input.closest("td");
-
-
-  const preview =
-      td.querySelector(
-        ".particular-preview"
-      );
-
-
-  const display =
-      td.querySelector(
-        ".particular-display"
-      );
-
-
-  const suggestion =
-      element.dataset.suggestion;
-
-
-  // Fill input
-  input.value =
-      suggestion;
-
-
-  // Update preview
-  if (preview) {
-
-    preview.textContent =
-        suggestion;
-
-    preview.style.display =
-        "none";
-
-  }
-
-
-  // Update normal display
-  if (display) {
-
-    display.textContent =
-        suggestion;
-
-    display.style.display =
-        "block";
-
-  }
-
-
-  // Hide suggestion box
-  suggestionBox.style.display =
-      "none";
-
-
-  // Hide input
-  input.style.display =
-      "none";
-
-}
-
-
-
-
-
-
-
-
-function hideParticularSuggestions(input) {
-
-  const suggestionBox =
-      document.querySelector(
-        ".particular-suggestion-box"
-      );
-
-
-  if (suggestionBox) {
-
-    suggestionBox.style.display =
-        "none";
-
-  }
-
-}
-
-
-
-
-
-/* ===============================
-   SMART WORKSHOP SPELLING SYSTEM
-================================ */
-
-const workshopDictionary = {
-
-  // ===== VEHICLE =====
-  "vehiical": "Vehicle",
-  "vehical": "Vehicle",
-  "vehicale": "Vehicle",
-
-  // ===== ENGINE =====
-  "engin": "Engine",
-  "engien": "Engine",
-
-  // ===== BATTERY =====
-  "battary": "Battery",
-  "battry": "Battery",
-
-  // ===== BRAKE =====
-  "break": "Brake",
-  "brakee": "Brake",
-
-  // ===== TYRE =====
-  "tyer": "Tyre",
-  "tire": "Tyre",
-
-  // ===== SERVICE =====
-  "servise": "Service",
-  "sevice": "Service",
-
-  // ===== REPAIR =====
-  "repaire": "Repair",
-  "repir": "Repair",
-
-  // ===== CHANGE =====
-  "chenge": "Change",
-  "chnage": "Change",
-
-  // ===== OIL =====
-  "oill": "Oil",
-
-  // ===== FILTER =====
-  "fillter": "Filter",
-  "fiter": "Filter",
-
-  // ===== REPLACEMENT =====
-  "replcement": "Replacement",
-  "replacment": "Replacement"
-
-};
-
-
-function smartCorrectParticular(input) {
-
-  let text = input.value;
-
-  // Preserve spaces but process words
-  const words = text.split(/(\s+)/);
-
-  const correctedWords = words.map(function(word) {
-
-    // Keep spaces unchanged
-    if (word.trim() === "") {
-      return word;
-    }
-
-    // Remove punctuation temporarily
-    const match = word.match(/^([^a-zA-Z]*)(.*?)([^a-zA-Z]*)$/);
-
-    if (!match) {
-      return word;
-    }
-
-    const before = match[1];
-    const coreWord = match[2];
-    const after = match[3];
-
-    const lowerWord =
-      coreWord.toLowerCase();
-
-    // Dictionary correction
-    if (workshopDictionary[lowerWord]) {
-
-      return (
-        before +
-        workshopDictionary[lowerWord] +
-        after
-      );
-
-    }
-
-    // Unknown word:
-    // Capitalize first letter
-    if (coreWord.length > 0) {
-
-      return (
-        before +
-        coreWord.charAt(0).toUpperCase() +
-        coreWord.slice(1).toLowerCase() +
-        after
-      );
-
-    }
-
-    return word;
-
-  });
-
-  input.value =
-    correctedWords.join("");
-
-}
-
-
-
-
-function startParticularEdit(input) {
-
-    const td = input.parentElement;
-
-    const preview =
-        td.querySelector(".particular-preview");
-
-    const display =
-        td.querySelector(".particular-display");
-
-    // Show input
-    input.style.display = "block";
-
-    // Hide normal display
-    if (display) {
-        display.style.display = "none";
-    }
-
-    // Show live preview
-    if (preview) {
-        preview.style.display = "block";
-        preview.textContent = input.value;
-    }
-    
-    // Allow suggestions again when editing
-input.setAttribute(
-    "data-suggestion-active",
-    "true"
-);
-}
-
-
-function updateParticularPreview(input) {
-
-    const preview =
-        input.parentElement.querySelector(".particular-preview");
-
-    if (preview) {
-        preview.textContent = input.value;
-    }
-}
-
-
-function finishParticular(input) {
-
-  const td =
-    input.closest("td");
-
-  const preview =
-    td.querySelector(".particular-preview");
-
-  const display =
-    td.querySelector(".particular-display");
-
-  // Smart spelling correction
-  smartCorrectParticular(input);
-
-  const value =
-    input.value.trim();
-
-  // Empty නම් input එකම පෙන්වන්න
-  if (value === "") {
-
-    input.style.display = "block";
-
-    if (preview) {
-      preview.style.display = "none";
-    }
-
-    if (display) {
-      display.textContent = "";
-      display.style.display = "none";
-    }
-
-    return;
-  }
-
-  // Normal display update
-  if (display) {
-
-    display.textContent = value;
-
-    display.style.display = "block";
-
-  }
-
-  // Preview hide
-  if (preview) {
-
-    preview.style.display = "none";
-
-  }
-
-  // Input hide
-  input.style.display = "none";
-
-}
-
-
-function editParticular(display) {
-
-    const td = display.parentElement;
-
-    const input =
-        td.querySelector(".particular-input");
-
-    display.style.display = "none";
-
-    input.style.display = "block";
-
-    startParticularEdit(input);
-
-    input.focus();
-}
-
-
-function getParticularCellHTML(value = "") {
-
-  return `
-    <td style="position:relative;">
-
-      <input type="text"
-             class="particular-input"
-             value="${value}"
-             spellcheck="true"
-             autocomplete="off"
-             onfocus="startParticularEdit(this)"
-             oninput="updateParticularPreview(this); showParticularSuggestions(this)"
-             onblur="hideParticularSuggestions(this); finishParticular(this)">
-
-      <div class="particular-preview"></div>
-
-      <div class="particular-suggestion-box"></div>
-
-      <div class="particular-display"
-           onclick="editParticular(this)">
-      </div>
-
-    </td>
-  `;
-}
-
-
-
-
-
-/* ===== ADD ROW BUTTON FUNCTION ===== */
-function addRow() {
-
-  const table =
-    document.getElementById("items");
-
-
-  // Find the Add Row button row
-  const addRowButton =
-    table.querySelector(".add-row-table");
-
-
-  // Count only actual item rows
-  const itemRows =
-    table.querySelectorAll(
-      "tr:not(.add-row-table)"
-    );
-
-  const rowCount =
-    itemRows.length;
-
-
-  // Create new row
-  const row =
-    table.insertRow(
-      addRowButton
-        ? addRowButton.rowIndex
-        : table.rows.length
-    );
-
-
-  row.innerHTML = `
-
-    <td>${rowCount}</td>
-
-    ${getParticularCellHTML()}
-
-    <td>
-      <input type="number"
-             value="1"
-             min="1"
-             step="1"
-             oninput="calculateTotal()">
-    </td>
-
-    <td>
-      <input type="number"
-             step="0.01"
-             min="0"
-             oninput="calculateTotal()">
-    </td>
-
-    <td>
-      <input type="number"
-             readonly>
-    </td>
-
-  `;
-
-
-  // Auto focus Particulars
-  const input =
-    row.querySelector(".particular-input");
-
-  if (input) {
-    input.focus();
-  }
-
-}
 
 
 
@@ -6550,163 +2028,776 @@ generateNextBillNumber();
 
 
 
+// ===== HTML ESCAPE HELPER =====
+
+function escapeHTML(value) {
+
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+
+}
+
+
+
+function updateMonthlySummary(filteredBills) {
+
+// ===== SUMMARY VALUES =====
+
+let billCount = filteredBills.length;
+
+let totalBillValue = 0;
+
+let totalPaid = 0;
+
+let totalOutstanding = 0;
+
+// ===== CALCULATE TOTALS =====
+
+filteredBills.forEach(function(item) {
+
+const bill = item.bill || item;
+
+const billTotal =
+  Number(bill.total) || 0;
+
+let paidAmount =
+  Number(bill.paidAmount) || 0;
+
+let balance =
+  Number(bill.balance);
+
+// Support older bills without payment fields
+if (bill.paymentStatus === "NOT PAID") {
+
+  paidAmount = 0;
+
+  balance = billTotal;
+
+} else if (bill.paymentStatus === "FULL") {
+
+  paidAmount = billTotal;
+
+  balance = 0;
+
+} else {
+
+  // For HALF or other payment statuses,
+  // use the saved payment values.
+  if (!Number.isFinite(Number(bill.balance))) {
+
+    balance = Math.max(
+      billTotal - paidAmount,
+      0
+    );
+
+  }
+
+  if (!Number.isFinite(Number(bill.paidAmount))) {
+
+    paidAmount = Math.max(
+      billTotal - balance,
+      0
+    );
+
+  }
+
+}
+
+
+totalBillValue += billTotal;
+
+totalPaid += paidAmount;
+
+totalOutstanding += balance;
+
+});
+
+// ===== FORMAT CURRENCY =====
+
+function formatRs(amount) {
+
+return "Rs. " + amount.toLocaleString(
+  "en-LK",
+  {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }
+);
+
+}
+
+// ===== UPDATE SUMMARY CARDS =====
+
+document.getElementById(
+"summaryBillCount"
+).textContent = billCount;
+
+document.getElementById(
+"summaryBillTotal"
+).textContent = formatRs(totalBillValue);
+
+document.getElementById(
+"summaryPaidTotal"
+).textContent = formatRs(totalPaid);
+
+document.getElementById(
+"summaryOutstanding"
+).textContent = formatRs(totalOutstanding);
+
+}
+
+
+
+function updatePaymentStatusSummary(filteredBills) {
+
+let fullCount = 0;
+let halfCount = 0;
+let unpaidCount = 0;
+
+filteredBills.forEach(function(item) {
+
+const bill = item.bill || item;
+
+if (bill.paymentStatus === "FULL") {
+
+  fullCount++;
+
+} else if (bill.paymentStatus === "HALF") {
+
+  halfCount++;
+
+} else if (bill.paymentStatus === "NOT PAID") {
+
+  unpaidCount++;
+
+}
+
+});
+
+document.getElementById("summaryFullCount").textContent = fullCount;
+
+document.getElementById("summaryHalfCount").textContent = halfCount;
+
+document.getElementById("summaryUnpaidCount").textContent = unpaidCount;
+
+}
+
+
+
+
+/* ===== PAYMENT STATUS BUTTON FILTER ===== */
+
+let selectedPaymentStatus = "ALL";
+
+function filterBillsByPaymentStatus(status) {
+
+if (selectedPaymentStatus === status) {
+
+selectedPaymentStatus = "ALL";
+
+} else {
+
+selectedPaymentStatus = status;
+
+}
+
+// Update selected button design
+document.querySelectorAll(".status-summary-card").forEach(function(button) {
+
+const isActive =
+  button.getAttribute("onclick") ===
+  "filterBillsByPaymentStatus('" + selectedPaymentStatus + "')";
+
+button.classList.toggle(
+  "active",
+  selectedPaymentStatus !== "ALL" && isActive
+);
+
+});
+
+// Update filter indicator
+updateActivePaymentFilter();
+
+// Refresh Bill History
+loadBillHistory();
+
+}
+
+
+
+
+
+function updateActivePaymentFilter() {
+
+const indicator = document.getElementById("activePaymentFilter");
+
+if (!indicator) return;
+
+const labels = {
+"ALL": "Showing: All Payment Statuses",
+"FULL": "Showing: FULL — Fully Paid Bills",
+"HALF": "Showing: HALF — Partially Paid Bills",
+"NOT PAID": "Showing: NOT PAID — Unpaid Bills"
+};
+
+indicator.textContent =
+labels[selectedPaymentStatus] || labels["ALL"];
+
+}
 
 
 /* ===============================
-   LOAD BILL HISTORY
+   ➡️LOAD BILL HISTORY new upbrade v2.591
 ================================ */
 
+// ===== BILL HISTORY DISPLAY SETTINGS =====
+
+const BILLS_PER_MONTH = 10;
+
+let showOlderBills = false;
+
+let olderBillsFilterKey = "";
+
+
+// ===== LOAD BILL HISTORY =====
+
 function loadBillHistory() {
+
+  // ===== KEEP PAYMENT FILTER SYNCHRONIZED =====
+
+  updateActivePaymentFilter();
+
+
+  // ===== UPDATE ACTIVE PAYMENT BUTTON =====
+
+  document.querySelectorAll(
+    ".status-summary-card"
+  ).forEach(function(button) {
+
+    const isActive =
+      button.getAttribute("onclick") ===
+      "filterBillsByPaymentStatus('" +
+      selectedPaymentStatus + "')";
+
+    button.classList.toggle(
+      "active",
+      selectedPaymentStatus !== "ALL" &&
+      isActive
+    );
+
+  });
+
 
   const history =
     document.getElementById("billHistory");
 
-  const bills =
-    JSON.parse(
-      localStorage.getItem("hrmBills")
-    ) || [];
+  const monthFilter =
+    document.getElementById("historyMonth");
 
 
-  // ===== NO BILLS =====
+  const bills = JSON.parse(
+    localStorage.getItem("hrmBills") || "[]"
+  );
 
-  if (bills.length === 0) {
 
-    history.innerHTML =
-      "<p>No Saved Bills Found.</p>";
+  // ===== GET MONTH KEY =====
 
-    return;
+  function getMonthKey(dateValue) {
+
+    if (!dateValue) return "";
+
+    const match = String(dateValue).match(
+      /^(\d{4})-(\d{2})/
+    );
+
+    if (match) {
+      return `${match[1]}-${match[2]}`;
+    }
+
+    const alternate = String(dateValue).match(
+      /^(\d{2})\/(\d{2})\/(\d{4})$/
+    );
+
+    if (alternate) {
+      return `${alternate[3]}-${alternate[2]}`;
+    }
+
+    return "";
+
   }
 
 
-  // ===== TABLE HEADER =====
+  // ===== BUILD MONTH LIST =====
+
+  const monthMap = new Map();
+
+  bills.forEach(function(bill) {
+
+    const key = getMonthKey(bill.billDate);
+
+    if (!key) return;
+
+    if (!monthMap.has(key)) {
+
+      const parts = key.split("-");
+
+      const label = new Date(
+        Number(parts[0]),
+        Number(parts[1]) - 1,
+        1
+      ).toLocaleDateString("en-US", {
+        month: "long",
+        year: "numeric"
+      });
+
+      monthMap.set(key, label);
+
+    }
+
+  });
+
+
+  // ===== UPDATE MONTH FILTER =====
+
+  if (monthFilter) {
+
+    const previousSelection = monthFilter.value;
+
+    const sortedMonths =
+      Array.from(monthMap.entries()).sort(
+        function(a, b) {
+          return b[0].localeCompare(a[0]);
+        }
+      );
+
+    monthFilter.innerHTML =
+      '<option value="ALL">All Months</option>';
+
+    sortedMonths.forEach(function(entry) {
+
+      const option = document.createElement("option");
+
+      option.value = entry[0];
+      option.textContent = entry[1];
+
+      monthFilter.appendChild(option);
+
+    });
+
+    monthFilter.value =
+      previousSelection === "ALL" ||
+      monthMap.has(previousSelection)
+        ? previousSelection
+        : "ALL";
+
+  }
+
+
+  // ===== FILTER BILLS =====
+
+  const selectedMonth =
+    monthFilter ? monthFilter.value : "ALL";
+
+
+  // Reset See More when the selected filters change.
+
+  const currentFilterKey =
+    selectedMonth + "|" + selectedPaymentStatus;
+
+  if (currentFilterKey !== olderBillsFilterKey) {
+
+    showOlderBills = false;
+
+    olderBillsFilterKey = currentFilterKey;
+
+  }
+
+
+  const filteredBills = [];
+
+  bills.forEach(function(bill, index) {
+
+    const billMonth = getMonthKey(bill.billDate);
+
+    const matchesMonth =
+      selectedMonth === "ALL" ||
+      billMonth === selectedMonth;
+
+    const matchesPaymentStatus =
+      selectedPaymentStatus === "ALL" ||
+      bill.paymentStatus === selectedPaymentStatus;
+
+    if (matchesMonth && matchesPaymentStatus) {
+
+      filteredBills.push({
+        bill: bill,
+        originalIndex: index,
+        monthKey: billMonth
+      });
+
+    }
+
+  });
+
+
+  // ===== UPDATE SUMMARIES =====
+
+  updateMonthlySummary(filteredBills);
+
+  updatePaymentStatusSummary(filteredBills);
+
+
+  // ===== HANDLE EMPTY HISTORY =====
+
+  if (filteredBills.length === 0) {
+
+    history.innerHTML =
+      '<p class="no-bills">No Saved Bills Found.</p>';
+
+    return;
+
+  }
+
+
+  // ===== SORT NEWEST BILL FIRST =====
+
+  // Reverse a copy so the original filteredBills array
+  // and its originalIndex values remain unchanged.
+
+  const sortedBills =
+    filteredBills.slice().reverse();
+
+
+  // ===== FIRST 10 BILLS =====
+
+  const recentBills =
+    sortedBills.slice(0, BILLS_PER_MONTH);
+
+
+  // ===== REMAINING BILLS =====
+
+  const olderBills =
+    sortedBills.slice(BILLS_PER_MONTH);
+
+
+  // ===== BUILD BILL TABLE =====
+
+  function buildBillTable(items) {
+
+    let tableHTML = `
+
+      <div class="bill-history-table-wrap">
+
+        <table class="history-table">
+
+          <thead>
+            <tr>
+              <th>Bill No</th>
+              <th>Date</th>
+              <th>Customer</th>
+              <th>Vehicle</th>
+              <th>Payment</th>
+              <th>Total (Rs.)</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+    `;
+
+
+    items.forEach(function(item) {
+
+      const bill = item.bill;
+
+      const i = item.originalIndex;
+
+
+      // ===== PAYMENT STATUS BADGE =====
+
+      let paymentHTML = "";
+
+      if (bill.paymentStatus === "FULL") {
+
+        paymentHTML =
+          '<span class="payment-paid">✓ FULL</span>';
+
+      } else if (bill.paymentStatus === "HALF") {
+
+        paymentHTML =
+          '<span class="payment-half">🌓 HALF</span>';
+
+      } else {
+
+        paymentHTML =
+          '<span class="payment-not-paid">✕ NOT PAID</span>';
+
+      }
+
+
+      // ===== BILL ROW =====
+
+      tableHTML += `
+
+        <tr>
+
+          <td>
+            <strong>
+              ${escapeHTML(bill.billNo)}
+            </strong>
+          </td>
+
+          <td>
+            ${escapeHTML(bill.billDate)}
+          </td>
+
+          <td>
+            ${escapeHTML(bill.customer)}
+          </td>
+
+          <td>
+            ${escapeHTML(bill.vehicle)}
+          </td>
+
+          <td>
+            ${paymentHTML}
+          </td>
+
+          <td class="history-total">
+
+            ${Number(
+              bill.total || 0
+            ).toLocaleString(
+              "en-LK",
+              {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              }
+            )}
+
+          </td>
+
+          <td>
+
+            <div class="history-actions">
+
+              <button
+                type="button"
+                class="view-btn"
+                onclick="viewBill(${i})">
+                👁
+              </button>
+
+              <button
+                type="button"
+                class="edit-btn"
+                onclick="editBill(${i})">
+                ✏️
+              </button>
+
+              <button
+                type="button"
+                class="print-btn"
+                onclick="reprintBill(${i})">
+                🖨
+              </button>
+
+              <button
+                type="button"
+                class="delete-btn"
+                onclick="deleteBill(${i})">
+                🗑
+              </button>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+      `;
+
+    });
+
+
+    tableHTML += `
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    `;
+
+
+    return tableHTML;
+
+  }
+
+
+  // ===== MAIN TABLE: FIRST 10 BILLS =====
 
   let html = `
 
-    <table class="history-table">
+    <div class="recent-bills-section">
 
-      <tr>
-        <th>Bill No</th>
-        <th>Date</th>
-        <th>Customer</th>
-        <th>Vehicle</th>
-        <th>Payment</th>
-        <th>Total (Rs.)</th>
-        <th>Actions</th>
-      </tr>
+      <h3 class="recent-bills-heading">
+        🧾 Recent Bills
+      </h3>
+
+      ${buildBillTable(recentBills)}
+
+    </div>
 
   `;
 
 
-  // ===== NEWEST BILL FIRST =====
+  // ===== GROUP REMAINING BILLS BY MONTH =====
 
-  for (
-    let i = bills.length - 1;
-    i >= 0;
-    i--
-  ) {
+  const groupedOlderBills = new Map();
 
-    const bill = bills[i];
+  olderBills.forEach(function(item) {
+
+    const monthKey = item.monthKey || "UNKNOWN";
+
+    if (!groupedOlderBills.has(monthKey)) {
+
+      groupedOlderBills.set(monthKey, []);
+
+    }
+
+    groupedOlderBills.get(monthKey).push(item);
+
+  });
+
+
+  // ===== SORT MONTHS: NEWEST FIRST =====
+
+  const sortedOlderMonthKeys =
+    Array.from(groupedOlderBills.keys()).sort(
+      function(a, b) {
+
+        if (a === "UNKNOWN") return 1;
+
+        if (b === "UNKNOWN") return -1;
+
+        return b.localeCompare(a);
+
+      }
+    );
+
+
+  // ===== SEE MORE BUTTON =====
+
+  if (olderBills.length > 0) {
+
+    html += `
+
+      <div class="bill-month-more">
+
+        <button
+          type="button"
+          class="bill-see-more-btn"
+          onclick="toggleOlderBills()">
+
+          ${showOlderBills
+            ? "⬆ Show Less"
+            : "⬇ See More Bills (" +
+              olderBills.length +
+              " more)"}
+
+        </button>
+
+      </div>
+
+    `;
+
+  }
+
+
+  // ===== OLDER BILLS: MONTH DROPDOWN SECTIONS =====
+
+  if (showOlderBills && olderBills.length > 0) {
+
+    html += `
+
+      <div class="older-bills-section">
+
+        <h3 class="recent-bills-heading">
+          📅 Older Bills by Month
+        </h3>
+
+    `;
+
+
+    sortedOlderMonthKeys.forEach(function(monthKey) {
+
+      const monthBills =
+        groupedOlderBills.get(monthKey);
+
+      const monthLabel =
+        monthMap.get(monthKey) || "Unknown Date";
+
+
+      html += `
+
+        <details class="bill-month-section">
+
+          <summary class="bill-month-heading">
+
+            <span>
+              📅 ${escapeHTML(monthLabel)}
+            </span>
+
+            <span class="bill-month-count">
+              ${monthBills.length} Bills
+            </span>
+
+          </summary>
+
+          <div class="bill-month-content">
+
+            ${buildBillTable(monthBills)}
+
+          </div>
+
+        </details>
+
+      `;
+
+    });
 
 
     html += `
 
-      <tr>
-
-        <td>
-          <strong>
-            ${bill.billNo || ""}
-          </strong>
-        </td>
-
-        <td>
-          ${bill.billDate || ""}
-        </td>
-
-        <td>
-          ${bill.customer || ""}
-        </td>
-
-        <td>
-          ${bill.vehicle || ""}
-        </td>
-        
-        <td>
-
-      ${
-  bill.paymentStatus === "FULL"
-
-    ? `<span class="payment-paid">
-         ✓ FULL
-       </span>`
-
-  : bill.paymentStatus === "HALF"
-
-    ? `<span class="payment-half">
-         🌓 HALF
-       </span>`
-
-    : `<span class="payment-not-paid">
-         ✕ NOT PAID
-       </span>`
-}
-
-        </td>
-
-        <td class="history-total">
-
-          ${Number(
-            bill.total || 0
-          ).toLocaleString(
-            "en-LK",
-            {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-            }
-          )}
-
-        </td>
-
-        <td>
-
-          <div class="history-actions">
-
-            <button
-              class="view-btn"
-              onclick="viewBill(${i})">
-              👁
-            </button>
-
-            <button
-              class="edit-btn"
-              onclick="editBill(${i})">
-              ✏️
-            </button>
-
-            <button
-              class="print-btn"
-              onclick="reprintBill(${i})">
-              🖨
-            </button>
-
-            <button
-              class="delete-btn"
-              onclick="deleteBill(${i})">
-              🗑
-            </button>
-
-          </div>
-
-        </td>
-
-      </tr>
+      </div>
 
     `;
+
   }
 
 
-  html += "</table>";
+  // ===== DISPLAY HISTORY =====
 
   history.innerHTML = html;
+
+}
+
+
+
+// ===== SHOW / HIDE OLDER BILLS =====
+
+function toggleOlderBills() {
+
+  showOlderBills = !showOlderBills;
+
+  loadBillHistory();
 
 }
 
@@ -6894,6 +2985,19 @@ async function createBackupFile() {
     ) || [];
 
 
+// Get current date and time
+const now = new Date();
+
+const dateTime =
+  now.getFullYear() + "-" +
+  String(now.getMonth() + 1).padStart(2, "0") + "-" +
+  String(now.getDate()).padStart(2, "0") + "_" +
+  String(now.getHours()).padStart(2, "0") + "-" +
+  String(now.getMinutes()).padStart(2, "0") + "-" +
+  String(now.getSeconds()).padStart(2, "0");
+
+
+
   /* ===== FILE SYSTEM ACCESS API ===== */
 
   if ("showSaveFilePicker" in window) {
@@ -6904,7 +3008,7 @@ async function createBackupFile() {
         await window.showSaveFilePicker({
 
           suggestedName:
-            "HRM-Bill-Database.json",
+  "HRM-Bill-Database_" + dateTime + ".json",
 
           types: [
 
@@ -6940,10 +3044,10 @@ async function createBackupFile() {
 
 
       alert(
-        "📁 Backup File Created Successfully!\n\n" +
-        "Bills Saved: " +
-        bills.length
-      );
+"📁 Backup File Created Successfully!\n\n" +
+"File: " + handle.name + "\n\n" +
+"Bills Saved: " + bills.length
+);
 
 
     } catch (error) {
@@ -6988,27 +3092,41 @@ async function writeBackupFile(
   bills
 ) {
 
-  const backupData = {
+ const backupData = {
 
-    app:
-      "HighResist MOTORS Bill Generator",
+app:
+"HighResist MOTORS Bill Generator",
 
-    version:
-      "2.1",
+version:
+"2.58",
 
-    backupType:
-      "Bill History",
+backupType:
+"Bill History",
 
-    exportedAt:
-      new Date().toISOString(),
+exportedAt:
+new Date().toISOString(),
 
-    billCount:
-      bills.length,
+billCount:
+bills.length,
 
-    bills:
-      bills
+/* ===== BILL HISTORY ===== */
 
-  };
+bills:
+bills,
+
+/* ===== COMPANY DETAILS ===== */
+
+companyDetails:
+JSON.parse(
+localStorage.getItem("companyDetails") || "null"
+),
+
+/* ===== COMPANY LOGO ===== */
+
+companyLogo:
+localStorage.getItem("companyLogo") || ""
+
+};
 
 
   const json =
@@ -7031,6 +3149,11 @@ async function writeBackupFile(
   await writable.close();
 
 }
+
+
+
+
+
 
 
 /* =====================================================
@@ -7255,32 +3378,332 @@ function handleBackupFileImport(event) {
 
 }
 
-/* =====================================================
-   PROCESS BACKUP DATA
-   ===================================================== */
 
-function processBackupData(text) {
+
+
+
+
+/* =========================================
+   STEP 3.2 — RESTORE COMPANY DETAILS
+========================================= */
+
+function restoreCompanyDetailsFromBackup(backupData) {
+
+  /* ===== CHECK BACKUP COMPANY DETAILS ===== */
+
+  const hasCompanyDetails =
+    backupData.companyDetails &&
+    typeof backupData.companyDetails === "object" &&
+    !Array.isArray(backupData.companyDetails);
+
+
+  /* ===== CHECK BACKUP LOGO ===== */
+
+  const hasSeparateLogo =
+    typeof backupData.companyLogo === "string";
+
+  const hasCompanyLogo =
+    hasSeparateLogo ||
+    (
+      hasCompanyDetails &&
+      typeof backupData.companyDetails.logo === "string"
+    );
+
+
+  /*
+    පැරණි Backup එකක Company Details හෝ Logo
+    නොමැති නම් දැනට තිබෙන Settings වෙනස් නොකරමු.
+  */
+
+  if (!hasCompanyDetails && !hasCompanyLogo) {
+
+    return;
+
+  }
+
+
+  /* ===== LOAD CURRENT COMPANY DETAILS ===== */
+
+  let companyDetails =
+    JSON.parse(
+      localStorage.getItem("companyDetails")
+    ) || {};
+
+
+  /* ===== RESTORE COMPANY DETAILS ===== */
+
+  if (hasCompanyDetails) {
+
+    companyDetails = {
+      ...backupData.companyDetails
+    };
+
+  }
+
+
+  /* ===== RESTORE COMPANY LOGO ===== */
+
+  let companyLogo =
+    localStorage.getItem("companyLogo") || "";
+
+
+  /*
+    Backup එකේ companyLogo field එක තිබේ නම්
+    එය ප්‍රමුඛතාව ලබා ගනී.
+
+    එය හිස් String එකක් නම් Logo එක ඉවත් කරයි.
+  */
+
+  if (hasSeparateLogo) {
+
+    companyLogo = backupData.companyLogo;
+
+  }
+
+  /*
+    වෙනම companyLogo field එක නොමැති නමුත්
+    companyDetails.logo තිබේ නම් එය භාවිත කරමු.
+  */
+
+  else if (
+    hasCompanyDetails &&
+    typeof backupData.companyDetails.logo === "string"
+  ) {
+
+    companyLogo = backupData.companyDetails.logo;
+
+  }
+
+
+  // Remove duplicate logo from Company Details
+delete companyDetails.logo;
+
+
+
+
+  /* ===== SAVE TO LOCAL STORAGE ===== */
+
+  if (hasCompanyDetails || hasCompanyLogo) {
+
+    localStorage.setItem(
+      "companyDetails",
+      JSON.stringify(companyDetails)
+    );
+
+    localStorage.setItem(
+      "companyLogo",
+      companyLogo
+    );
+
+  }
+
+
+  /* ===== UPDATE COMPANY INPUT FIELDS ===== */
+
+  if (hasCompanyDetails) {
+
+    document.getElementById("companyName").value =
+      companyDetails.name || "";
+
+    document.getElementById("billPrefix").value =
+      companyDetails.prefix || "HRM";
+
+    document.getElementById("companyType").value =
+      companyDetails.type || "";
+
+    document.getElementById("companyAddress").value =
+      companyDetails.address || "";
+
+    document.getElementById("companyContact").value =
+      companyDetails.contact || "";
+
+    document.getElementById("companyEmail").value =
+      companyDetails.email || "";
+
+
+    /* ===== UPDATE MAIN COMPANY HEADER ===== */
+
+    document.getElementById("mainCompanyName").textContent =
+      companyDetails.name || "HighResist MOTORS";
+
+    document.getElementById("mainCompanyType").textContent =
+      companyDetails.type || "";
+
+    document.getElementById("mainCompanyAddress").textContent =
+      companyDetails.address || "";
+
+    document.getElementById("mainCompanyContact").textContent =
+      "Tel: " + (companyDetails.contact || "-");
+
+    document.getElementById("mainCompanyEmail").textContent =
+      "Email: " + (companyDetails.email || "-");
+
+  }
+
+
+  /* ===== UPDATE LOGO PREVIEW ===== */
+
+  const logoPreview =
+    document.getElementById("logoPreview");
+
+  const mainLogo =
+    document.getElementById("mainCompanyLogo");
+
+
+  if (companyLogo) {
+
+    logoPreview.src = companyLogo;
+
+    logoPreview.style.display =
+      "inline-block";
+
+    mainLogo.src = companyLogo;
+
+    mainLogo.style.display =
+      "block";
+
+  }
+
+  else {
+
+    logoPreview.removeAttribute("src");
+
+    logoPreview.style.display =
+      "none";
+
+    mainLogo.removeAttribute("src");
+
+    mainLogo.style.display =
+      "none";
+
+  }
+
+}
+
+
+
+/* =========================================
+SAFETY BACKUP — BEFORE REPLACE
+========================================= */
+
+function createSafetyBackup() {
+
+try {
+
+const currentBills =
+  localStorage.getItem("hrmBills");
+
+const currentCompanyDetails =
+  localStorage.getItem("companyDetails");
+
+const currentCompanyLogo =
+  localStorage.getItem("companyLogo");
+
+
+const safetyBackup = {
+
+  createdAt: new Date().toISOString(),
+
+  hrmBills: currentBills,
+
+  companyDetails: currentCompanyDetails,
+
+  companyLogo: currentCompanyLogo
+
+};
+
+
+localStorage.setItem(
+  "hrmSafetyBackup",
+  JSON.stringify(safetyBackup)
+);
+
+
+return true;
+
+} catch (error) {
+
+alert(
+  "❌ Safety Backup Failed!\n\n" +
+  "Current data was not replaced.\n\n" +
+  "Please check available browser storage."
+);
+
+return false;
+
+}
+
+}
+
+
+
+
+
+/* =====================================================
+   RESTORE SAFETY BACKUP
+===================================================== */
+
+function restoreSafetyBackup() {
+
+  /* ===== CHECK SAFETY BACKUP ===== */
+
+  const safetyBackupText =
+    localStorage.getItem("hrmSafetyBackup");
+
+  if (!safetyBackupText) {
+
+    alert(
+      "⚠️ Safety Backup Not Found!\n\n" +
+      "There is no local Safety Backup to restore."
+    );
+
+    return;
+
+  }
+
+
+  /* ===== CONFIRM RESTORE ===== */
+
+  const confirmRestore = confirm(
+
+    "⚠️ RESTORE SAFETY BACKUP?\n\n" +
+
+    "Current Bill History and Company Details " +
+    "will be replaced with the saved Safety Backup.\n\n" +
+
+    "Do you want to continue?"
+
+  );
+
+  if (!confirmRestore) {
+
+    return;
+
+  }
+
+
+  /* ===== READ SAFETY BACKUP ===== */
 
   let backupData;
 
-  /* ===== JSON PARSE ===== */
-
   try {
 
-    backupData = JSON.parse(text);
+    backupData =
+      JSON.parse(safetyBackupText);
 
   } catch (error) {
 
     alert(
-      "❌ Invalid Backup File.\n\n" +
-      "The selected file is not valid JSON."
+      "❌ Safety Backup Error!\n\n" +
+      "The saved Safety Backup data is invalid."
     );
 
     return;
+
   }
 
 
-  /* ===== VALIDATE FORMAT ===== */
+  /* ===== VALIDATE BACKUP STRUCTURE ===== */
 
   if (
     !backupData ||
@@ -7288,219 +3711,1893 @@ function processBackupData(text) {
   ) {
 
     alert(
-      "❌ Invalid HighResist MOTORS Backup File.\n\n" +
+      "❌ Invalid Safety Backup!\n\n" +
       "Bill History data was not found."
     );
 
     return;
+
   }
 
 
-  const importedBills =
-    backupData.bills;
-
-  const currentBills =
-    JSON.parse(
-      localStorage.getItem("hrmBills")
-    ) || [];
-
-
-  /* =================================================
-     IMPORT INFORMATION
-     ================================================= */
-
-  const replace =
-    confirm(
-      "📥 Import Bill History\n\n" +
-
-      "Current Bills: " +
-      currentBills.length +
-
-      "\nBackup Bills: " +
-      importedBills.length +
-
-      "\n\n" +
-
-      "OK = Replace Current History\n" +
-
-      "Cancel = Choose Merge"
-    );
-
-
-  /* =================================================
-     REPLACE
-     ================================================= */
-
-  if (replace) {
-
-    const confirmReplace =
-      confirm(
-        "⚠️ Replace Current History?\n\n" +
-
-        "Current Bills: " +
-        currentBills.length +
-
-        "\nBackup Bills: " +
-        importedBills.length +
-
-        "\n\n" +
-
-        "All current Bill History will be " +
-        "replaced by the backup data."
-      );
-
-
-    if (!confirmReplace) {
-
-      return;
-    }
-
-
-    localStorage.setItem(
-      "hrmBills",
-      JSON.stringify(
-        importedBills
-      )
-    );
-
-
-    /* Refresh History */
-
-    loadBillHistory();
-
-
-    alert(
-      "✅ History Restored Successfully!\n\n" +
-
-      "Imported Bills: " +
-      importedBills.length
-    );
-
-
-    return;
-  }
-
-
-  /* =================================================
-     MERGE CONFIRMATION
-     ================================================= */
-
-  const merge =
-    confirm(
-      "🔄 Merge Bill History?\n\n" +
-
-      "Current Bills: " +
-      currentBills.length +
-
-      "\nBackup Bills: " +
-      importedBills.length +
-
-      "\n\n" +
-
-      "Duplicate Bill Numbers will be skipped.\n\n" +
-
-      "OK = Merge\n" +
-      "Cancel = Cancel Import"
-    );
-
-
-  if (!merge) {
-
-    return;
-  }
-
-
-  /* =================================================
-     MERGE
-     ================================================= */
-
-  const existingNumbers =
-    new Set(
-      currentBills.map(
-        function(bill) {
-
-          return String(
-            bill.billNo || ""
-          ).trim();
-
-        }
-      )
-    );
-
-
-  let added = 0;
-  let skipped = 0;
-
-
-  importedBills.forEach(
-    function(bill) {
-
-      const billNo =
-        String(
-          bill.billNo || ""
-        ).trim();
-
-
-      /* ===== DUPLICATE BILL NUMBER ===== */
-
-      if (
-        billNo !== "" &&
-        existingNumbers.has(billNo)
-      ) {
-
-        skipped++;
-
-        return;
-      }
-
-
-      /* ===== ADD BILL ===== */
-
-      currentBills.push(bill);
-
-      if (billNo !== "") {
-
-        existingNumbers.add(billNo);
-
-      }
-
-      added++;
-
-    }
-  );
-
-
-  /* ===== SAVE MERGED DATA ===== */
+  /* ===== RESTORE BILL HISTORY ===== */
 
   localStorage.setItem(
     "hrmBills",
-    JSON.stringify(
-      currentBills
-    )
+    JSON.stringify(backupData.bills)
   );
 
 
-  /* ===== REFRESH HISTORY ===== */
+  /* ===== RESTORE COMPANY DETAILS ===== */
+
+  if (
+    Object.prototype.hasOwnProperty.call(
+      backupData,
+      "companyDetails"
+    )
+  ) {
+
+    if (backupData.companyDetails === null) {
+
+      localStorage.removeItem("companyDetails");
+
+    } else {
+
+      localStorage.setItem(
+        "companyDetails",
+        JSON.stringify(backupData.companyDetails)
+      );
+
+    }
+
+  }
+
+
+  /* ===== RESTORE COMPANY LOGO ===== */
+
+  if (
+    Object.prototype.hasOwnProperty.call(
+      backupData,
+      "companyLogo"
+    )
+  ) {
+
+    if (backupData.companyLogo === "") {
+
+      localStorage.removeItem("companyLogo");
+
+    } else {
+
+      localStorage.setItem(
+        "companyLogo",
+        backupData.companyLogo
+      );
+
+    }
+
+  }
+  
+  
+  
+  
+  /* ===== UPDATE COMPANY DETAILS & LOGO ===== */
+
+restoreCompanyDetailsFromBackup(backupData);
+
+
+// Handle backup with null Company Details
+if (
+  Object.prototype.hasOwnProperty.call(
+    backupData,
+    "companyDetails"
+  ) &&
+  backupData.companyDetails === null
+) {
+
+  localStorage.removeItem("companyDetails");
+
+}
+  
+
+
+  /* ===== REFRESH BILL HISTORY ===== */
 
   loadBillHistory();
 
 
-  /* ===== RESULT ===== */
+  /* ===== SUCCESS MESSAGE ===== */
 
   alert(
-    "✅ Backup Merged Successfully!\n\n" +
 
-    "Added: " +
-    added +
+    "✅ Safety Backup Restored Successfully!\n\n" +
 
-    "\nSkipped Duplicate Bills: " +
-    skipped +
+    "Bills Restored: " +
+    backupData.bills.length
 
-    "\nTotal Bills: " +
-    currentBills.length
   );
 
 }
+
+
+
+
+
+
+/* =========================================
+   AUTOMATIC RECOVERY BACKUP FILE
+========================================= */
+
+function createRecoveryBackupFile() {
+
+  try {
+
+    /* ===== GET CURRENT DATA ===== */
+
+    const currentBills =
+      JSON.parse(
+        localStorage.getItem("hrmBills") || "[]"
+      );
+
+    const currentCompanyDetails =
+      localStorage.getItem("companyDetails");
+
+    const currentCompanyLogo =
+      localStorage.getItem("companyLogo");
+
+
+    /* ===== CREATE BACKUP DATA ===== */
+
+    const recoveryBackup = {
+
+      app:
+        "HighResist MOTORS Bill Generator",
+
+      version:
+        "2.58",
+
+      backupType:
+        "Bill History",
+
+      recoveryBackup:
+        true,
+
+      exportedAt:
+        new Date().toISOString(),
+
+      billCount:
+        currentBills.length,
+
+      bills:
+        currentBills,
+
+      companyDetails:
+        currentCompanyDetails
+          ? JSON.parse(currentCompanyDetails)
+          : null,
+
+      companyLogo:
+        currentCompanyLogo || ""
+
+    };
+
+
+    /* ===== CREATE JSON FILE ===== */
+
+    const jsonData =
+      JSON.stringify(
+        recoveryBackup,
+        null,
+        2
+      );
+
+    const blob =
+      new Blob(
+        [jsonData],
+        {
+          type: "application/json"
+        }
+      );
+
+
+    /* ===== CREATE FILE NAME ===== */
+
+    const now =
+      new Date();
+
+    const timestamp =
+      now.getFullYear() + "-" +
+      String(now.getMonth() + 1).padStart(2, "0") + "-" +
+      String(now.getDate()).padStart(2, "0") + "_" +
+      String(now.getHours()).padStart(2, "0") + "-" +
+      String(now.getMinutes()).padStart(2, "0") + "-" +
+      String(now.getSeconds()).padStart(2, "0");
+
+
+    const fileName =
+      "HRM-Recovery-Backup_" +
+      timestamp +
+      ".json";
+
+
+    /* ===== DOWNLOAD RECOVERY FILE ===== */
+
+    const url =
+      URL.createObjectURL(blob);
+
+    const link =
+      document.createElement("a");
+
+    link.href = url;
+
+    link.download = fileName;
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    setTimeout(function() {
+
+      URL.revokeObjectURL(url);
+
+    }, 1000);
+
+
+    return true;
+    
+    
+
+  } catch (error) {
+
+    console.error(
+      "Recovery Backup Error:",
+      error
+    );
+
+    alert(
+      "❌ Recovery Backup Failed!\n\n" +
+      "Current data has not been replaced.\n\n" +
+      "Please try again."
+    );
+
+    return false;
+
+  }
+
+}
+
+
+
+/* =========================================
+   RESTORE SAFETY BACKUP
+========================================= */
+
+function restoreSafetyBackup() {
+
+  /* ===== GET SAFETY BACKUP ===== */
+
+  const savedBackup =
+    localStorage.getItem("hrmSafetyBackup");
+
+
+  if (!savedBackup) {
+
+    alert(
+      "❌ Safety Backup Not Found!"
+    );
+
+    return;
+
+  }
+
+
+  /* ===== PARSE SAFETY BACKUP ===== */
+
+  let safetyBackup;
+
+  try {
+
+    safetyBackup =
+      JSON.parse(savedBackup);
+
+  } catch (error) {
+
+    alert(
+      "❌ Safety Backup Is Invalid!"
+    );
+
+    return;
+
+  }
+
+
+  /* ===== VALIDATE SAFETY BACKUP ===== */
+
+  if (
+    !safetyBackup ||
+    typeof safetyBackup !== "object" ||
+    !("hrmBills" in safetyBackup) ||
+    !("companyDetails" in safetyBackup) ||
+    !("companyLogo" in safetyBackup)
+  ) {
+
+    alert(
+      "❌ Safety Backup Structure Is Invalid!"
+    );
+
+    return;
+
+  }
+
+
+  /* ===== VALIDATE SAVED BILLS ===== */
+
+  let savedBills;
+
+  try {
+
+    savedBills =
+      safetyBackup.hrmBills === null
+        ? []
+        : JSON.parse(safetyBackup.hrmBills);
+
+  } catch (error) {
+
+    alert(
+      "❌ Safety Backup Bill Data Is Invalid!"
+    );
+
+    return;
+
+  }
+
+
+  if (!Array.isArray(savedBills)) {
+
+    alert(
+      "❌ Safety Backup Bill History Is Invalid!"
+    );
+
+    return;
+
+  }
+
+
+  /* ===== CONFIRM RESTORE ===== */
+
+  const confirmRestore = confirm(
+    "⚠️ Restore Safety Backup?\n\n" +
+    "Bills: " + savedBills.length + "\n\n" +
+    "Current Bill History and Company Details " +
+    "will be replaced."
+  );
+
+
+  if (!confirmRestore) {
+
+    return;
+
+  }
+
+
+  /* ===== RESTORE BILL HISTORY ===== */
+
+  if (safetyBackup.hrmBills === null) {
+
+    localStorage.removeItem("hrmBills");
+
+  } else {
+
+    localStorage.setItem(
+      "hrmBills",
+      safetyBackup.hrmBills
+    );
+
+  }
+
+
+  /* ===== RESTORE COMPANY DETAILS ===== */
+
+  if (safetyBackup.companyDetails === null) {
+
+    localStorage.removeItem("companyDetails");
+
+  } else {
+
+    localStorage.setItem(
+      "companyDetails",
+      safetyBackup.companyDetails
+    );
+
+  }
+
+
+  /* ===== RESTORE COMPANY LOGO ===== */
+
+  if (safetyBackup.companyLogo === null) {
+
+    localStorage.removeItem("companyLogo");
+
+  } else {
+
+    localStorage.setItem(
+      "companyLogo",
+      safetyBackup.companyLogo
+    );
+
+  }
+
+
+  /* ===== REFRESH BILL HISTORY ===== */
+
+  loadBillHistory();
+
+
+  /* ===== RESTORE COMPANY DETAILS IN UI ===== */
+
+  try {
+
+    const companyDetails =
+      JSON.parse(
+        localStorage.getItem("companyDetails")
+      );
+
+    if (companyDetails) {
+
+      restoreCompanyDetailsFromBackup({
+        companyDetails: companyDetails,
+        companyLogo:
+          localStorage.getItem("companyLogo") || ""
+      });
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      "Company Details UI Refresh Error:",
+      error
+    );
+
+  }
+
+
+  /* ===== SUCCESS MESSAGE ===== */
+
+  alert(
+    "✅ Safety Backup Restored Successfully!\n\n" +
+    "Bills Restored: " + savedBills.length
+  );
+
+}
+
+
+
+
+
+function processBackupData(text) {
+
+let backupData;
+
+/* ===== JSON PARSE ===== */
+
+try {
+
+backupData = JSON.parse(text);
+
+} catch (error) {
+
+alert(  
+  "❌ Invalid Backup File.\n\n" +  
+  "The selected file is not valid JSON."  
+);  
+
+return;
+
+}
+
+/* ===== VALIDATE FORMAT ===== */
+
+if (
+!backupData ||
+!Array.isArray(backupData.bills)
+) {
+
+alert(  
+  "❌ Invalid HighResist MOTORS Backup File.\n\n" +  
+  "Bill History data was not found."  
+);  
+
+return;
+
+}
+
+
+
+/* =========================================
+   STEP 4.2 — BACKUP STRUCTURE VALIDATION
+========================================= */
+
+
+/* ===== BACKUP TYPE ===== */
+
+// backupType නොමැති පැරණි Backup සඳහා ඉඩ දෙමු.
+
+if (backupData.backupType !== undefined) {
+
+  if (
+    typeof backupData.backupType !== "string" ||
+    backupData.backupType !== "Bill History"
+  ) {
+
+    alert(
+      "❌ Invalid Backup Data.\n\n" +
+      "Backup Type is invalid."
+    );
+
+    return;
+
+  }
+
+}
+
+
+/* ===== EXPORTED AT ===== */
+
+// exportedAt නොමැති පැරණි Backup සඳහා ඉඩ දෙමු.
+
+if (backupData.exportedAt !== undefined) {
+
+  const exportedAt = backupData.exportedAt;
+
+  /* Check 1 — Must Be a String */
+
+  if (
+    typeof exportedAt !== "string" ||
+    exportedAt.trim() === ""
+  ) {
+
+    alert(
+      "❌ Invalid Backup Data.\n\n" +
+      "Backup Export Date is invalid."
+    );
+
+    return;
+
+  }
+
+
+  /* Check 2 — ISO Timestamp Format */
+
+  const exportTimestampPattern =
+    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,})?Z$/;
+
+  if (
+    !exportTimestampPattern.test(exportedAt)
+  ) {
+
+    alert(
+      "❌ Invalid Backup Data.\n\n" +
+      "Backup Export Date format is invalid."
+    );
+
+    return;
+
+  }
+
+
+  /* Check 3 — Must Be a Valid Timestamp */
+
+  if (
+    !Number.isFinite(Date.parse(exportedAt))
+  ) {
+
+    alert(
+      "❌ Invalid Backup Data.\n\n" +
+      "Backup Export Date is not a valid date."
+    );
+
+    return;
+
+  }
+
+}
+
+
+/* ===== BILL COUNT ===== */
+
+// billCount නොමැති පැරණි Backup සඳහා ඉඩ දෙමු.
+
+if (backupData.billCount !== undefined) {
+
+  if (
+    !Number.isInteger(backupData.billCount) ||
+    backupData.billCount < 0
+  ) {
+
+    alert(
+      "❌ Invalid Backup Data.\n\n" +
+      "Bill Count is invalid."
+    );
+
+    return;
+
+  }
+
+
+  /* ===== COMPARE BILL COUNT ===== */
+
+  if (
+    backupData.billCount !== backupData.bills.length
+  ) {
+
+    alert(
+      "❌ Invalid Backup Data.\n\n" +
+
+      "Saved Bill Count: " +
+      backupData.billCount + "\n" +
+
+      "Actual Bill Count: " +
+      backupData.bills.length + "\n\n" +
+
+      "Bill Count does not match " +
+      "the Bill History data."
+    );
+
+    return;
+
+  }
+
+}
+
+
+
+/* =========================================
+   STEP 3.3 — BACKUP VERSION VALIDATION
+========================================= */
+
+
+/* ===== CHECK BACKUP VERSION ===== */
+
+// පැරණි Backup වල version field එක
+// නොතිබිය හැකි බැවින් එයට ඉඩ දෙමු.
+
+if (backupData.version !== undefined) {
+
+  /* ===== VERSION MUST BE A STRING ===== */
+
+  if (
+    typeof backupData.version !== "string" ||
+    backupData.version.trim() === ""
+  ) {
+
+    alert(
+      "❌ Invalid Backup Data.\n\n" +
+      "Backup Version information is invalid."
+    );
+
+    return;
+
+  }
+
+}
+
+
+
+
+/* =========================================
+   STEP 3.4 — BACKUP APP IDENTITY VALIDATION
+========================================= */
+
+
+/* ===== CHECK BACKUP APP IDENTITY ===== */
+
+// පැරණි Backup වල app field එක
+// නොතිබිය හැකි බැවින් එයට ඉඩ දෙමු.
+
+if (backupData.app !== undefined) {
+
+  /* ===== APP NAME MUST BE A STRING ===== */
+
+  if (
+    typeof backupData.app !== "string" ||
+    backupData.app.trim() === ""
+  ) {
+
+    alert(
+      "❌ Invalid Backup Data.\n\n" +
+      "Backup App Identity is invalid."
+    );
+
+    return;
+
+  }
+
+
+  /* ===== CHECK APP NAME ===== */
+
+  if (
+    backupData.app.trim() !==
+    "HighResist MOTORS Bill Generator"
+  ) {
+
+    alert(
+      "❌ Incompatible Backup File.\n\n" +
+      "This backup was not created by " +
+      "HighResist MOTORS Bill Generator."
+    );
+
+    return;
+
+  }
+
+}
+
+
+
+/* =========================================
+   STEP 3.1 — COMPANY DETAILS VALIDATION
+========================================= */
+
+
+/* ===== COMPANY DETAILS ===== */
+
+// Company Details නොමැති පැරණි Backup සඳහාත්
+// Import කිරීමට ඉඩ ලබා දෙමු.
+
+if (
+  backupData.companyDetails !== undefined &&
+  backupData.companyDetails !== null
+) {
+
+  const company = backupData.companyDetails;
+
+
+  /* Check 1 — Must Be an Object */
+
+  if (
+    typeof company !== "object" ||
+    Array.isArray(company)
+  ) {
+
+    alert(
+      "❌ Invalid Backup Data.\n\n" +
+      "Company Details must be a valid object."
+    );
+
+    return;
+
+  }
+
+
+  /* Check 2 — Validate Company Fields */
+
+  const companyFields = [
+    "name",
+    "prefix",
+    "type",
+    "address",
+    "contact",
+    "email",
+    "logo"
+  ];
+
+
+  for (const field of companyFields) {
+
+    // පැරණි Backup වල ඇතැම් fields නොතිබිය හැකියි.
+    if (company[field] === undefined) {
+      continue;
+    }
+
+
+    // Field එක තිබේ නම් එය String එකක් විය යුතුයි.
+    if (
+      typeof company[field] !== "string"
+    ) {
+
+      alert(
+        "❌ Invalid Backup Data.\n\n" +
+        "Company Details contains invalid " +
+        field + " data."
+      );
+
+      return;
+
+    }
+
+  }
+
+}
+
+
+/* ===== COMPANY LOGO ===== */
+
+// Logo එක නොමැති පැරණි Backup සඳහාත්
+// Import කිරීමට ඉඩ ලබා දෙමු.
+
+if (
+  backupData.companyLogo !== undefined &&
+  backupData.companyLogo !== null
+) {
+
+  if (
+    typeof backupData.companyLogo !== "string"
+  ) {
+
+    alert(
+      "❌ Invalid Backup Data.\n\n" +
+      "Company Logo data is invalid."
+    );
+
+    return;
+
+  }
+
+}
+
+
+/* =========================================
+   STEP 4.1 — DUPLICATE BILL NUMBER VALIDATION
+========================================= */
+
+const backupBillNumbers = new Set();
+
+
+/* ===== CHECK EVERY BILL NUMBER ===== */
+
+for (
+  let i = 0;
+  i < backupData.bills.length;
+  i++
+) {
+
+  const bill = backupData.bills[i];
+
+
+  /* ===== SKIP INVALID BILL RECORDS ===== */
+
+  // Bill Record එකේ මූලික Validation එක
+  // පහළින් සිදු වන බැවින්, මෙහිදී
+  // වැරදි Record එකක් තිබේ නම් එය Skip කරමු.
+
+  if (
+    !bill ||
+    typeof bill !== "object" ||
+    typeof bill.billNo !== "string"
+  ) {
+
+    continue;
+
+  }
+
+
+  /* ===== NORMALIZE BILL NUMBER ===== */
+
+  const billNo =
+    bill.billNo.trim();
+
+
+  /* ===== CHECK DUPLICATE ===== */
+
+  if (
+    backupBillNumbers.has(billNo)
+  ) {
+
+    alert(
+      "❌ Duplicate Bill Number Found!\n\n" +
+
+      "Bill Number: " + billNo + "\n\n" +
+
+      "The backup file contains the same " +
+      "Bill Number more than once.\n\n" +
+
+      "Please check the backup file " +
+      "before importing."
+    );
+
+    return;
+
+  }
+
+
+  /* ===== SAVE BILL NUMBER ===== */
+
+  backupBillNumbers.add(billNo);
+
+}
+
+
+
+/* ===== VALIDATE EVERY BILL ===== */
+
+for (let i = 0; i < backupData.bills.length; i++) {
+
+const bill = backupData.bills[i];
+
+if (!bill || typeof bill !== "object") {
+
+alert(  
+  "❌ Invalid Backup Data.\n\n" +  
+  "Bill #" + (i + 1) +  
+  " is not a valid Bill record."  
+);  
+
+return;
+
+}
+
+
+
+/* ===== BILL FIELDS VALIDATION ===== */
+
+if (
+typeof bill.billNo !== "string" ||
+bill.billNo.trim() === ""
+) {
+
+alert(
+"❌ Invalid Backup Data.\n\n" +
+"Bill #" + (i + 1) +
+" has an invalid Bill Number."
+);
+
+return;
+}
+
+
+
+
+/* ===== BILL DATE VALIDATION ===== */
+
+const date = bill.billDate;
+
+/* Check 1 — Must be a String */
+
+if (
+  typeof date !== "string"
+) {
+
+  alert(
+    "❌ Invalid Backup Data.\n\n" +
+    "Bill " + bill.billNo +
+    " has an invalid Bill Date."
+  );
+
+  return;
+}
+
+
+/* Check 2 — Must Match YYYY-MM-DD */
+
+const datePattern =
+  /^\d{4}-\d{2}-\d{2}$/;
+
+if (
+  !datePattern.test(date)
+) {
+
+  alert(
+    "❌ Invalid Backup Data.\n\n" +
+    "Bill " + bill.billNo +
+    " has an invalid Bill Date format.\n\n" +
+    "Expected Format: YYYY-MM-DD"
+  );
+
+  return;
+}
+
+
+/* Check 3 — Must Be a Real Calendar Date */
+
+const dateParts =
+  date.split("-").map(Number);
+
+const year = dateParts[0];
+const month = dateParts[1];
+const day = dateParts[2];
+
+const parsedDate =
+  new Date(
+    Date.UTC(year, month - 1, day)
+  );
+
+const isValidDate =
+  parsedDate.getUTCFullYear() === year &&
+  parsedDate.getUTCMonth() === month - 1 &&
+  parsedDate.getUTCDate() === day;
+
+if (
+  !isValidDate
+) {
+
+  alert(
+    "❌ Invalid Backup Data.\n\n" +
+    "Bill " + bill.billNo +
+    " contains an invalid calendar date.\n\n" +
+    "Bill Date: " + date
+  );
+
+  return;
+}
+
+
+
+
+
+// ========================================
+// OPTIONAL BILL FIELDS VALIDATION
+// ========================================
+
+const optionalTextFields = [
+  "customer",
+  "customerContact",
+  "vehicle",
+  "jobType",
+  "meter",
+  "note"
+];
+
+
+for (const field of optionalTextFields) {
+
+  
+  if (!(field in bill)) {
+    continue;
+  }
+
+ 
+  if (typeof bill[field] !== "string") {
+
+    alert(
+      "❌ Invalid Backup Data.\n\n" +
+      "Bill " + bill.billNo +
+      " has invalid " + field + " data."
+    );
+
+    return;
+
+  }
+
+}
+
+
+
+
+
+/* ===== SAVED AT TIMESTAMP VALIDATION ===== */
+
+// savedAt is optional
+if (bill.savedAt !== undefined) {
+
+  const savedAt = bill.savedAt;
+
+
+  /* Check 1 — Must Be a String */
+
+  if (
+    typeof savedAt !== "string" ||
+    savedAt.trim() === ""
+  ) {
+
+    alert(
+      "❌ Invalid Backup Data.\n\n" +
+      "Bill " + bill.billNo +
+      " has invalid Saved Date data."
+    );
+
+    return;
+  }
+
+
+
+
+
+
+
+  /* Check 2 — ISO 8601 Timestamp Format */
+
+  const timestampPattern =
+    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,})?Z$/;
+
+  if (
+    !timestampPattern.test(savedAt)
+  ) {
+
+    alert(
+      "❌ Invalid Backup Data.\n\n" +
+      "Bill " + bill.billNo +
+      " has an invalid Saved Date format.\n\n" +
+      "Expected Format: YYYY-MM-DDTHH:mm:ss.sssZ"
+    );
+
+    return;
+  }
+
+
+  /* Check 3 — Must Be a Real Timestamp */
+
+const timestamp = Date.parse(savedAt);
+
+if (
+  !Number.isFinite(timestamp)
+) {
+
+  alert(
+    "❌ Invalid Backup Data.\n\n" +
+    "Bill " + bill.billNo +
+    " contains an invalid Saved Date."
+  );
+
+  return;
+}
+
+}
+
+
+
+
+
+
+
+
+/* ===== PAYMENT METHOD ===== */
+
+if (
+bill.paymentMethod !== "CASH" &&
+bill.paymentMethod !== "BANK"
+) {
+
+alert(
+"❌ Invalid Backup Data.\n\n" +
+"Bill " + bill.billNo +
+" has an invalid Payment Method."
+);
+
+return;
+}
+
+
+
+
+
+
+/* ===== PAYMENT STATUS ===== */
+
+if (
+bill.paymentStatus !== "FULL" &&
+bill.paymentStatus !== "HALF" &&
+bill.paymentStatus !== "NOT PAID"
+) {
+
+alert(
+"❌ Invalid Backup Data.\n\n" +
+"Bill " + bill.billNo +
+" has an invalid Payment Status."
+);
+
+return;
+}
+
+/* ===== PAID AMOUNT ===== */
+
+if (
+typeof bill.paidAmount !== "number" ||
+!Number.isFinite(bill.paidAmount) ||
+bill.paidAmount < 0
+) {
+
+alert(
+"❌ Invalid Backup Data.\n\n" +
+"Bill " + bill.billNo +
+" has an invalid Paid Amount."
+);
+
+return;
+}
+
+
+
+/* ===== BALANCE ===== */
+
+if (
+typeof bill.balance !== "number" ||
+!Number.isFinite(bill.balance) ||
+bill.balance < 0
+) {
+
+alert(
+"❌ Invalid Backup Data.\n\n" +
+"Bill " + bill.billNo +
+" has an invalid Balance."
+);
+
+return;
+}
+
+
+
+/* ===== TOTAL ===== */
+
+if (
+typeof bill.total !== "number" ||
+!Number.isFinite(bill.total) ||
+bill.total < 0
+) {
+
+alert(
+"❌ Invalid Backup Data.\n\n" +
+"Bill " + bill.billNo +
+" has an invalid Total Amount."
+);
+
+return;
+}
+
+
+/* =================================
+BUSINESS LOGIC VALIDATION
+RULE 3 — PAID AMOUNT
+================================= */
+
+if (
+bill.paidAmount > bill.total
+) {
+
+alert(
+"❌ Invalid Backup Data.\n\n" +
+
+"Bill Number: " + bill.billNo + "\n\n" +
+
+"Bill Total: Rs. " +
+bill.total.toFixed(2) + "\n" +
+
+"Paid Amount: Rs. " +
+bill.paidAmount.toFixed(2) + "\n\n" +
+
+"Paid Amount cannot exceed " +
+"the Bill Total."
+
+);
+
+return;
+}
+
+
+/* =================================
+BUSINESS LOGIC VALIDATION
+RULE 4 — BALANCE
+================================= */
+
+const expectedBalance =
+Math.max(
+bill.total - bill.paidAmount,
+0
+);
+
+/* ===== CHECK BALANCE ===== */
+
+if (
+Math.abs(
+bill.balance - expectedBalance
+) > 0.01
+) {
+
+alert(
+"❌ Invalid Backup Data.\n\n" +
+
+"Bill Number: " + bill.billNo + "\n\n" +
+
+"Saved Balance: Rs. " +
+bill.balance.toFixed(2) + "\n" +
+
+"Calculated Balance: Rs. " +
+expectedBalance.toFixed(2) + "\n\n" +
+
+"Balance does not match " +
+"Bill Total minus Paid Amount."
+
+);
+
+return;
+}
+
+
+/* =================================
+BUSINESS LOGIC VALIDATION
+RULE 5 — PAYMENT STATUS
+================================= */
+
+let paymentStatusValid = true;
+
+/* ===== FULL PAYMENT ===== */
+
+if (
+bill.paymentStatus === "FULL"
+) {
+
+if (
+bill.paidAmount !== bill.total ||
+bill.balance !== 0
+) {
+
+paymentStatusValid = false;
+
+}
+
+}
+
+/* ===== HALF PAYMENT ===== */
+
+else if (
+bill.paymentStatus === "HALF"
+) {
+
+if (
+bill.paidAmount <= 0 ||
+bill.paidAmount >= bill.total ||
+bill.balance <= 0
+) {
+
+paymentStatusValid = false;
+
+}
+
+}
+
+/* ===== NOT PAID ===== */
+
+else if (
+bill.paymentStatus === "NOT PAID"
+) {
+
+if (
+bill.paidAmount !== 0 ||
+bill.balance !== bill.total
+) {
+
+paymentStatusValid = false;
+
+}
+
+}
+
+/* ===== CHECK PAYMENT STATUS ===== */
+
+if (!paymentStatusValid) {
+
+alert(
+"❌ Invalid Backup Data.\n\n" +
+
+"Bill Number: " + bill.billNo + "\n\n" +
+
+"Payment Status: " +
+bill.paymentStatus + "\n" +
+
+"Bill Total: Rs. " +
+bill.total.toFixed(2) + "\n" +
+
+"Paid Amount: Rs. " +
+bill.paidAmount.toFixed(2) + "\n" +
+
+"Balance: Rs. " +
+bill.balance.toFixed(2) + "\n\n" +
+
+"Payment Status does not match " +
+"the payment amounts."
+
+);
+
+return;
+
+}
+
+
+
+/* ===== ITEMS ===== */
+
+if (
+!Array.isArray(bill.items) ||
+bill.items.length === 0
+) {
+
+alert(
+"❌ Invalid Backup Data.\n\n" +
+"Bill " + bill.billNo +
+" has missing or empty Items data."
+);
+
+return;
+}
+
+
+
+
+
+
+/* ===== VALIDATE EVERY ITEM ===== */
+
+for (let j = 0; j < bill.items.length; j++) {
+
+const item = bill.items[j];  
+
+if (!item || typeof item !== "object") {  
+
+  alert(  
+    "❌ Invalid Backup Data.\n\n" +  
+    "Bill " + bill.billNo +  
+    " contains an invalid Item."  
+  );  
+
+  return;  
+}  
+  
+  
+  
+/* ===== SERIAL NUMBER ===== */
+
+if (
+item.sno !== undefined &&
+(
+typeof item.sno !== "number" ||
+!Number.isFinite(item.sno)
+)
+) {
+
+alert(
+"❌ Invalid Backup Data.\n\n" +
+"Bill " + bill.billNo +
+" contains an invalid Item Serial Number."
+);
+
+return;
+}
+
+/* ===== PARTICULARS ===== */  
+
+if (  
+  typeof item.particulars !== "string"  
+) {  
+
+  alert(  
+    "❌ Invalid Backup Data.\n\n" +  
+    "Bill " + bill.billNo +  
+    " contains an invalid Particular."  
+  );  
+
+  return;  
+}  
+
+
+/* ===== QTY ===== */  
+
+if (  
+  typeof item.qty !== "number" ||  
+  !Number.isFinite(item.qty)  
+) {  
+
+  alert(  
+    "❌ Invalid Backup Data.\n\n" +  
+    "Bill " + bill.billNo +  
+    " contains an invalid Quantity."  
+  );  
+
+  return;  
+}  
+
+
+/* ===== RATE ===== */  
+
+if (  
+  typeof item.rate !== "number" ||  
+  !Number.isFinite(item.rate)  
+) {  
+
+  alert(  
+    "❌ Invalid Backup Data.\n\n" +  
+    "Bill " + bill.billNo +  
+    " contains an invalid Rate."  
+  );  
+
+  return;  
+}  
+
+
+
+/* =================================
+BUSINESS LOGIC VALIDATION
+RULE 6 — ITEM QTY & RATE
+================================= */
+
+/* ===== CHECK QUANTITY ===== */
+
+if (
+item.qty <= 0
+) {
+
+alert(
+"❌ Invalid Backup Data.\n\n" +
+
+"Bill Number: " + bill.billNo + "\n" +
+
+"Item: " + item.particulars + "\n\n" +
+
+"Quantity must be greater than zero."
+
+);
+
+return;
+}
+
+/* ===== CHECK RATE ===== */
+
+if (
+item.rate < 0
+) {
+
+alert(
+"❌ Invalid Backup Data.\n\n" +
+
+"Bill Number: " + bill.billNo + "\n" +
+
+"Item: " + item.particulars + "\n\n" +
+
+"Rate cannot be a negative value."
+
+);
+
+return;
+}
+
+
+
+
+
+/* ===== AMOUNT ===== */  
+
+if (  
+  typeof item.amount !== "number" ||  
+  !Number.isFinite(item.amount)  
+) {  
+
+  alert(  
+    "❌ Invalid Backup Data.\n\n" +  
+    "Bill " + bill.billNo +  
+    " contains an invalid Amount."  
+  );  
+
+  return;  
+}
+
+
+/* =================================
+   BUSINESS LOGIC VALIDATION
+   RULE 1 — ITEM AMOUNT
+================================= */
+
+const expectedAmount =
+  item.qty * item.rate;
+
+
+/* ===== CHECK ITEM AMOUNT ===== */
+
+if (
+  Math.abs(
+    item.amount - expectedAmount
+  ) > 0.01
+) {
+
+  alert(
+    "❌ Invalid Backup Data.\n\n" +
+
+    "Bill: " + bill.billNo + "\n" +
+
+    "Item: " + item.particulars + "\n\n" +
+
+    "Quantity × Rate does not match " +
+    "the saved Amount."
+  );
+
+  return;
+}
+
+
+}
+
+
+/* =================================
+BUSINESS LOGIC VALIDATION
+RULE 2 — BILL TOTAL
+================================= */
+
+// Calculate total from all item amounts
+
+const calculatedTotal =
+bill.items.reduce(
+(sum, item) => sum + item.amount,
+0
+);
+
+/* ===== CHECK BILL TOTAL ===== */
+
+if (
+Math.abs(
+bill.total - calculatedTotal
+) > 0.01
+) {
+
+alert(
+"❌ Invalid Backup Data.\n\n" +
+
+"Bill Number: " + bill.billNo + "\n\n" +
+
+"Saved Bill Total: Rs. " +
+bill.total.toFixed(2) + "\n" +
+
+"Calculated Total: Rs. " +
+calculatedTotal.toFixed(2) + "\n\n" +
+
+"Bill Total does not match " +
+"the sum of Item Amounts."
+
+);
+
+return;
+}
+
+
+}
+
+
+
+
+
+
+const importedBills =
+backupData.bills;
+
+const currentBills =
+JSON.parse(
+localStorage.getItem("hrmBills")
+) || [];
+
+/* =================================================
+IMPORT INFORMATION
+================================================= */
+
+const replace =
+confirm(
+"📥 Import Bill History\n\n" +
+
+"Current Bills: " +  
+  currentBills.length +  
+
+  "\nBackup Bills: " +  
+  importedBills.length +  
+
+  "\n\n" +  
+
+  "OK = Replace Current History\n" +  
+
+  "Cancel = Choose Merge"  
+);
+
+/* =================================================
+REPLACE
+================================================= */
+
+if (replace) {
+
+const confirmReplace =  
+  confirm(  
+    "⚠️ Replace Current History?\n\n" +  
+
+    "Current Bills: " +  
+    currentBills.length +  
+
+    "\nBackup Bills: " +  
+    importedBills.length +  
+
+    "\n\n" +  
+
+    "All current Bill History will be " +  
+    "replaced by the backup data."  
+  );  
+
+
+if (!confirmReplace) {  
+
+  return;  
+}  
+
+
+/* ===== CREATE LOCAL SAFETY BACKUP ===== */
+
+const safetyBackupCreated =
+  createSafetyBackup();
+
+if (!safetyBackupCreated) {
+
+  return;
+
+}
+
+
+/* ===== CREATE RECOVERY BACKUP FILE ===== */
+
+const recoveryBackupCreated =
+  createRecoveryBackupFile();
+
+if (!recoveryBackupCreated) {
+
+  return;
+
+}
+
+
+
+localStorage.setItem(  
+  "hrmBills",  
+  JSON.stringify(  
+    importedBills  
+  )  
+);  
+
+
+/* ===== RESTORE COMPANY DETAILS & LOGO ===== */
+
+restoreCompanyDetailsFromBackup(backupData);
+
+/* Refresh History */  
+
+loadBillHistory();  
+
+
+alert(  
+  "✅ History Restored Successfully!\n\n" +  
+
+  "Imported Bills: " +  
+  importedBills.length  
+);  
+
+
+return;
+
+}
+
+/* =================================================
+MERGE CONFIRMATION
+================================================= */
+
+const merge =
+confirm(
+"🔄 Merge Bill History?\n\n" +
+
+"Current Bills: " +  
+  currentBills.length +  
+
+  "\nBackup Bills: " +  
+  importedBills.length +  
+
+  "\n\n" +  
+
+  "Duplicate Bill Numbers will be skipped.\n\n" +  
+
+  "OK = Merge\n" +  
+  "Cancel = Cancel Import"  
+);
+
+if (!merge) {
+
+return;
+
+}
+
+/* =================================================
+MERGE
+================================================= */
+
+const existingNumbers =
+new Set(
+currentBills.map(
+function(bill) {
+
+return String(  
+        bill.billNo || ""  
+      ).trim();  
+
+    }  
+  )  
+);
+
+let added = 0;
+let skipped = 0;
+
+importedBills.forEach(
+function(bill) {
+
+const billNo =  
+    String(  
+      bill.billNo || ""  
+    ).trim();  
+
+
+  /* ===== DUPLICATE BILL NUMBER ===== */  
+
+  if (  
+    billNo !== "" &&  
+    existingNumbers.has(billNo)  
+  ) {  
+
+    skipped++;  
+
+    return;  
+  }  
+
+
+  /* ===== ADD BILL ===== */  
+
+  currentBills.push(bill);  
+
+  if (billNo !== "") {  
+
+    existingNumbers.add(billNo);  
+
+  }  
+
+  added++;  
+
+}
+
+);
+
+/* ===== SAVE MERGED DATA ===== */
+
+localStorage.setItem(
+"hrmBills",
+JSON.stringify(
+currentBills
+)
+);
+
+/* ===== RESTORE COMPANY DETAILS & LOGO ===== */
+
+restoreCompanyDetailsFromBackup(backupData);
+
+
+/* ===== REFRESH HISTORY ===== */
+
+loadBillHistory();
+
+/* ===== RESULT ===== */
+
+alert(
+"✅ Backup Merged Successfully!\n\n" +
+
+"Added: " +  
+added +  
+
+"\nSkipped Duplicate Bills: " +  
+skipped +  
+
+"\nTotal Bills: " +  
+currentBills.length
+
+);
+
+}
+
+
+
+
+
+
+
+
+
+
+
 
 /* =====================================================
    FALLBACK DOWNLOAD
@@ -7512,25 +5609,39 @@ function downloadBackupFile(
 
   const backupData = {
 
-    app:
-      "HighResist MOTORS Bill Generator",
+app:
+"HighResist MOTORS Bill Generator",
 
-    version:
-      "2.1",
+version:
+"2.58",
 
-    backupType:
-      "Bill History",
+backupType:
+"Bill History",
 
-    exportedAt:
-      new Date().toISOString(),
+exportedAt:
+new Date().toISOString(),
 
-    billCount:
-      bills.length,
+billCount:
+bills.length,
 
-    bills:
-      bills
+/* ===== BILL HISTORY ===== */
 
-  };
+bills:
+bills,
+
+/* ===== COMPANY DETAILS ===== */
+
+companyDetails:
+JSON.parse(
+localStorage.getItem("companyDetails") || "null"
+),
+
+/* ===== COMPANY LOGO ===== */
+
+companyLogo:
+localStorage.getItem("companyLogo") || ""
+
+};
 
 
   const blob =
@@ -7562,10 +5673,19 @@ function downloadBackupFile(
   link.href =
     url;
 
+// Get current date and time
+const now = new Date();
 
-  link.download =
-    "HRM-Bill-Database.json";
+const dateTime =
+  now.getFullYear() + "-" +
+  String(now.getMonth() + 1).padStart(2, "0") + "-" +
+  String(now.getDate()).padStart(2, "0") + "_" +
+  String(now.getHours()).padStart(2, "0") + "-" +
+  String(now.getMinutes()).padStart(2, "0") + "-" +
+  String(now.getSeconds()).padStart(2, "0");
 
+
+  link.download = "HRM-Bill-Database_" + dateTime + ".json";
 
   document.body.appendChild(
     link
@@ -7594,7 +5714,7 @@ function downloadBackupFile(
 
   alert(
     "📁 Backup File Created.\n\n" +
-    "File: HRM-Bill-Database.json\n\n" +
+    "File: HRM-Bill-Database_" + dateTime + ".json\n\n" +
     "You can import this file later."
   );
 
@@ -7733,8 +5853,9 @@ Array.from(table.querySelectorAll("tr"))
   });
 
 
+
 // =================================
-// ADD SAVED ITEMS
+// ADD SAVED ITEMS - DOM SAFE
 // =================================
 
 (bill.items || []).forEach(function(item, index) {
@@ -7747,44 +5868,58 @@ Array.from(table.querySelectorAll("tr"))
     );
 
 
-  row.innerHTML = `
+  // S.No
+  const numberCell =
+    document.createElement("td");
 
-    <td>
-      ${index + 1}
-    </td>
+  numberCell.textContent =
+    index + 1;
 
-    ${getParticularCellHTML(
+  row.appendChild(numberCell);
+
+
+  // Particulars
+  row.appendChild(
+    createParticularCell(
       item.particulars || ""
-    )}
+    )
+  );
 
-    <td>
-      <input
-        type="number"
-        value="${item.qty || 1}"
-        min="1"
-        step="1"
-        oninput="calculateTotal()">
-    </td>
 
-    <td>
-      <input
-        type="number"
-        value="${item.rate || 0}"
-        step="0.01"
-        min="0"
-        oninput="calculateTotal()">
-    </td>
+ // Qty
+row.appendChild(
+  createEditableNumberCell(
+    item.qty ?? 1,
+    "1",
+    "1"
+  )
+);
 
-    <td>
-      <input
-        type="number"
-        value="${item.amount || 0}"
-        readonly>
-    </td>
+  // Rate
+row.appendChild(
+  createEditableNumberCell(
+    item.rate ?? 0,
+    "0",
+    "0.01"
+  )
+);
 
-  `;
+  // Amount
+  const amountCell =
+    document.createElement("td");
+
+  const amountInput =
+    document.createElement("input");
+
+  amountInput.type = "number";
+  amountInput.value = item.amount || 0;
+  amountInput.readOnly = true;
+
+  amountCell.appendChild(amountInput);
+  row.appendChild(amountCell);
 
 });
+
 
 
 // =================================
@@ -8444,11 +6579,62 @@ function deleteBill(index) {
 
 
 
+// =================================
+// PDF HEADER IMAGE LOADER
+// =================================
+
+function loadImageAsDataURL(imagePath) {
+
+  return new Promise((resolve, reject) => {
+
+    const image = new Image();
+
+    image.onload = function () {
+
+      const canvas =
+        document.createElement("canvas");
+
+      canvas.width = image.naturalWidth;
+      canvas.height = image.naturalHeight;
+
+      const ctx = canvas.getContext("2d");
+
+      if (!ctx) {
+        reject(new Error("Canvas could not be created."));
+        return;
+      }
+
+      ctx.drawImage(image, 0, 0);
+
+      const imageData =
+        canvas.toDataURL("image/jpeg", 0.92);
+
+      resolve(imageData);
+
+    };
+
+    image.onerror = function () {
+
+      reject(
+        new Error("PDF Header Background Image could not be loaded.")
+      );
+
+    };
+
+    image.src = imagePath;
+
+  });
+
+}
+
+
+
+
 
 // ===============================
 // GENERATE PDF (Returns Blob)
 // ===============================
-function generatePDF() {
+async function generatePDF() {
 
   /* ===== GET BILL DETAILS ===== */
 
@@ -8520,7 +6706,42 @@ const companyEmail =
 const companyLogo =
   localStorage.getItem("companyLogo") || "";
   
-const headerBackground = "header-bg.jpg";
+// =================================
+// PDF HEADER BACKGROUND MAPPING
+// =================================
+
+// Saved Business Type
+const businessType =
+  savedCompany.businessType || "";
+
+
+// Background Images
+const backgroundImages = {
+
+  "Automotive Electrical Repair & Service Station":
+    "assets/images/automotive-electrical.webp",
+
+  "All Car Repair & Service Station":
+    "assets/images/automotive-workshop.webp"
+
+};
+
+
+// Select Background Image
+const headerBackgroundPath =
+  backgroundImages[businessType] ||
+  "assets/images/header-bg.jpg";
+
+
+
+
+
+
+// Load Selected Image
+const headerBackground =
+  await loadImageAsDataURL(
+    headerBackgroundPath
+  );
 
   const { jsPDF } = window.jspdf;
 
@@ -9355,7 +7576,7 @@ async function sharePDF() {
   try {
 
     // Generate PDF
-    const pdfBlob = generatePDF();
+    const pdfBlob = await generatePDF();
 
     // Bill number
     const billNo =
@@ -9460,7 +7681,7 @@ async function previewPDF() {
   try {
 
     // Generate PDF
-    const blob = generatePDF();
+    const blob = await generatePDF();
 
     if (!blob) {
       alert("PDF could not be generated.");
@@ -9561,9 +7782,9 @@ async function previewPDF() {
 // ===============================
 // DOWNLOAD PDF BUTTON
 // ===============================
-function downloadPDF() {
+async function downloadPDF() {
 
-    const blob = generatePDF();
+    const blob = await generatePDF();
 
     const url = URL.createObjectURL(blob);
 
@@ -9590,7 +7811,7 @@ function downloadPDF() {
 // ===============================
 async function shareWhatsApp() {
 
-  const blob = generatePDF();
+  const blob = await generatePDF();
 
   const billNo =
     document.getElementById("billNo").value.trim();
@@ -9635,258 +7856,31 @@ async function shareWhatsApp() {
 
 
 
-/* =====================================================
-   PWA SERVICE WORKER + UPDATE
-===================================================== */
 
-if ("serviceWorker" in navigator) {
 
-  window.addEventListener("load", function() {
 
-    navigator.serviceWorker
-      .register("./service-worker.js")
-      .then(function(registration) {
 
-        console.log(
-          "Service Worker registered:",
-          registration.scope
-        );
-        
-        registration.update();
 
 
-        /* =================================
-           CHECK FOR NEW VERSION
-        ================================= */
-
-        registration.addEventListener(
-          "updatefound",
-          function() {
-
-            const newWorker =
-              registration.installing;
-
-            if (!newWorker) return;
-
-
-            newWorker.addEventListener(
-              "statechange",
-              function() {
-
-                if (
-                  newWorker.state === "installed" &&
-                  navigator.serviceWorker.controller
-                ) {
-
-                  showUpdateNotification(
-                    registration
-                  );
-
-                }
-
-              }
-            );
-
-          }
-        );
-
-      })
-
-      .catch(function(error) {
-
-        console.error(
-          "Service Worker registration failed:",
-          error
-        );
-
-      });
-
-  });
-
-}
-
-/* =================================
-   SHOW UPDATE NOTIFICATION
-================================= */
-
-function showUpdateNotification(registration) {
-
-  const notification =
-    document.getElementById(
-      "updateNotification"
-    );
-
-  const updateBtn =
-    document.getElementById(
-      "updateAppBtn"
-    );
-
-
-  notification.style.display = "flex";
-
-
-  updateBtn.onclick = function() {
-
-    updateBtn.disabled = true;
-
-    updateBtn.textContent =
-      "Updating...";
-
-
-    if (
-      registration.waiting
-    ) {
-
-      registration.waiting.postMessage({
-        type: "SKIP_WAITING"
-      });
-
-    }
-
-  };
-
-}
-
-
-
-/* =================================
-   RELOAD AFTER UPDATE
-================================= */
-
-if ("serviceWorker" in navigator) {
-
-  let refreshing = false;
-
-  navigator.serviceWorker.addEventListener(
-    "controllerchange",
-    function() {
-
-      if (refreshing) return;
-
-      refreshing = true;
-
-      window.location.reload();
-
-    }
-  );
-
-}
-
-
-
-
-// =================================
-// ONLINE / OFFLINE STATUS
-// =================================
-
-function updateConnectionStatus() {
-
-  const status =
-    document.getElementById("connectionStatus");
-
-  if (navigator.onLine) {
-
-    status.textContent = "🟢 Online";
-
-    status.classList.remove("offline");
-    status.classList.add("online");
-
-  } else {
-
-    status.textContent = "🔴 Offline";
-
-    status.classList.remove("online");
-    status.classList.add("offline");
-  }
-}
-
-
-// App open කරන වෙලාවේ check කරන්න
-updateConnectionStatus();
-
-
-// Internet connection change
-window.addEventListener("online", updateConnectionStatus);
-window.addEventListener("offline", updateConnectionStatus);
-
-
-
-
-
-// =================================
-// PWA INSTALL
-// =================================
-
-let deferredInstallPrompt = null;
-
-const installAppBtn =
-  document.getElementById("installAppBtn");
-
-
-// Browser install prompt එක ready වුණාම
-window.addEventListener(
-  "beforeinstallprompt",
-  function(event) {
-
-    event.preventDefault();
-
-    deferredInstallPrompt = event;
-
-    installAppBtn.style.display = "block";
-
-  }
-);
-
-
-// Install button click
-installAppBtn.addEventListener(
-  "click",
-  async function() {
-
-    if (!deferredInstallPrompt) {
-      return;
-    }
-
-    deferredInstallPrompt.prompt();
-
-    const { outcome } =
-      await deferredInstallPrompt.userChoice;
-
-    console.log(
-      "PWA install result:",
-      outcome
-    );
-
-    deferredInstallPrompt = null;
-
-    installAppBtn.style.display = "none";
-
-  }
-);
-
-
-// App install වුණාම button එක hide කරන්න
-window.addEventListener(
-  "appinstalled",
-  function() {
-
-    console.log(
-      "HighResist MOTORS installed"
-    );
-
-    installAppBtn.style.display = "none";
-
-    deferredInstallPrompt = null;
-
-  }
-);
 
 
 
 </script>
 
+<script src="js/company.js"></script>
+
+<script src="js/calculations.js"></script>
+
+<script src="js/particulars.js"></script>
+
+<script src="js/draft.js"></script>
+
+<script src="js/pwa.js"></script>
+
+
 </body>
 </html>
+
 
 
 
