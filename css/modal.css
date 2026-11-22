@@ -1,0 +1,728 @@
+
+
+
+/* ===============================
+   modal.css
+================================ */
+
+
+
+
+
+.pdf-modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.75);
+    z-index:9999;
+    overflow:auto;
+}
+
+.pdf-toolbar{
+    position:sticky;
+    top:0;
+    background:#fff;
+    padding:10px;
+    text-align:right;
+}
+
+#pdfCanvas{
+    display:block;
+    margin:20px auto;
+    background:#fff;
+}
+
+
+
+
+
+
+
+
+
+/* ===============================
+   PROFESSIONAL BILL VIEWER
+================================ */
+
+.bill-viewer-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 30, 45, 0.72);
+  z-index: 10000;
+  overflow-y: auto;
+  padding: 24px 16px;
+  box-sizing: border-box;
+}
+
+
+/* ===== MAIN VIEWER CARD ===== */
+
+.bill-viewer-box {
+  width: 100%;
+  max-width: 760px;
+  margin: 10px auto;
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #d9e2ea;
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+}
+
+
+
+
+
+
+/* ===== VIEWER HEADER ===== */
+
+.bill-viewer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  background: linear-gradient(
+    135deg,
+    #1e4f8a,
+    #163b68
+  );
+  color: #ffffff;
+  border-bottom: 1px solid #123557;
+}
+
+
+/* ===== HEADER TITLE ===== */
+
+.bill-viewer-header strong {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+
+/* ===== CLOSE BUTTON ===== */
+
+.bill-viewer-header button {
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #e60000;
+  color: #ffffff;
+
+  border: none;
+  border-radius: 9px;
+
+  font-size: 22px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 3px 6px rgba(0,0,0,0.35),
+    inset 0 1px 2px rgba(255,255,255,0.25);
+
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.bill-viewer-header button:hover {
+  background: #ff0000;
+  box-shadow:
+    0 4px 8px rgba(0,0,0,0.4),
+    inset 0 1px 2px rgba(255,255,255,0.3);
+}
+
+
+.bill-viewer-header button:active {
+  transform: scale(0.92);
+}
+
+
+
+
+
+/* ===== CONTENT ===== */
+
+.bill-viewer-content {
+  padding: 24px;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+
+
+.viewer-company {
+  text-align: center;
+  padding: 16px 12px 18px;
+  margin-bottom: 20px;
+  background: #f8fbff;
+  border: 1px solid #dce6ef;
+  border-radius: 12px;
+  position: relative;
+}
+
+
+
+.viewer-company::after {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 0;
+  height: 3px;
+  background: #1e4f8a;
+  border-radius: 3px;
+}
+
+
+
+
+
+/* ===== COMPANY NAME ===== */
+
+.viewer-company-name {
+  font-size: 24px;
+  font-weight: 800;
+  color: #1e3a5f;
+  letter-spacing: 0.4px;
+}
+
+
+/* ===== COMPANY TYPE ===== */
+
+.viewer-company-type {
+  margin-top: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #5b6775;
+}
+
+
+/* ===== ADDRESS ===== */
+
+.viewer-company > div:nth-child(3) {
+  margin-top: 5px;
+  font-size: 11px;
+  color: #777f87;
+}
+
+
+/* ===== CONTACT ===== */
+
+.viewer-company-contact {
+  margin-top: 6px;
+  font-size: 11px;
+  color: #44515d;
+}
+
+
+
+
+
+
+/* =================================
+   BILL VIEWER - INFORMATION CARDS
+================================= */
+
+.viewer-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.viewer-info > div {
+  position: relative;
+  padding: 12px 14px;
+  background: #ffffff;
+  border: 1px solid #dce3eb;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.viewer-info > div::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  background: #1e4f8a;
+  border-radius: 0 3px 3px 0;
+}
+
+
+
+
+
+/* =================================
+   VIEWER GENERATED DATA
+================================= */
+
+.viewer-data {
+  display: block;
+
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+
+  line-height: 1.4;
+  letter-spacing: 0.2px;
+
+  font-variant-numeric: tabular-nums;
+  word-break: break-word;
+}
+
+
+.viewer-label {
+  display: block;
+
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+
+  color: #7a8795;
+}
+
+
+
+
+
+/* ===== VIEWER PAYMENT STATUS ===== */
+
+.viewer-payment-paid {
+
+  color: #198754;
+
+  background: #e8f8ef;
+
+  border: 1px solid #b9e5c9;
+
+  padding: 3px 8px;
+
+  border-radius: 15px;
+
+  font-weight: bold;
+
+  font-size: 12px;
+
+}
+
+
+.viewer-payment-not-paid {
+
+  color: #d93636;
+
+  background: #ffebeb;
+
+  border: 1px solid #f2bcbc;
+
+  padding: 3px 8px;
+
+  border-radius: 15px;
+
+  font-weight: bold;
+
+  font-size: 12px;
+
+}
+
+
+
+
+/* =================================
+   BILL VIEWER - STEP 6
+   ITEMS TABLE
+================================= */
+
+.viewer-items {
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 18px;
+
+  overflow-x: auto;
+}
+
+
+.viewer-items table {
+  width: 100%;
+  table-layout: fixed;
+
+  border-collapse: separate;
+  border-spacing: 0;
+
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 12px;
+
+  border: 1px solid #dce3eb;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+
+/* ===== COLUMN WIDTH & ALIGNMENT ===== */
+
+.viewer-items th:nth-child(1),
+.viewer-items td:nth-child(1) {
+  width: 45px;
+}
+
+
+.viewer-items th:nth-child(2),
+.viewer-items td:nth-child(2) {
+  width: auto;
+}
+
+
+.viewer-items th:nth-child(3),
+.viewer-items td:nth-child(3) {
+  width: 55px;
+}
+
+
+.viewer-items th:nth-child(4),
+.viewer-items td:nth-child(4),
+.viewer-items th:nth-child(5),
+.viewer-items td:nth-child(5) {
+  width: 95px;
+}
+
+
+
+
+
+/* ===== TABLE HEADER ===== */
+
+.viewer-items th {
+
+  padding: 11px 10px;
+
+  background: #1e3a5f;
+  color: #ffffff;
+
+  border: 1px solid #3d5a7a;
+
+  font-size: 11px;
+  font-weight: 700;
+  
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+
+  text-align: center;
+}
+
+
+/* ===== TABLE BODY ===== */
+
+.viewer-items td {
+
+  padding: 10px;
+
+  background: #ffffff;
+  color: #26384d;
+
+  border: 1px solid #d5dde6;
+  
+  font-size: 12px;
+  font-weight: 500;
+
+  line-height: 1.4;
+}
+
+
+/* ===== SERVICE / ITEM ===== */
+
+.viewer-items td:nth-child(2) {
+
+  text-align: left;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  color: #26384d;
+}
+
+
+/* ===== QTY ===== */
+
+.viewer-items td:nth-child(3) {
+
+  text-align: center;
+
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+
+/* ===== RATE / AMOUNT ===== */
+
+.viewer-items td:nth-child(4),
+.viewer-items td:nth-child(5) {
+
+  text-align: right;
+
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  font-weight: 500;
+
+  white-space: nowrap;
+}
+
+
+/* ===== SERIAL NUMBER ===== */
+
+.viewer-items td:nth-child(1) {
+
+  text-align: center;
+
+  font-variant-numeric: tabular-nums;
+
+  color: #6b7785;
+}
+
+
+/* ===== ROW HOVER ===== */
+
+.viewer-items tbody tr:hover td {
+
+  background: #f7f9fc;
+
+}
+
+
+
+/* =================================
+   STEP 6A
+   AMOUNT COLUMN EMPHASIS
+================================= */
+
+/* Amount column header */
+.viewer-items th:nth-child(5) {
+  text-align: right;
+  white-space: nowrap;
+}
+
+
+/* Amount column data */
+.viewer-items td:nth-child(5) {
+  text-align: right;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  color: #1e3a5f;
+
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+
+/* Slight background emphasis */
+.viewer-items td:nth-child(5) {
+  background: #f7f9fc;
+}
+
+
+/* Keep hover effect */
+.viewer-items tbody tr:hover td:nth-child(5) {
+  background: #eef4fb;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* =================================
+   TOTAL AMOUNT
+================================= */
+
+.viewer-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 14px;
+  margin-bottom: 18px;
+
+  padding: 14px 18px;
+
+  background: #eef4fb;
+
+  border: 1px solid #cbd9e8;
+  border-radius: 10px;
+}
+
+
+/* TOTAL label */
+.viewer-total > span {
+  font-size: 13px;
+  font-weight: 800;
+
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+
+  color: #5b6775;
+}
+
+
+/* TOTAL amount */
+.viewer-total > strong {
+  font-size: 20px;
+  font-weight: 800;
+
+  color: #1e3a5f;
+
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+
+/* Number itself */
+.viewer-total-amount {
+  font-variant-numeric: tabular-nums;
+}
+
+
+
+
+/* =================================
+   VIEWER PAYMENT SUMMARY
+================================= */
+
+.viewer-payment-summary {
+  margin-top: 18px;
+  padding: 16px;
+  background: #f7f9fc;
+  border: 1px solid #dce3eb;
+  border-radius: 12px;
+}
+
+.viewer-payment-title {
+  margin-bottom: 12px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid #dce3eb;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.9px;
+  color: #1e3a5f;
+}
+
+.viewer-payment-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.viewer-payment-card {
+  padding: 11px 13px;
+  background: #ffffff;
+  border: 1px solid #dce3eb;
+  border-radius: 9px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.viewer-payment-card > span:first-child {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #7a8795;
+}
+
+.viewer-payment-card > strong {
+  font-size: 14px;
+  font-weight: 700;
+  color: #26384d;
+  font-variant-numeric: tabular-nums;
+}
+
+.viewer-balance-card {
+  background: #eef4fb;
+  border-color: #cbd9e8;
+}
+
+.viewer-balance-card > strong {
+  color: #1e4f8a;
+  font-size: 15px;
+}
+
+
+
+
+/* ===== NOTE ===== */
+
+.viewer-note {
+
+  margin-top: 15px;
+
+  padding: 10px;
+
+  background: #fff8cc;
+
+  border-left: 4px solid #e6b800;
+
+}
+
+
+.viewer-note-title {
+
+  font-weight: bold;
+
+  color: #b00000;
+
+}
+
+
+/* ===== FOOTER ===== */
+
+.bill-viewer-footer {
+
+  padding: 12px 18px;
+
+  background: #f5f5f5;
+
+  display: flex;
+
+  gap: 10px;
+
+}
+
+
+.bill-viewer-footer button {
+
+  flex: 1;
+
+  margin: 0;
+
+}
+

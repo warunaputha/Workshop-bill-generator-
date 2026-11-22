@@ -1,0 +1,20 @@
+
+/* ===== layout.css ===== */
+
+
+/* ===== MAIN CONTAINER ===== */
+
+.container {
+  background: #ffffff;
+
+  max-width: 850px;
+
+  margin: 20px auto;
+
+  padding: 25px;
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.10);
+}

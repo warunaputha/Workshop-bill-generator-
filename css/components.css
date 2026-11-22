@@ -1,0 +1,533 @@
+
+
+
+/* ===== components.css ===== */
+
+
+/* ===== ALL ACTION BUTTONS ===== */
+
+.container > button {
+  width: 100%;
+  min-height: 42px;
+  margin-top: 8px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 7px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+}
+
+
+/* ===== BUTTON PRESS ===== */
+
+.container > button:active {
+  transform: scale(0.98);
+}
+
+
+/* ===== BUTTON HOVER ===== */
+
+.container > button:hover {
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+
+/* ===== ADD ROW ===== */
+
+.container > button:nth-of-type(1) {
+  background: #f1f3f5;
+  color: #333;
+
+  border: 1px solid #d0d5da;
+}
+
+
+/* ===== PREVIEW PDF ===== */
+
+.container > button:nth-of-type(2) {
+  background: #e9eef5;
+  color: #34495e;
+  border: 1px solid #ccd6e0;
+}
+
+
+/* ===== DOWNLOAD PDF ===== */
+
+.container > button:nth-of-type(3) {
+  background: #e8f1fb;
+  color: #075a9c;
+  border: 1px solid #bcd4eb;
+}
+
+
+/* ===== SAVE / UPDATE BILL ===== */
+
+.container > button:nth-of-type(4) {
+  background: #0066cc;
+  color: #ffffff;
+  border: 1px solid #005bb5;
+  font-size: 15px;
+}
+
+
+/* ===== SAVE / UPDATE HOVER ===== */
+
+.container > button:nth-of-type(4):hover {
+  background: #0052a3;
+}
+
+
+/* ===== WHATSAPP ===== */
+
+.container > button:nth-of-type(5) {
+  background: #25D366;
+  color: #ffffff;
+  border: 1px solid #1ebe5d;
+  font-size: 14px;
+}
+
+
+/* ===== WHATSAPP HOVER ===== */
+
+.container > button:nth-of-type(5):hover {
+  background: #1ebe5d;
+}
+
+
+
+
+
+
+/* ===============================
+   ONLINE / OFFLINE STATUS
+================================ */
+
+#connectionStatus {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+
+  padding: 6px 12px;
+  border-radius: 20px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  z-index: 9999;
+}
+
+#connectionStatus.online {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+#connectionStatus.offline {
+  background: #ffebee;
+  color: #c62828;
+}
+
+
+
+
+/* =================================
+   PWA INSTALL BUTTON
+================================= */
+
+.install-app-btn {
+
+  display: none;
+
+  margin: 10px auto;
+
+  padding: 10px 18px;
+
+  background: #0066cc;
+  color: #ffffff;
+
+  border: none;
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+
+.install-app-btn:hover {
+  background: #0052a3;
+}
+
+.install-app-btn:active {
+  transform: scale(0.98);
+}
+
+
+
+/* =================================
+   SHARE PDF BUTTON
+================================= */
+
+.share-pdf-btn {
+
+  margin: 8px auto;
+
+  padding: 10px 18px;
+
+  background: #198754;
+  color: #ffffff;
+
+  border: none;
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+
+.share-pdf-btn:hover {
+  background: #157347;
+}
+
+.share-pdf-btn:active {
+  transform: scale(0.98);
+}
+
+
+
+
+
+/* =================================
+   BILL SAVED NOTIFICATION
+================================= */
+
+#saveNotification {
+
+  position: fixed;
+
+  top: 20px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  display: none;
+
+  align-items: center;
+  gap: 10px;
+
+  min-width: 250px;
+
+  padding: 12px 16px;
+
+  background: #e8f5e9;
+  color: #1b5e20;
+
+  border: 1px solid #a5d6a7;
+
+  border-radius: 10px;
+
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.15);
+
+  z-index: 10000;
+}
+
+.save-notification-icon {
+
+  display: flex;
+
+  width: 28px;
+  height: 28px;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #2e7d32;
+  color: #ffffff;
+
+  border-radius: 50%;
+
+  font-weight: bold;
+}
+
+#saveNotification strong {
+
+  display: block;
+
+  font-size: 14px;
+}
+
+#saveNotification small {
+
+  display: block;
+
+  margin-top: 2px;
+
+  font-size: 12px;
+
+  color: #4b6b4d;
+}
+
+
+/* =================================
+   NEW VERSION NOTIFICATION
+================================= */
+
+#updateNotification {
+
+  position: fixed;
+
+  top: 20px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  display: none;
+
+  align-items: center;
+
+  gap: 12px;
+
+  width: min(420px, calc(100% - 30px));
+
+  padding: 14px 16px;
+
+  background: #ffffff;
+
+  border: 1px solid #cfd8dc;
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 5px 18px rgba(0,0,0,0.18);
+
+  z-index: 10001;
+}
+
+
+/* Icon */
+
+.update-notification-icon {
+
+  font-size: 24px;
+
+  flex-shrink: 0;
+}
+
+
+/* Text */
+
+.update-notification-content {
+
+  flex: 1;
+
+}
+
+.update-notification-content strong {
+
+  display: block;
+
+  font-size: 14px;
+
+  color: #123b63;
+
+}
+
+.update-notification-content small {
+
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 12px;
+
+  line-height: 1.4;
+
+  color: #666;
+
+}
+
+
+/* Update button */
+
+#updateAppBtn {
+
+  padding: 8px 14px;
+
+  background: #0066cc;
+
+  color: #ffffff;
+
+  border: none;
+
+  border-radius: 7px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  flex-shrink: 0;
+
+}
+
+#updateAppBtn:hover {
+
+  background: #0052a3;
+
+}
+
+#updateAppBtn:active {
+
+  transform: scale(0.97);
+
+}
+
+
+
+
+/* ===============================
+   DRAFT RESTORE POPUP
+================================ */
+
+.draft-popup-overlay {
+
+  display: none;
+
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 999999;
+
+  background: rgba(0, 0, 0, 0.55);
+
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+
+}
+
+
+/* POPUP BOX */
+
+.draft-popup {
+
+  width: 100%;
+  max-width: 380px;
+
+  background: #ffffff;
+
+  padding: 22px;
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 10px 35px rgba(0, 0, 0, 0.25);
+
+  text-align: center;
+
+}
+
+
+/* TITLE */
+
+.draft-popup h3 {
+
+  margin-top: 0;
+
+  margin-bottom: 12px;
+
+  color: #1565c0;
+
+}
+
+
+/* MESSAGE */
+
+.draft-popup p {
+
+  color: #444;
+
+  line-height: 1.6;
+
+  margin-bottom: 22px;
+
+}
+
+
+/* BUTTON CONTAINER */
+
+.draft-popup-buttons {
+
+  display: flex;
+
+  gap: 12px;
+
+}
+
+
+/* BUTTONS */
+
+.draft-popup-buttons button {
+
+  flex: 1;
+
+  padding: 12px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  font-size: 15px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+}
+
+
+/* RESTORE BUTTON */
+
+#restoreDraftBtn {
+
+  background: #1565c0;
+
+  color: white;
+
+}
+
+
+/* NOT NOW BUTTON */
+
+#skipDraftBtn {
+
+  background: #e5e7eb;
+
+  color: #333;
+
+}
+
+
+/* BUTTON TOUCH FEEDBACK */
+
+.draft-popup-buttons button:active {
+
+  transform: scale(0.97);
+
+}
+
+

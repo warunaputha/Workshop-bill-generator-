@@ -1,0 +1,121 @@
+
+
+/* ===== bill-form.css ===== */
+
+
+
+/* ===============================
+   STEP 3 — BILL INFORMATION UI
+================================ */
+
+/* ===== BILL INFORMATION AREA ===== */
+
+.container > .row {
+  margin-top: 15px;
+}
+
+
+/* ===== ROW CARDS ===== */
+
+.container > .row:first-of-type,
+.container > .row:nth-of-type(2) {
+  background: #f8fbff;
+  border: 1px solid #d9e6f2;
+  border-radius: 10px;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+
+/* ===== LABELS ===== */
+
+.container label {
+  display: block;
+  margin-top: 14px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #34495e;
+}
+
+
+/* ===== BILL INPUTS ===== */
+
+.container > .row input,
+.container > input,
+.container > textarea {
+  width: 100%;
+  padding: 10px 12px;
+  box-sizing: border-box;
+  border: 1px solid #ccd8e3;
+  border-radius: 7px;
+  background: #ffffff;
+  font-size: 14px;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+/* ===== INPUT FOCUS ===== */
+
+.container > .row input:focus,
+.container > input:focus,
+.container > textarea:focus {
+  border-color: #0066cc;
+  box-shadow:
+    0 0 0 3px rgba(0, 102, 204, 0.12);
+}
+
+
+/* ===== BILL NUMBER ===== */
+
+#billNo {
+  font-weight: bold;
+  color: #003399;
+  background: #f4f8ff;
+}
+
+
+/* ===== DATE ===== */
+
+#billDate {
+  font-weight: 500;
+}
+
+
+/* ===== CUSTOMER ===== */
+
+#customer {
+  background: #ffffff;
+}
+
+
+/* ===== NOTE / DESCRIPTION ===== */
+
+#note {
+  min-height: 80px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+
+/* ===== SECTION TITLE ===== */
+
+.container > h3 {
+  margin-top: 25px;
+  margin-bottom: 10px;
+  padding: 10px 14px;
+  background: #0066cc;
+  color: #ffffff;
+  border-radius: 8px;
+  text-align: left;
+  font-size: 16px;
+}
+
+
+
+
+
+

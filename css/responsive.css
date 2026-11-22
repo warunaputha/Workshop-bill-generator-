@@ -1,0 +1,467 @@
+
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 600px) {
+    
+    /* ============== MAINCOMPANY HEADER=========== */
+    
+.main-company-header {
+    gap: 10px;
+    padding: 6px 4px 12px;
+  }
+
+
+  /* Company Name */
+
+  .main-company-title h2 {
+    font-size: 19px;
+    margin-bottom: 2px;
+  }
+
+
+  /* Business Type */
+
+  .main-company-type {
+    font-size: 10px;
+    margin-bottom: 4px;
+  }
+
+
+  /* Address */
+
+  .main-company-address {
+    font-size: 9px;
+    margin-bottom: 4px;
+  }
+
+
+  /* Tel / Email */
+
+  .main-company-contact {
+    font-size: 9px;
+    gap: 4px;
+  }
+
+
+  /* Logo */
+
+  .main-company-logo {
+    width: 58px;
+    height: 48px;
+
+    border-radius: 7px;
+  }
+
+
+  #mainCompanyLogo {
+    max-width: 50px;
+    max-height: 42px;
+  }
+    
+    
+    
+    
+    .company-details-header {
+
+    padding: 11px 14px;
+
+    font-size: 14px;
+  }
+
+
+  .company-details-content {
+
+    padding: 12px;
+  }
+    
+    
+    
+    
+    
+  .container {
+    padding: 15px;
+  }
+
+  .container > .row {
+    flex-direction: column;
+
+    gap: 0;
+
+    padding: 10px;
+  }
+
+  .container > .row div {
+    width: 100%;
+  }
+
+  .container > .row div + div {
+    margin-top: 10px;
+  }
+    
+    
+
+  .bill-viewer-modal {
+
+    padding: 10px;
+
+  }
+
+
+  .bill-viewer-box {
+
+    margin: 5px auto;
+
+  }
+
+
+  
+  
+  /* =================================
+   BILL VIEWER - INFORMATION CARDS
+================================= */
+
+.viewer-info {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .viewer-info > div {
+    padding: 11px 13px;
+  }
+
+  .viewer-info strong {
+    font-size: 13px;
+  }
+  
+
+
+  .viewer-items {
+
+    font-size: 12px;
+
+  }
+
+
+  .viewer-items th,
+  .viewer-items td {
+
+    padding: 5px;
+
+  }
+  
+  
+  
+  .viewer-total {
+    padding: 13px 14px;
+  }
+
+  .viewer-total > span {
+    font-size: 12px;
+  }
+
+  .viewer-total > strong {
+    font-size: 18px;
+  }
+  
+  
+  
+  
+  
+  
+ /* #items {
+    display: block;
+
+    overflow-x: auto;
+
+    white-space: nowrap;
+
+    -webkit-overflow-scrolling: touch;
+  }*/
+  
+
+
+  #items th,
+  #items td {
+    min-width: 75px;
+  }
+
+
+  #items th:nth-child(2),
+  #items td:nth-child(2) {
+    min-width: 150px;
+  }
+
+
+  #items th:nth-child(3),
+  #items td:nth-child(3) {
+    min-width: 65px;
+  }
+
+
+  #items th:nth-child(4),
+  #items td:nth-child(4),
+  #items th:nth-child(5),
+  #items td:nth-child(5) {
+    min-width: 105px;
+  }
+  
+  
+  .table-swipe-controls {
+    justify-content: space-between;
+  }
+
+  .table-swipe-controls button {
+    min-width: 125px;
+  }
+  
+  
+  
+  
+  
+   
+
+  .total-label {
+    font-size: 18px;
+  }
+
+  .total-value {
+    font-size: 19px;
+  }
+
+  #grandTotal {
+    font-size: 25px;
+  }
+
+
+  .container > button {
+    min-height: 44px;
+
+    font-size: 14px;
+  }
+  
+  
+  /* ===============================
+   SMART PARTICULARS SUGGESTIONS
+================================ */
+.particular-suggestion-item {
+    padding: 10px;
+    font-size: 13px;
+  }
+  
+  
+  
+  
+  
+  
+  /* ===== MOBILE BACKUP CONTROLS ===== */
+  
+    .history-tools {
+    width: 100%;
+    justify-content: flex-start;
+    margin-top: 8px;
+  }
+
+  .history-tools button {
+    min-width: 82px;
+    padding: 7px 8px;
+    font-size: 11px;
+  }
+  
+  
+  
+  
+  
+  /* ===============================
+   MOBILE BILL HISTORY
+================================ */
+  
+  
+   .bill-history {
+    margin: 18px 0;
+    border-radius: 10px;
+  }
+
+
+  .history-header {
+    padding: 15px;
+    align-items: flex-start;
+  }
+
+
+  .history-header h2 {
+    font-size: 17px;
+  }
+
+
+  .history-header p {
+    font-size: 11px;
+  }
+
+
+  .history-refresh-btn {
+    min-width: 82px;
+    font-size: 12px;
+    padding: 7px 8px;
+  }
+
+  #billHistory {
+    padding: 10px;
+    overflow-x: auto;
+  }
+
+  .history-table {
+    min-width: 720px;
+  }
+
+  .history-table th {
+    font-size: 11px;
+    padding: 9px 7px;
+
+  }
+
+
+  .history-table td {
+    font-size: 12px;
+    padding: 9px 7px;
+  }
+
+
+  .history-actions button {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    font-size: 14px;
+  }
+  
+  
+  .bill-month-content {
+    padding: 5px;
+    overflow-x: auto;
+  }
+
+  .bill-month-content .history-table {
+    min-width: 700px;
+  }
+
+  .bill-month-heading {
+    padding: 12px 9px;
+    font-size: 14px;
+  }
+
+  .bill-history-table-wrap .history-table {
+    min-width: 700px;
+  }
+
+  .recent-bills-heading {
+    font-size: 15px;
+  }
+
+  
+
+}
+
+
+
+
+
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 700px) {
+.monthly-summary {
+grid-template-columns:
+  repeat(2, minmax(0, 1fr));
+
+gap: 10px;
+}
+.summary-card {
+padding: 13px 10px;
+}
+.summary-value {
+font-size: 16px;
+}
+
+
+.payment-status-summary {
+grid-template-columns: repeat(3, minmax(0, 1fr));
+gap: 8px;
+}
+
+.status-summary-card {
+padding: 12px 5px;
+}
+
+.status-summary-icon {
+font-size: 21px;
+}
+
+.status-summary-label {
+font-size: 12px;
+}
+
+.status-summary-value {
+font-size: 22px;
+}
+
+.status-summary-caption {
+font-size: 10px;
+line-height: 1.4;
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 768px) {
+
+    .table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
+    .table-wrapper table {
+        min-width: 700px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .amount-input {
+        width: 150px;
+    }
+
+    .amount-input input {
+        width: 85px;
+    }
+    
+    .payment-balance {
+        padding: 18px 16px;
+    }
+
+    .payment-balance > span {
+        font-size: 14px;
+    }
+
+    .payment-balance strong {
+        font-size: 21px;
+        gap: 5px;
+    }
+
+}
+
+
+
+
+
+
+
+

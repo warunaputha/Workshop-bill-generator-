@@ -1,0 +1,659 @@
+
+
+/* ===============================
+   company.css
+================================ */
+
+
+
+/* ===============================
+   MAIN COMPANY HEADER
+================================ */
+
+.main-company-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 12px 16px;
+
+  border-bottom: 1px solid #dce6ef;
+
+  /* ===== BACKGROUND IMAGE ===== */
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.82),
+      rgba(255, 255, 255, 0.82)
+    ),
+   url("../assets/images/header-bg.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  border-radius: 10px;
+}
+
+
+/* ===============================
+   COMPANY INFORMATION
+================================ */
+
+.main-company-title {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+
+
+/* ===== COMPANY NAME ===== */
+
+.main-company-title h2 {
+  margin: 0 0 3px;
+
+  text-align: left;
+
+  font-size: 23px;
+  line-height: 1.2;
+
+  font-weight: 700;
+
+  color: #003399;
+}
+
+
+/* ===== BUSINESS TYPE ===== */
+
+.main-company-type {
+  margin-bottom: 5px;
+
+  font-size: 12px;
+  line-height: 1.3;
+
+  font-weight: 600;
+
+  color: #566575;
+}
+
+
+/* ===== ADDRESS ===== */
+
+.main-company-address {
+  margin-bottom: 5px;
+
+  font-size: 11px;
+  line-height: 1.4;
+
+  color: #777f87;
+}
+
+
+/* ===== CONTACT LINE ===== */
+
+.main-company-contact {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  font-size: 11px;
+  line-height: 1.3;
+
+  color: #44515d;
+
+  white-space: nowrap;
+}
+
+
+/* ===== SEPARATOR ===== */
+
+.contact-separator {
+  color: #aeb7bf;
+}
+
+
+/* ===============================
+   COMPANY LOGO - RIGHT SIDE
+================================ */
+
+.main-company-logo {
+  width: 72px;
+  height: 58px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #ffffff;
+
+  border: 1px solid #d9e2ea;
+  border-radius: 8px;
+}
+
+
+#mainCompanyLogo {
+  display: none;
+
+  max-width: 64px;
+  max-height: 50px;
+
+  width: auto;
+  height: auto;
+
+  object-fit: contain;
+}
+
+
+
+
+
+
+
+
+
+
+/* ===============================
+   STEP 2 — COMPANY DETAILS UI
+================================ */
+
+.company-settings {
+  background: #f8fbff;
+  border: 1px solid #d9e6f2;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0 25px;
+
+  box-shadow:
+    0 3px 12px rgba(0, 0, 0, 0.06);
+}
+
+
+/* ===== SECTION TITLE ===== */
+
+.company-settings h3 {
+  margin: -20px -20px 20px;
+  padding: 14px 18px;
+
+  background: #0066cc;
+  color: #ffffff;
+
+  text-align: left;
+  font-size: 17px;
+  font-weight: bold;
+
+  border-radius: 12px 12px 0 0;
+}
+
+
+/* ===== LABELS ===== */
+
+.company-settings label {
+  display: block;
+
+  margin-top: 12px;
+  margin-bottom: 5px;
+
+  font-size: 13px;
+  font-weight: bold;
+  color: #34495e;
+}
+
+
+/* ===== INPUTS ===== */
+
+.company-settings input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccd8e3;
+  border-radius: 7px;
+  background: #ffffff;
+  font-size: 14px;
+  box-sizing: border-box;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+/* ===== INPUT FOCUS ===== */
+
+.company-settings input:focus {
+  border-color: #0066cc;
+  box-shadow:
+    0 0 0 3px rgba(0, 102, 204, 0.12);
+}
+
+
+/* ===== FILE INPUT ===== */
+
+.company-settings input[type="file"] {
+  width: 100%;
+  padding: 9px;
+  border: 1px dashed #9fb6cc;
+  border-radius: 7px;
+  background: #ffffff;
+  box-sizing: border-box;
+  font-size: 13px;
+}
+
+
+/* ===== LOGO PREVIEW AREA ===== */
+
+.company-settings div[style*="text-align:center"] {
+  background: #ffffff;
+  border: 1px dashed #c7d5e2;
+  border-radius: 8px;
+  padding: 12px;
+  min-height: 50px;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* ===== LOGO ===== */
+
+#logoPreview {
+  border-radius: 6px;
+  object-fit: contain;
+  max-width: 150px;
+  max-height: 80px;
+}
+
+
+/* ===== SAVE COMPANY BUTTON ===== */
+
+.company-settings button {
+  width: 100%;
+  margin-top: 18px;
+  padding: 11px 15px;
+  background: #0066cc;
+  color: #ffffff;
+  border: none;
+  border-radius: 7px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease;
+}
+
+
+/* ===== BUTTON HOVER ===== */
+
+.company-settings button:hover {
+  background: #0052a3;
+}
+
+
+/* ===== BUTTON PRESS ===== */
+
+.company-settings button:active {
+  transform: scale(0.98);
+}
+
+
+
+
+
+/* ===============================
+   COMPANY DETAILS ACCORDION
+================================ */
+
+/* =================================
+   COMPANY DETAILS
+================================= */
+
+.company-details {
+  margin-top: 12px;
+  margin-bottom: 16px;
+
+  border: 1px solid #dce6ef;
+  border-radius: 12px;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+
+
+.company-details + h3 {
+  margin-top: 18px;
+}
+
+
+/* ===== HEADER ===== */
+
+/*.company-details-header {
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 12px 16px;
+
+  background: #0066cc;
+
+  color: #ffffff;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  user-select: none;
+}*/
+
+/* =================================
+   COMPANY DETAILS HEADER
+================================= */
+
+.company-details-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: 46px;
+
+  padding: 0 14px;
+
+  background: #0066cc;
+
+  color: #ffffff;
+
+  font-size: 18px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  user-select: none;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.company-details-header:active {
+  opacity: 0.9;
+}
+
+
+/* ===== ARROW ===== */
+
+/*#companyDetailsArrow {
+
+  font-size: 13px;
+
+  transition:
+    transform 0.2s ease;
+}*/
+
+
+#companyDetailsArrow {
+
+  font-size: 24px;
+  font-weight: 300;
+
+  color: #ffffff;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 28px;
+  height: 28px;
+
+  border: 1.5px solid rgba(0, 102, 204, 0.35);
+  border-radius: 50%;
+
+  box-sizing: border-box;
+
+  transition:
+    transform 0.3s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.company-details-header:hover #companyDetailsArrow {
+
+  background: rgba(0, 102, 204, 0.08);
+
+  border-color: rgba(0, 102, 204, 0.65);
+}
+
+#companyDetailsArrow.open {
+  transform: rotate(180deg);
+  border-color: #0066cc;
+}
+
+
+
+
+
+
+
+.company-details-header {
+  cursor: pointer;
+}
+
+
+
+
+/* ===== CONTENT ===== */
+
+/*.company-details-content {
+
+  max-height: 1000px;
+
+  overflow: hidden;
+
+  padding: 15px;
+
+  transition:
+    max-height 0.3s ease,
+    padding 0.3s ease;
+}*/
+
+
+/* ===== CONTENT ===== */
+
+.company-details-content {
+
+  max-height: 1000px;
+
+  overflow: hidden;
+
+  padding: 15px;
+
+  background: #ffffff;
+
+  border-top: 1px solid #e5edf5;
+
+  transition:
+    max-height 0.3s ease,
+    padding 0.3s ease;
+}
+
+
+.company-details-content label {
+  display: block;
+
+  margin-top: 10px;
+  margin-bottom: 5px;
+
+  color: #34495e;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.company-details-content input {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 10px 11px;
+
+  border: 1px solid #ccd9e6;
+  border-radius: 7px;
+
+  background: #ffffff;
+
+  color: #263746;
+
+  font-size: 14px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.company-details-content input:focus {
+  border-color: #0066cc;
+
+  box-shadow:
+    0 0 0 3px rgba(0, 102, 204, 0.10);
+}
+
+
+.company-details-content button {
+  width: 100%;
+
+  margin-top: 18px;
+
+  padding: 11px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #0066cc;
+
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease;
+}
+
+.company-details-content button:hover {
+  background: #0052a3;
+}
+
+.company-details-content button:active {
+  transform: scale(0.98);
+}
+
+
+
+
+/* =================================
+   COMPANY TYPE DROPDOWN
+================================= */
+
+.company-type-select {
+
+  width: 100%;
+  min-height: 46px;
+
+  padding: 11px 40px 11px 14px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  color: #1e293b;
+
+  background-color: #ffffff;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+
+  outline: none;
+
+  cursor: pointer;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px;
+
+  transition: all 0.2s ease;
+
+}
+
+
+/* HOVER */
+
+.company-type-select:hover {
+
+  border-color: #2563eb;
+
+}
+
+
+/* FOCUS */
+
+.company-type-select:focus {
+
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 3px rgba(37, 99, 235, 0.12);
+
+}
+
+
+/* DROPDOWN OPTIONS */
+
+.company-type-select option {
+
+  padding: 10px;
+
+  font-size: 14px;
+
+  color: #1e293b;
+
+  background: #ffffff;
+
+}
+
+
+
+
+
+
+/* ===== CLOSED ===== */
+
+.company-details-content.collapsed {
+
+  max-height: 0;
+
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+
+
+
+

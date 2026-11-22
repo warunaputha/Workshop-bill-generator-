@@ -1,0 +1,157 @@
+
+
+/* ===== Base.css ===== */
+
+
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+
+
+/* ===== GLOBAL CSS VARIABLES ===== */
+
+:root {
+  --primary-color: #0066cc;
+  --background-color: #eef3f8;
+  --text-color: #222;
+  --border-color: #000;
+  --default-radius: 6px;
+}
+
+
+/* ===== GLOBAL BOX SIZING ===== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+
+
+body {
+  font-family: Arial, sans-serif;
+  background: var(--background-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 20px;
+  
+}
+
+
+
+
+
+h2, h3 {
+  text-align: center;
+  margin: 5px 0;
+}
+
+
+
+label {
+  font-size: 14px;
+}
+
+input {
+  width: 100%;
+  padding: 6px;
+  margin-top: 4px;
+  
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 6px;
+  text-align: center;
+}
+
+
+
+button {
+  margin-top: 15px;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+
+textarea {
+  width: 100%;
+  padding: 6px;
+  margin-top: 4px;
+  
+  resize: vertical;
+}
+
+
+
+/* ===== GLOBAL FORM FONT ===== */
+
+input,
+textarea,
+button,
+select {
+  font-family: inherit;
+}
+
+
+/* ===== MOBILE INPUT OPTIMIZATION ===== */
+
+input,
+textarea,
+select {
+  font-size: 16px;
+}
+
+
+
+
+
+/* ===== ACCESSIBILITY & FOCUS OPTIMIZATION ===== */
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+
+
+
+
+/* ===== REDUCED MOTION SUPPORT ===== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+
+    scroll-behavior: auto !important;
+
+    animation-duration: 0.01ms !important;
+
+    animation-iteration-count: 1 !important;
+
+    transition-duration: 0.01ms !important;
+
+  }
+
+}
+
+
+

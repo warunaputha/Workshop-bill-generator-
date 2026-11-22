@@ -1,0 +1,373 @@
+
+
+
+/* =====payment.css===== */
+
+
+/* ===============================
+   STEP 5 — TOTAL + ACTION BUTTONS
+================================ */
+
+
+/* ==PROFESSIONAL TOTAL BOX===== */
+
+.total-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+  margin-bottom: 18px;
+  padding: 12px 14px;
+  background: #f7faff;
+  border-top: 3px solid #0066cc;
+  border-bottom: 1px solid #d7e2ec;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+
+
+
+/* ===== TOTAL LABEL ===== */
+
+.total-label {
+  font-size: 20px;
+  font-weight: 700;
+  color: #34495e;
+  letter-spacing: 0.5px;
+}
+
+
+/* ===== TOTAL VALUE ===== */
+
+.total-value {
+  font-size: 21px;
+  font-weight: 700;
+  color: #34495e;
+}
+
+
+/* ===== GRAND TOTAL NUMBER ===== */
+
+#grandTotal {
+  font-size: 28px;
+  font-weight: 800;
+  color: #003399;
+  letter-spacing: 0.4px;
+}
+
+
+
+    
+    
+    
+    
+    /* ===== payment-panel ===== */
+
+    
+ /*   .payment-panel {
+  margin-top: 12px;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  background: #fff;
+}*/
+
+
+.payment-panel {
+    margin-top: 20px;
+    padding: 22px;
+    background: #ffffff;
+    border: 1px solid #d9e0e8;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+
+
+/* PAYMENT PANEL HEADING */
+
+.payment-heading {
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e5e9ef;
+}
+
+.payment-heading span {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #1e3a5f;
+}
+
+
+
+
+
+/* =================================
+   TOTAL AMOUNT - PROFESSIONAL
+================================= */
+
+.payment-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 16px 18px;
+    margin-bottom: 20px;
+
+    background: #f4f7fb;
+    border: 1px solid #dbe3ed;
+    border-radius: 10px;
+}
+
+.payment-total > span {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    color: #5b6775;
+}
+
+.payment-total strong {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1e3a5f;
+}
+
+.payment-total strong span {
+    font-variant-numeric: tabular-nums;
+}
+
+
+
+
+
+/* SECTION */
+
+.payment-section {
+  margin-bottom: 14px;
+}
+
+.payment-title {
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 7px;
+}
+
+
+
+
+/* =================================
+   PAYMENT METHOD - PROPOSAL CARDS
+================================= */
+
+.payment-options {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.payment-card {
+    flex: 1;
+    position: relative;
+    cursor: pointer;
+}
+
+.payment-card input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.payment-card span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 48px;
+    padding: 10px 14px;
+
+    background: #ffffff;
+    border: 1px solid #d5dde7;
+    border-radius: 10px;
+
+    font-size: 14px;
+    font-weight: 700;
+    color: #44515f;
+
+    transition: all 0.2s ease;
+}
+
+/* Hover */
+.payment-card:hover span {
+    border-color: #1e3a5f;
+    background: #f7f9fc;
+}
+
+/* Selected */
+.payment-card input:checked + span {
+    background: #eef4fb;
+    border-color: #1e3a5f;
+    color: #1e3a5f;
+
+    box-shadow: 0 2px 6px rgba(30, 58, 95, 0.12);
+}
+
+
+
+
+/* =================================
+   PAYMENT STATUS - PROPOSAL CARDS
+================================= */
+
+.status-options {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.status-options .payment-card {
+    flex: 1;
+}
+
+.status-options .payment-card span {
+    min-height: 46px;
+    padding: 9px 8px;
+
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* Selected status */
+
+.status-options .payment-card input:checked + span {
+    background: #eef4fb;
+    border-color: #1e3a5f;
+    color: #1e3a5f;
+
+    box-shadow: 0 2px 6px rgba(30, 58, 95, 0.12);
+}
+
+
+
+
+
+/* =================================
+   PAID AMOUNT - PROFESSIONAL INPUT
+================================= */
+
+.payment-amount-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 18px;
+    padding: 14px 16px;
+
+    background: #ffffff;
+    border: 1px solid #d5dde7;
+    border-radius: 10px;
+}
+
+.payment-amount-row > label {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.7px;
+    color: #5b6775;
+}
+
+.amount-input {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    padding: 7px 10px;
+
+    background: #f7f9fc;
+    border: 1px solid #d5dde7;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e3a5f;
+    
+    width: 170px;
+}
+
+.amount-input input {
+    width: 100px;
+
+    border: none;
+    outline: none;
+    background: transparent;
+
+    font-size: 17px;
+    font-weight: 700;
+    text-align: right;
+
+    color: #1e3a5f;
+}
+
+.amount-input input:focus {
+    outline: none;
+}
+
+
+
+
+/* =================================
+   BALANCE - PROFESSIONAL HIGHLIGHT
+================================= */
+/* =================================
+   BALANCE - PROFESSIONAL
+================================= */
+
+.payment-balance {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 18px;
+    padding: 18px 20px;
+
+    background: linear-gradient(
+        135deg,
+        #1e4f8a,
+        #163b68
+    );
+
+    border-radius: 12px;
+
+    box-shadow: 0 4px 10px rgba(30, 58, 95, 0.18);
+
+    color: #ffffff;
+}
+
+.payment-balance > span {
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.payment-balance strong {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    font-size: 23px;
+    font-weight: 800;
+
+    white-space: nowrap;
+}
+
+.payment-balance strong span {
+    font-variant-numeric: tabular-nums;
+}
+
+
+
+
+
+
+

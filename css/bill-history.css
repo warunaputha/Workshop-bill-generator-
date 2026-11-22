@@ -1,0 +1,792 @@
+
+/* ===============================
+   bill-history.css
+================================ */
+
+
+
+/* ===============================
+   ➡️ PROFESSIONAL BILL HISTORY
+================================ */
+
+.bill-history {
+  background: #ffffff;
+  max-width: 900px;
+  margin: 25px auto;
+  padding: 0;
+  border-radius: 14px;
+  border: 1px solid #dce6ef;
+  box-shadow:
+    0 5px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+
+/* ===== HISTORY HEADER ===== */
+
+.history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 18px 20px;
+  background: linear-gradient(
+    135deg,
+    #0066cc,
+    #004b99
+  );
+  color: #ffffff;
+}
+
+
+.history-header h2 {
+  margin: 0;
+  font-size: 20px;
+  text-align: left;
+}
+
+
+.history-header p {
+  margin: 5px 0 0;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+
+/* ===== REFRESH BUTTON ===== */
+
+.history-refresh-btn {
+  width: auto !important;
+  min-width: 105px;
+  margin: 0 !important;
+  padding: 8px 12px;
+  background: rgba(255,255,255,0.15);
+  color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+
+.history-refresh-btn:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+
+
+
+
+
+
+/* ===== HISTORY CONTENT ===== */
+
+#billHistory {
+  padding: 18px;
+}
+
+
+/* ===== HISTORY TABLE ===== */
+
+.history-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 0;
+  background: #ffffff;
+  border: 1px solid #dce6ef;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+
+/* ===== TABLE HEADER ===== */
+
+.history-table th {
+  padding: 11px 8px;
+  background: #f1f6fb;
+  color: #34495e;
+  border-bottom: 1px solid #dce6ef;
+  font-size: 12px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+
+/* ===== TABLE CELLS ===== */
+
+.history-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid #edf2f6;
+  font-size: 13px;
+  color: #34495e;
+  vertical-align: middle;
+}
+
+
+/* ===== REMOVE LAST BORDER ===== */
+
+.history-table tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* ===== ROW HOVER ===== */
+
+.history-table tr:not(:first-child):hover td {
+  background: #f8fbff;
+}
+
+
+/* ===== BILL NUMBER ===== */
+
+.history-table td:first-child strong {
+  color: #0066cc;
+  font-size: 13px;
+}
+
+
+/* ===== TOTAL ===== */
+
+.history-total {
+  font-weight: bold;
+  color: #003399 !important;
+  white-space: nowrap;
+}
+
+
+/* ===============================
+   ACTION BUTTONS
+================================ */
+
+.history-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: nowrap;
+}
+
+
+.history-actions button {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 7px;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.15s ease;
+}
+
+
+.history-actions button:hover {
+  box-shadow:
+    0 3px 8px rgba(0,0,0,0.15);
+}
+
+
+.history-actions button:active {
+  transform: scale(0.92);
+}
+
+
+/* ===== VIEW ===== */
+
+.view-btn {
+  background: #e7f3ff;
+  color: #0878c9;
+  border: 1px solid #b9ddf8 !important;
+}
+
+
+/* ===== EDIT ===== */
+
+.edit-btn {
+  background: #fff4df;
+  color: #d98200;
+  border: 1px solid #f2d49d !important;
+}
+
+
+/* ===== PRINT ===== */
+
+.print-btn {
+  background: #e8f8ef;
+  color: #239653;
+  border: 1px solid #b9e5c9 !important;
+}
+
+
+/* ===== DELETE ===== */
+
+.delete-btn {
+  background: #ffebeb;
+  color: #d93636;
+  border: 1px solid #f2bcbc !important;
+}
+
+
+/* ===== EMPTY HISTORY ===== */
+
+.no-bills {
+  margin: 0;
+  padding: 30px 15px;
+  text-align: center;
+  color: #7b8a97;
+  font-size: 14px;
+  background: #f8fafc;
+  border: 1px dashed #ccd8e3;
+  border-radius: 10px;
+}
+
+
+
+
+/* ===============================
+   Month & Year Filter
+================================ */
+
+.history-filter {
+display: flex;
+align-items: center;
+gap: 10px;
+flex-wrap: wrap;
+
+margin: 15px 0;
+padding: 12px;
+
+background: #f1f6fc;
+border: 1px solid #d5e3f3;
+border-radius: 10px;
+}
+
+.history-filter label {
+font-weight: 600;
+color: #23466b;
+}
+
+.history-filter select {
+flex: 1;
+min-width: 150px;
+max-width: 260px;
+
+padding: 10px;
+
+border: 1px solid #b8cce2;
+border-radius: 7px;
+
+background: #ffffff;
+color: #23466b;
+
+font-size: 14px;
+}
+
+
+
+/* ===== MONTHLY SUMMARY ===== */
+
+.monthly-summary {
+
+display: grid;
+
+grid-template-columns:
+repeat(4, minmax(0, 1fr));
+
+gap: 12px;
+
+margin: 16px 0;
+
+}
+
+.summary-card {
+
+min-width: 0;
+
+padding: 16px 12px;
+
+background: #ffffff;
+
+border: 1px solid #dce6f1;
+
+border-radius: 12px;
+
+box-shadow:
+0 3px 10px rgba(0, 0, 0, 0.05);
+
+}
+
+.summary-icon {
+
+font-size: 25px;
+
+margin-bottom: 8px;
+
+}
+
+.summary-label {
+
+font-size: 13px;
+
+font-weight: 600;
+
+color: #64748b;
+
+margin-bottom: 8px;
+
+}
+
+.summary-value {
+
+font-size: 19px;
+
+font-weight: 700;
+
+color: #173b65;
+
+overflow-wrap: anywhere;
+
+}
+
+.summary-total {
+
+border-top: 4px solid #2878d0;
+
+}
+
+.summary-paid {
+
+border-top: 4px solid #16a34a;
+
+}
+
+.summary-balance {
+
+border-top: 4px solid #ea8a16;
+
+}
+
+.summary-bills {
+
+border-top: 4px solid #64748b;
+
+}
+
+
+
+/* ===== PAYMENT STATUS SUMMARY ===== */
+
+.payment-status-summary {
+display: grid;
+grid-template-columns: repeat(3, minmax(0, 1fr));
+gap: 12px;
+margin: 16px 0;
+}
+
+.status-summary-card {
+min-width: 0;
+padding: 16px 12px;
+background: #ffffff;
+border: 1px solid #dce6f1;
+border-radius: 12px;
+box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+text-align: center;
+transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.status-summary-card:hover {
+transform: translateY(-2px);
+box-shadow: 0 5px 14px rgba(0, 0, 0, 0.09);
+}
+
+.status-summary-icon {
+font-size: 25px;
+margin-bottom: 8px;
+}
+
+.status-summary-label {
+font-size: 14px;
+font-weight: 700;
+margin-bottom: 8px;
+color: #334155;
+}
+
+.status-summary-value {
+font-size: 26px;
+font-weight: 800;
+color: #173b65;
+margin-bottom: 6px;
+}
+
+.status-summary-caption {
+font-size: 12px;
+color: #64748b;
+}
+
+.status-full {
+border-top: 4px solid #16a34a;
+}
+
+.status-half {
+border-top: 4px solid #ea8a16;
+}
+
+.status-unpaid {
+border-top: 4px solid #dc2626;
+}
+
+
+/* ===== PAYMENT SUMMARY BUTTON STYLE ===== */
+
+.status-summary-card {
+  width: 100%;
+  font-family: inherit;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: #ffffff;
+  color: inherit;
+  text-align: center;
+}
+
+.status-summary-card:focus-visible {
+  outline: 3px solid #0066cc;
+  outline-offset: 3px;
+}
+
+.status-summary-card:active {
+  transform: scale(0.98);
+}
+
+
+
+/* ===== ACTIVE PAYMENT STATUS BUTTON ===== */
+
+.status-summary-card {
+position: relative;
+transition:
+transform 0.2s ease,
+box-shadow 0.2s ease,
+border-color 0.2s ease;
+}
+
+/* Selected FULL Button */
+.status-full.active {
+background: #ecfdf3;
+border: 2px solid #16a34a;
+box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
+}
+
+/* Selected HALF Button */
+.status-half.active {
+background: #fff7ed;
+border: 2px solid #ea8a16;
+box-shadow: 0 0 0 3px rgba(234, 138, 22, 0.15);
+}
+
+/* Selected NOT PAID Button */
+.status-unpaid.active {
+background: #fef2f2;
+border: 2px solid #dc2626;
+box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+}
+
+/* Small selected indicator */
+.status-summary-card.active::after {
+content: "✓ Selected";
+display: inline-block;
+margin-top: 10px;
+padding: 4px 9px;
+border-radius: 20px;
+background: rgba(255, 255, 255, 0.85);
+font-size: 11px;
+font-weight: 700;
+color: #334155;
+}
+
+/* Keyboard focus */
+.status-summary-card:focus-visible {
+outline: 3px solid #0066cc;
+outline-offset: 3px;
+}
+
+
+
+/* ===== ACTIVE FILTER INDICATOR ===== */
+
+.active-payment-filter {
+margin: 12px 0;
+padding: 11px 14px;
+background: #eff6ff;
+border-left: 4px solid #2878d0;
+border-radius: 7px;
+color: #173b65;
+font-size: 14px;
+font-weight: 600;
+overflow-wrap: anywhere;
+}
+
+
+/* ===== BILL HISTORY PAYMENT BADGES ===== */
+
+.payment-paid,
+.payment-half,
+.payment-not-paid {
+display: inline-block;
+padding: 5px 10px;
+border-radius: 20px;
+font-size: 11px;
+font-weight: 700;
+line-height: 1.5;
+text-align: center;
+white-space: nowrap;
+}
+
+/* FULL — Green */
+.payment-paid {
+color: #166534;
+background: #dcfce7;
+border: 1px solid #86efac;
+}
+
+/* HALF — Orange */
+.payment-half {
+color: #9a3412;
+background: #ffedd5;
+border: 1px solid #fdba74;
+}
+
+/* NOT PAID — Red */
+.payment-not-paid {
+color: #991b1b;
+background: #fee2e2;
+border: 1px solid #fca5a5;
+}
+
+/* Keyboard accessibility */
+.payment-status-badge:focus-visible {
+outline: 2px solid #0066cc;
+outline-offset: 2px;
+}
+
+
+
+/* ===== BILL HISTORY MONTH SECTIONS ===== */
+
+.bill-month-section {
+  margin: 12px 0;
+  border: 1px solid #d5deea;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.bill-month-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  background: #eef4fb;
+  color: #173b65;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+
+.bill-month-heading::-webkit-details-marker {
+  display: none;
+}
+
+.bill-month-heading::before {
+  content: "▶";
+  font-size: 11px;
+  margin-right: 5px;
+}
+
+.bill-month-section[open] .bill-month-heading::before {
+  content: "▼";
+}
+
+.bill-month-count {
+  padding: 4px 9px;
+  border-radius: 20px;
+  background: #d9e9ff;
+  color: #174a86;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.bill-month-content {
+  padding: 10px;
+}
+
+.bill-month-content .history-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.bill-month-more {
+  display: flex;
+  justify-content: center;
+  padding: 14px 5px 5px;
+}
+
+.bill-see-more-btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #0066cc;
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.bill-see-more-btn:hover {
+  background: #004f9e;
+}
+
+
+/* ===== RECENT BILLS SECTION ===== */
+
+.recent-bills-section {
+  margin-bottom: 15px;
+}
+
+.recent-bills-heading {
+  margin: 12px 0;
+  padding: 12px;
+  background: #eef4fb;
+  color: #173b65;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+
+/* ===== BILL TABLE SCROLL ===== */
+
+.bill-history-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.bill-history-table-wrap .history-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+
+/* ===== OLDER BILLS SECTION ===== */
+
+.older-bills-section {
+  margin-top: 15px;
+}
+
+.older-bills-section .bill-month-section {
+  margin-bottom: 10px;
+}
+
+
+/* ===== SEE MORE BUTTON ===== */
+
+.bill-month-more {
+  display: flex;
+  justify-content: center;
+  padding: 14px 5px;
+}
+
+.bill-see-more-btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #0066cc;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.bill-see-more-btn:hover {
+  background: #004f9e;
+}
+
+
+
+
+
+
+
+
+/* ===============================
+   BACKUP FILE CONTROLS
+================================ */
+
+.history-tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.history-tools button {
+  width: auto !important;
+  min-width: 90px;
+  margin: 0 !important;
+  padding: 8px 10px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.2s ease;
+}
+
+.history-tools button:active {
+  transform: scale(0.96);
+}
+
+.history-tools button:hover {
+  box-shadow:
+    0 3px 8px rgba(0,0,0,0.15);
+}
+
+
+/* ===== BACKUP FILE ===== */
+
+.backup-btn {
+  background: #eef5ff;
+  color: #075a9c;
+  border: 1px solid #bcd4eb;
+}
+
+
+/* ===== SAVE BACKUP ===== */
+
+.backup-save-btn {
+  background: #e8f8ef;
+  color: #208a4a;
+  border: 1px solid #b9e5c9;
+}
+
+
+/* ===== IMPORT ===== */
+
+.backup-import-btn {
+  background: #fff4df;
+  color: #b86b00;
+  border: 1px solid #f2d49d;
+}
+
+
+
+
+
